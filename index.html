@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tamamen offline çalışan 2 ve 3 Kademeli Bağımsız Short (Split-Stop) Pozisyon ve Risk Hesaplayıcı." />
+  <title>Split-Stop Short — 2 &amp; 3 Kademeli Pozisyon &amp; Risk Hesaplayıcı</title>
+  <style>
+    :root {
+      --bg-main: #0b0e14;
+      --bg-card: #131722;
+      --bg-card-elevated: #171c29;
+      --bg-input: #0e121b;
+      --bg-hover: #1b2131;
+      --border: #1e222d;
+      --border-strong: #2a3142;
+
+      --text-primary: #e6eaf2;
+      --text-secondary: #9aa3b5;
+      --text-muted: #687287;
+
+      --green: #00e676;
+      --green-dim: rgba(0, 230, 118, 0.12);
+      --green-border: rgba(0, 230, 118, 0.32);
+
+      --red: #ff5252;
+      --red-dim: rgba(255, 82, 82, 0.12);
+      --red-border: rgba(255, 82, 82, 0.35);
+
+      --blue: #2962ff;
+      --blue-hover: #3b72ff;
+      --blue-dim: rgba(41, 98, 255, 0.14);
+      --blue-border: rgba(41, 98, 255, 0.4);
+
+      --orange: #ffb74d;
+      --orange-dim: rgba(255, 183, 77, 0.10);
+      --orange-border: rgba(255, 183, 77, 0.32);
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 10px;
+      --transition: 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+    }
+
+    /* Custom subtle scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #252b3b;
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #353d54;
+    }
+
+    /* ==================== TOP HEADER ==================== */
+    .topbar {
+      height: 46px;
+      min-height: 46px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--blue-dim);
+      border: 1px solid var(--blue-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      border-left: 1px solid var(--border-strong);
+      padding-left: 10px;
+      white-space: nowrap;
+    }
+
+    .topbar-metrics {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ticker-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+
+    .ticker-symbol {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .ticker-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--red-dim);
+      color: var(--red);
+      letter-spacing: 0.03em;
+    }
+
+    .ticker-tag.mode-tag {
+      background: var(--blue-dim);
+      color: #6b9bff;
+    }
+
+    .kpi-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+
+    .kpi-chip .kpi-label {
+      color: var(--text-muted);
+    }
+
+    .kpi-chip .kpi-val {
+      font-weight: 700;
+    }
+
+    .kpi-val.green { color: var(--green); }
+    .kpi-val.red { color: var(--red); }
+    .kpi-val.orange { color: var(--orange); }
+
+    /* ==================== MAIN WORKSPACE ==================== */
+    .workspace {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 356px 1fr;
+      gap: 12px;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .panel-title svg {
+      color: var(--text-muted);
+    }
+
+    /* ==================== LEFT PANEL (CONTROLS) ==================== */
+    .left-panel-body {
+      flex: 1;
+      min-height: 0;
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+
+    .field-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .field-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .field-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .field-label .unit {
+      color: var(--text-muted);
+      font-size: 10.5px;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix,
+    .input-suffix {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .input-prefix { left: 9px; }
+    .input-suffix { right: 9px; }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      height: 32px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 0 9px;
+      outline: none;
+      transition: border-color var(--transition), background-color var(--transition), box-shadow var(--transition);
+    }
+
+    input.has-prefix { padding-left: 22px; }
+    input.has-suffix { padding-right: 24px; }
+
+    input[type="text"]:hover,
+    input[type="number"]:hover {
+      border-color: #3a435a;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.22);
+      background: #101521;
+    }
+
+    input:disabled {
+      opacity: 0.36;
+      cursor: not-allowed;
+      background: #0b0e14;
+      border-style: dashed;
+    }
+
+    /* Hide number spinners for clean terminal look */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .input-tp:focus {
+      border-color: var(--green) !important;
+      box-shadow: 0 0 0 2px rgba(0, 230, 118, 0.18) !important;
+    }
+
+    .input-risk:focus {
+      border-color: var(--red) !important;
+      box-shadow: 0 0 0 2px rgba(255, 82, 82, 0.18) !important;
+    }
+
+    /* Segmented Toggle */
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      height: 32px;
+      gap: 2px;
+    }
+
+    .segmented-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .segmented-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .segmented-btn.active {
+      background: var(--blue);
+      color: #ffffff;
+      box-shadow: 0 1px 4px rgba(41, 98, 255, 0.35);
+    }
+
+    /* Section divider inside left panel */
+    .sub-section {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .sub-section-title {
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Sliders */
+    .slider-block {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .slider-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 4px;
+      border-radius: 99px;
+      background: #252c3d;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 2px solid #e6eaf2;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: transform var(--transition);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 2px solid #e6eaf2;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    .slider-num {
+      width: 62px !important;
+      height: 26px !important;
+      font-size: 12px !important;
+      text-align: right;
+      padding-right: 20px !important;
+      padding-left: 6px !important;
+    }
+
+    .slider-hint {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .slider-hint strong {
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* Switch Toggle */
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color var(--transition);
+    }
+
+    .switch-row:hover {
+      border-color: var(--border-strong);
+    }
+
+    .switch-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .switch-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .switch-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 38px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: #252c3d;
+      border-radius: 99px;
+      border: 1px solid var(--border-strong);
+      transition: background-color var(--transition), border-color var(--transition);
+    }
+
+    .toggle-track::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #9aa3b5;
+      transition: transform var(--transition), background-color var(--transition);
+    }
+
+    .toggle-switch input:checked + .toggle-track {
+      background: var(--blue-dim);
+      border-color: var(--blue);
+    }
+
+    .toggle-switch input:checked + .toggle-track::after {
+      transform: translateX(18px);
+      background: var(--blue);
+    }
+
+    /* Presets Section */
+    .presets-section {
+      flex: 1;
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      overflow: hidden;
+    }
+
+    .presets-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px;
+    }
+
+    .btn {
+      height: 30px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 10px;
+      transition: all var(--transition);
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-hover);
+    }
+
+    .btn-ghost {
+      background: var(--bg-input);
+      border-color: var(--border-strong);
+      color: var(--text-secondary);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      border-color: #3e4760;
+    }
+
+    .presets-list {
+      flex: 1;
+      min-height: 36px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .preset-empty {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 10px 6px;
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-sm);
+    }
+
+    .preset-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 5px 7px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .preset-item:hover {
+      border-color: var(--blue-border);
+      background: #121827;
+    }
+
+    .preset-item.active-preset {
+      border-color: var(--blue);
+      background: rgba(41, 98, 255, 0.08);
+    }
+
+    .preset-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .preset-coin {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .preset-meta {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .preset-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: var(--blue-dim);
+      color: #7ea7ff;
+    }
+
+    .preset-del {
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .preset-del:hover {
+      background: var(--red-dim);
+      color: var(--red);
+    }
+
+    /* ==================== RIGHT PANEL ==================== */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Validation Error Banner */
+    .error-banner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 82, 82, 0.11);
+      border: 1px solid var(--red-border);
+      border-left: 3px solid var(--red);
+      border-radius: var(--radius-md);
+      padding: 9px 13px;
+      color: #ffd0d0;
+      font-size: 12.5px;
+      flex-shrink: 0;
+    }
+
+    .error-banner.visible {
+      display: flex;
+    }
+
+    .error-banner svg {
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    .error-banner strong {
+      color: var(--red);
+      margin-right: 4px;
+    }
+
+    /* Tier Order Cards Grid */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .tiers-grid.mode-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .tier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .tier-card:hover,
+    .tier-card.highlighted {
+      border-color: var(--blue-border);
+    }
+
+    .tier-card.invalid-state {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .tier-card-header {
+      padding: 8px 12px;
+      background: var(--bg-card-elevated);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .tier-card-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .tier-num-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: var(--blue-dim);
+      border: 1px solid var(--blue-border);
+      color: #7ea7ff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tier-card.final-tier .tier-num-badge {
+      background: var(--orange-dim);
+      border-color: var(--orange-border);
+      color: var(--orange);
+    }
+
+    .tier-risk-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-secondary);
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tier-risk-pill span {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .tier-card-body {
+      padding: 9px 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Highlighted Margin Block */
+    .margin-hero {
+      background: linear-gradient(180deg, rgba(41, 98, 255, 0.08) 0%, rgba(14, 18, 27, 0.7) 100%);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .margin-hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .margin-hero-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .margin-hero-value {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+    }
+
+    .tier-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .tier-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 3.5px 6px;
+      border-radius: 5px;
+      transition: background-color var(--transition);
+    }
+
+    .tier-row:hover {
+      background: var(--bg-hover);
+    }
+
+    .tier-row-label {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .tier-row-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .tier-row-val {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .tier-row-val.val-sl { color: var(--red); }
+    .tier-row-val.val-tp { color: var(--green); }
+
+    .pct-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .pct-tag.sl {
+      background: var(--red-dim);
+      color: var(--red);
+    }
+
+    .pct-tag.tp {
+      background: var(--green-dim);
+      color: var(--green);
+    }
+
+    /* Copy Button */
+    .copy-btn {
+      width: 22px;
+      height: 22px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .copy-btn:hover {
+      background: #232b3e;
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    .copy-btn.copied {
+      background: var(--green-dim);
+      border-color: var(--green-border);
+      color: var(--green);
+    }
+
+    .margin-hero .copy-btn {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-strong);
+    }
+
+    /* ==================== BOTTOM SPLIT (SIMULATION + SVG LADDER) ==================== */
+    .bottom-grid {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(420px, 1.32fr) minmax(320px, 1fr);
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .sim-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .sim-panel {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .sim-table-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 4px 0;
+    }
+
+    table.sim-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .sim-table thead th {
+      text-align: left;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      background: var(--bg-card);
+      position: sticky;
+      top: 0;
+    }
+
+    .sim-table thead th.num,
+    .sim-table tbody td.num {
+      text-align: right;
+    }
+
+    .sim-table tbody tr {
+      border-bottom: 1px solid rgba(30, 34, 45, 0.7);
+      transition: background-color var(--transition);
+    }
+
+    .sim-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .sim-table tbody tr:hover {
+      background: var(--bg-hover);
+    }
+
+    .sim-table tbody td {
+      padding: 7px 10px;
+      vertical-align: middle;
+    }
+
+    .scenario-name {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .scenario-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 11.5px;
+      line-height: 1.25;
+    }
+
+    .scenario-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.25;
+    }
+
+    .sim-table tr.row-target {
+      background: rgba(0, 230, 118, 0.04);
+    }
+
+    .sim-table tr.row-worst {
+      background: rgba(255, 82, 82, 0.05);
+    }
+
+    .val-pos {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .val-neg {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .val-muted {
+      color: var(--text-muted);
+    }
+
+    .rr-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .rr-badge.target {
+      background: var(--green-dim);
+      border-color: var(--green-border);
+      color: var(--green);
+    }
+
+    .rr-badge.worst {
+      background: var(--red-dim);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+
+    /* Wallet & Margin Reminder Box */
+    .wallet-box {
+      background: linear-gradient(90deg, rgba(255, 183, 77, 0.09) 0%, rgba(19, 23, 34, 0.96) 100%);
+      border: 1px solid var(--orange-border);
+      border-left: 3px solid var(--orange);
+      border-radius: var(--radius-md);
+      padding: 9px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .wallet-box-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .wallet-icon {
+      color: var(--orange);
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .wallet-text {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.42;
+    }
+
+    .wallet-text strong {
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    .wallet-balance-pill {
+      background: var(--bg-input);
+      border: 1px solid var(--orange-border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .wallet-balance-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .wallet-balance-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    /* ==================== SVG PRICE LADDER ==================== */
+    .ladder-panel {
+      min-height: 0;
+    }
+
+    .ladder-legend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-dot i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .ladder-container {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #priceLadderSvg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      user-select: none;
+    }
+
+    .ladder-group {
+      cursor: pointer;
+      transition: opacity 150ms ease;
+    }
+
+    .ladder-group:hover .ladder-pill-bg {
+      filter: brightness(1.22);
+    }
+
+    /* ==================== TOAST NOTIFICATION ==================== */
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: #171e2e;
+      border: 1px solid var(--green-border);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-icon {
+      color: var(--green);
+      display: flex;
+      align-items: center;
+    }
+
+    .toast-val {
+      font-family: var(--font-mono);
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ==================== COMPACT 720P DESKTOP FIT ==================== */
+    @media (max-height: 790px) and (min-width: 1181px) {
+      .topbar { height: 40px; min-height: 40px; }
+      .workspace { gap: 9px; padding: 9px; grid-template-columns: 344px 1fr; }
+      .panel-header { padding: 6px 12px; }
+      .left-panel-body { padding: 8px 11px; gap: 7px; }
+      input[type="text"], input[type="number"], .segmented { height: 28px; font-size: 12px; }
+      .sub-section { padding: 6px 8px; gap: 5px; }
+      .switch-row { padding: 6px 8px; }
+      .presets-section { padding: 6px 8px; gap: 5px; min-height: 74px; }
+      .btn { height: 27px; }
+      .right-panel { gap: 8px; }
+      .tier-card-header { padding: 6px 10px; }
+      .tier-card-body { padding: 7px 10px 8px; gap: 4px; }
+      .margin-hero { padding: 5px 9px; }
+      .margin-hero-value { font-size: 18px; }
+      .tier-row { padding: 2px 5px; }
+      .sim-table thead th { padding: 5px 9px; }
+      .sim-table tbody td { padding: 5px 9px; }
+      .wallet-box { padding: 7px 10px; }
+      .wallet-balance-val { font-size: 13.5px; }
+    }
+
+    /* ==================== RESPONSIVE FALLBACK ==================== */
+    @media (max-width: 1180px), (max-height: 670px) {
+      body {
+        overflow: auto;
+        height: auto;
+      }
+      .workspace {
+        grid-template-columns: 340px 1fr;
+        overflow: visible;
+        height: auto;
+      }
+      .right-panel,
+      .bottom-grid,
+      .sim-column {
+        overflow: visible;
+      }
+      .ladder-container {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .topbar {
+        height: auto;
+        padding: 10px 14px;
+        flex-wrap: wrap;
+      }
+      .brand-subtitle {
+        display: none;
+      }
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .tiers-grid,
+      .tiers-grid.mode-3 {
+        grid-template-columns: 1fr;
+      }
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+      .ladder-container {
+        min-height: 380px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== TOP BAR ==================== -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+          <polyline points="17 18 23 18 23 12"></polyline>
+        </svg>
+      </div>
+      <h1 class="brand-title">Split-Stop Short Hesaplayıcı</h1>
+      <span class="brand-subtitle">2 &amp; 3 Kademeli Bağımsız Pozisyon &amp; Risk Motoru</span>
+    </div>
+
+    <div class="topbar-metrics">
+      <div class="ticker-pill">
+        <span class="ticker-symbol mono" id="headerCoin">VVVUSDT</span>
+        <span class="ticker-tag">SHORT</span>
+        <span class="ticker-tag mode-tag mono" id="headerMode">2K · 10x</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label">Maks Kayıp:</span>
+        <span class="kpi-val red mono" id="headerMaxLoss">-$40.00</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label">Son Kademe Hedef Net (3/4):</span>
+        <span class="kpi-val green mono" id="headerTargetProfit">+$30.00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN 2-COLUMN DASHBOARD ==================== -->
+  <main class="workspace">
+
+    <!-- LEFT PANEL: PARAMETERS & PRESETS -->
+    <section class="panel" aria-label="Strateji Parametreleri">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          Parametreler
+        </div>
+        <span class="mono" style="font-size:10.5px; color:var(--text-muted);" id="feeStatusBadge">Komisyon: Kapalı</span>
+      </div>
+
+      <div class="left-panel-body">
+
+        <!-- Row 1: Coin & Tier Mode -->
+        <div class="field-grid-2">
+          <div class="field">
+            <label class="field-label" for="coinInput">Coin / Parite</label>
+            <input type="text" id="coinInput" value="VVVUSDT" placeholder="Örn: VVVUSDT" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="field">
+            <span class="field-label">Kademe Sayısı</span>
+            <div class="segmented" role="group" aria-label="Kademe Sayısı Seçici">
+              <button type="button" class="segmented-btn active" id="mode2Btn" data-mode="2">2 Kademe</button>
+              <button type="button" class="segmented-btn" id="mode3Btn" data-mode="3">3 Kademe</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Max Loss & Leverage -->
+        <div class="field-grid-2">
+          <div class="field">
+            <label class="field-label" for="maxLossInput">Maks. Kayıp Limiti <span class="unit">($)</span></label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="number" id="maxLossInput" class="has-prefix input-risk" value="40" min="1" step="any" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="leverageInput">Kaldıraç <span class="unit">(x)</span></label>
+            <div class="input-wrap">
+              <input type="number" id="leverageInput" class="has-suffix" value="10" min="1" max="150" step="1" />
+              <span class="input-suffix">x</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Entry Prices & Take Profit -->
+        <div class="sub-section">
+          <div class="sub-section-title">
+            <span>Kademe Giriş Fiyatları &amp; TP Hedefi</span>
+            <span class="mono" style="color:var(--green);">SHORT ↓</span>
+          </div>
+
+          <div class="field-grid-3">
+            <div class="field">
+              <label class="field-label" for="p1Input">1. Kademe</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="p1Input" class="has-prefix" value="25.00" min="0" step="any" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="p2Input">2. Kademe</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="p2Input" class="has-prefix" value="40.00" min="0" step="any" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="p3Input">3. Kademe</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="p3Input" class="has-prefix" value="55.00" min="0" step="any" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="tpInput">
+              Take Profit (TP) Hedef Fiyatı
+              <span class="unit" style="color:var(--green);">Kâr Al ($)</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix" style="color:var(--green);">$</span>
+              <input type="number" id="tpInput" class="has-prefix input-tp" value="15.80" min="0" step="any" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: SL Sliders -->
+        <div class="sub-section">
+          <div class="sub-section-title">
+            <span>Stop-Loss Mesafe Ayarları</span>
+            <span class="mono" style="color:var(--red);">SL ↑</span>
+          </div>
+
+          <!-- Intermediate SL Buffer -->
+          <div class="slider-block">
+            <div class="slider-top">
+              <label class="field-label" for="midSlInput">Ara Kademe SL Yakınlık Payı</label>
+            </div>
+            <div class="slider-controls">
+              <input type="range" id="midSlRange" min="1.0" max="10.0" step="0.5" value="3.0" aria-label="Ara Kademe SL Yakınlık Payı Slider" />
+              <div class="input-wrap">
+                <input type="number" id="midSlInput" class="slider-num" min="1.0" max="10.0" step="0.5" value="3.0" />
+                <span class="input-suffix" style="right:6px;">%</span>
+              </div>
+            </div>
+            <div class="slider-hint">Bir sonraki kademenin <strong id="midSlHintVal">%3.0</strong> altına SL koyar</div>
+          </div>
+
+          <!-- Final Hard SL -->
+          <div class="slider-block" style="margin-top:2px;">
+            <div class="slider-top">
+              <label class="field-label" for="hardSlInput">Son Kademe Hard SL Yüzdesi</label>
+            </div>
+            <div class="slider-controls">
+              <input type="range" id="hardSlRange" min="10" max="60" step="1" value="30" aria-label="Son Kademe Hard SL Yüzdesi Slider" />
+              <div class="input-wrap">
+                <input type="number" id="hardSlInput" class="slider-num" min="10" max="60" step="1" value="30" />
+                <span class="input-suffix" style="right:6px;">%</span>
+              </div>
+            </div>
+            <div class="slider-hint">Son kademenin <strong id="hardSlHintVal">%30</strong> üstüne ana SL koyar</div>
+          </div>
+        </div>
+
+        <!-- Row 5: Fee Protection Toggle -->
+        <label class="switch-row" for="feeToggle">
+          <div class="switch-text">
+            <span class="switch-title">Borsa Komisyon Koruması</span>
+            <span class="switch-desc">Açılış + kapanış taker (%0.055 × 2) dahil edilir</span>
+          </div>
+          <div class="toggle-switch">
+            <input type="checkbox" id="feeToggle" />
+            <span class="toggle-track"></span>
+          </div>
+        </label>
+
+        <!-- Row 6: Presets Memory -->
+        <div class="presets-section">
+          <div class="sub-section-title">
+            <span>Kurgu Hafızası (Presets)</span>
+            <span class="mono" id="presetCount">0 kayıt</span>
+          </div>
+          <div class="presets-actions">
+            <button type="button" class="btn btn-primary" id="savePresetBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              Kurguyu Kaydet
+            </button>
+            <button type="button" class="btn btn-ghost" id="resetDefaultsBtn" title="Varsayılan değerlere dön">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              Sıfırla
+            </button>
+          </div>
+          <div class="presets-list" id="presetsList" role="list" aria-label="Kayıtlı Kurgular"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: ORDER CARDS, SIMULATION & SVG PRICE LADDER -->
+    <section class="right-panel" aria-label="Hesaplama Çıktıları">
+
+      <!-- Validation Error Banner -->
+      <div class="error-banner" id="errorBanner" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div><strong>Geçersiz Kurgu:</strong> <span id="errorMessage"></span></div>
+      </div>
+
+      <!-- Order Cards (2 or 3 side-by-side) -->
+      <div class="tiers-grid" id="tiersGrid"></div>
+
+      <!-- Bottom Area: Simulation + Wallet Box | Interactive Price Ladder SVG -->
+      <div class="bottom-grid">
+
+        <!-- Left: Scenario Simulation + Wallet Reminder -->
+        <div class="sim-column">
+          <div class="panel sim-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                Senaryo Simülasyonu
+              </div>
+              <span class="mono" style="font-size:10.5px; color:var(--text-muted);" id="alphaBadge">α = 2.02</span>
+            </div>
+
+            <div class="sim-table-wrap">
+              <table class="sim-table" aria-label="Senaryo Simülasyon Tablosu">
+                <thead>
+                  <tr>
+                    <th>Senaryo</th>
+                    <th class="num">Önceki Zarar</th>
+                    <th class="num">Kademe Kârı</th>
+                    <th class="num">Net Sonuç</th>
+                    <th class="num">Oran / Not</th>
+                  </tr>
+                </thead>
+                <tbody id="simTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Wallet & Margin Mode Reminder Box -->
+          <aside class="wallet-box" aria-label="Cüzdan ve Marjin Modu Hatırlatması">
+            <div class="wallet-box-left">
+              <div class="wallet-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="wallet-text">
+                Ara fitillerde erken likidasyonu önlemek için borsada mutlaka <strong>Çapraz (Cross) Marjin</strong> modu seçilmelidir. Vadeli cüzdanda en az <strong>Maks. Kayıp + %5</strong> bakiye bulundurun.
+              </div>
+            </div>
+            <div class="wallet-balance-pill">
+              <span class="wallet-balance-label">Min. Cüzdan</span>
+              <span class="wallet-balance-val" id="minWalletVal">$42.00</span>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Right: Interactive Price Ladder SVG -->
+        <div class="panel ladder-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              Fiyat Merdiveni
+            </div>
+            <div class="ladder-legend">
+              <span class="legend-dot"><i style="background:var(--green)"></i>TP</span>
+              <span class="legend-dot"><i style="background:var(--blue)"></i>Giriş</span>
+              <span class="legend-dot"><i style="background:var(--red)"></i>SL</span>
+            </div>
+          </div>
+          <div class="ladder-container">
+            <svg id="priceLadderSvg" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="İnteraktif Fiyat Merdiveni Diyagramı"></svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </span>
+    <span id="toastMsg">Kopyalandı!</span>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ==================== CONSTANTS & DEFAULTS ==================== */
+      const STORAGE_PRESETS_KEY = "split_stop_short_presets_v1";
+      const TAKER_ROUND_TRIP_FEE = 0.0011; // 2 * 0.055%
+
+      const DEFAULTS = {
+        coin: "VVVUSDT",
+        mode: 2,
+        maxLoss: 40,
+        leverage: 10,
+        p1: 25.00,
+        p2: 40.00,
+        p3: 55.00,
+        tp: 15.80,
+        midSlPct: 3.0,
+        hardSlPct: 30,
+        feeProtection: false
+      };
+
+      let state = { ...DEFAULTS };
+      let toastTimer = null;
+
+      /* ==================== DOM REFERENCES ==================== */
+      const el = {
+        coinInput: document.getElementById("coinInput"),
+        mode2Btn: document.getElementById("mode2Btn"),
+        mode3Btn: document.getElementById("mode3Btn"),
+        maxLossInput: document.getElementById("maxLossInput"),
+        leverageInput: document.getElementById("leverageInput"),
+        p1Input: document.getElementById("p1Input"),
+        p2Input: document.getElementById("p2Input"),
+        p3Input: document.getElementById("p3Input"),
+        tpInput: document.getElementById("tpInput"),
+        midSlRange: document.getElementById("midSlRange"),
+        midSlInput: document.getElementById("midSlInput"),
+        midSlHintVal: document.getElementById("midSlHintVal"),
+        hardSlRange: document.getElementById("hardSlRange"),
+        hardSlInput: document.getElementById("hardSlInput"),
+        hardSlHintVal: document.getElementById("hardSlHintVal"),
+        feeToggle: document.getElementById("feeToggle"),
+        feeStatusBadge: document.getElementById("feeStatusBadge"),
+
+        savePresetBtn: document.getElementById("savePresetBtn"),
+        resetDefaultsBtn: document.getElementById("resetDefaultsBtn"),
+        presetsList: document.getElementById("presetsList"),
+        presetCount: document.getElementById("presetCount"),
+
+        headerCoin: document.getElementById("headerCoin"),
+        headerMode: document.getElementById("headerMode"),
+        headerMaxLoss: document.getElementById("headerMaxLoss"),
+        headerTargetProfit: document.getElementById("headerTargetProfit"),
+
+        errorBanner: document.getElementById("errorBanner"),
+        errorMessage: document.getElementById("errorMessage"),
+        tiersGrid: document.getElementById("tiersGrid"),
+        simTableBody: document.getElementById("simTableBody"),
+        alphaBadge: document.getElementById("alphaBadge"),
+        minWalletVal: document.getElementById("minWalletVal"),
+        priceLadderSvg: document.getElementById("priceLadderSvg"),
+
+        toast: document.getElementById("toast"),
+        toastMsg: document.getElementById("toastMsg")
+      };
+
+      /* ==================== FORMATTING HELPERS ==================== */
+      function getPriceDecimals(price) {
+        const abs = Math.abs(price);
+        if (!isFinite(abs) || abs === 0) return 2;
+        if (abs >= 100) return 2;
+        if (abs >= 1) return 2;
+        if (abs >= 0.01) return 4;
+        if (abs >= 0.0001) return 6;
+        return 8;
+      }
+
+      function formatPriceRaw(val, refPrice) {
+        if (!isFinite(val)) return "0.00";
+        const ref = refPrice !== undefined ? refPrice : val;
+        let dec = getPriceDecimals(ref);
+        // Preserve up to 4 decimals if price >= 1 has finer precision (e.g. 1.235)
+        if (dec === 2 && Math.abs(val) < 100) {
+          const rounded2 = Math.round(val * 100) / 100;
+          if (Math.abs(val - rounded2) > 1e-6) {
+            dec = Math.abs(val - Math.round(val * 1000) / 1000) > 1e-6 ? 4 : 3;
+          }
+        }
+        return val.toFixed(dec);
+      }
+
+      function formatUSD(val) {
+        if (!isFinite(val)) return "$0.00";
+        const sign = val < 0 ? "-" : "";
+        return sign + "$" + Math.abs(val).toFixed(2);
+      }
+
+      function formatUSDSigned(val) {
+        if (!isFinite(val)) return "$0.00";
+        const sign = val > 0 ? "+" : (val < 0 ? "-" : "");
+        return sign + "$" + Math.abs(val).toFixed(2);
+      }
+
+      function formatQtyRaw(qty) {
+        if (!isFinite(qty)) return "0";
+        const abs = Math.abs(qty);
+        if (abs >= 10000) return qty.toFixed(0);
+        if (abs >= 100) return qty.toFixed(2);
+        if (abs >= 1) return qty.toFixed(4);
+        return qty.toFixed(6);
+      }
+
+      function extractBaseCoin(pairStr) {
+        const cleaned = (pairStr || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+        if (!cleaned) return "Adet";
+        const quotes = ["USDT", "USDC", "BUSD", "FDUSD", "PERP", "USD", "BTC", "ETH"];
+        for (const q of quotes) {
+          if (cleaned.endsWith(q) && cleaned.length > q.length) {
+            return cleaned.slice(0, -q.length);
+          }
+        }
+        return cleaned;
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      /* ==================== CLIPBOARD & TOAST ==================== */
+      function showToast(htmlMsg) {
+        el.toastMsg.innerHTML = htmlMsg;
+        el.toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          el.toast.classList.remove("show");
+        }, 1800);
+      }
+
+      function copyToClipboard(text, btnElement) {
+        const done = () => {
+          if (btnElement) {
+            btnElement.classList.add("copied");
+            btnElement.innerHTML = checkIconSvg();
+            setTimeout(() => {
+              btnElement.classList.remove("copied");
+              btnElement.innerHTML = copyIconSvg();
+            }, 1200);
+          }
+          showToast('Kopyalandı! <span class="toast-val">' + escapeHtml(text) + "</span>");
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+        } else {
+          fallbackCopy(text, done);
+        }
+      }
+
+      function fallbackCopy(text, callback) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          document.execCommand("copy");
+        } catch (_) {}
+        document.body.removeChild(ta);
+        callback();
+      }
+
+      function copyIconSvg() {
+        return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+      }
+
+      function checkIconSvg() {
+        return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      }
+
+      /* ==================== MATHEMATICAL ENGINE ==================== */
+      function calculateStrategy(params) {
+        const W = params.maxLoss;
+        const L = params.leverage;
+        const b = params.midSlPct / 100;
+        const s = params.hardSlPct / 100;
+        const feeRate = params.feeProtection ? TAKER_ROUND_TRIP_FEE : 0;
+        const mode = params.mode;
+        const P1 = params.p1;
+        const P2 = params.p2;
+        const P3 = params.p3;
+        const TP = params.tp;
+
+        // Basic numeric validation
+        if (!isFinite(W) || W <= 0) {
+          return { error: "Maksimum Kayıp Limiti ($) 0'dan büyük geçerli bir sayı olmalıdır." };
+        }
+        if (!isFinite(L) || L <= 0) {
+          return { error: "Kaldıraç oranı (x) 0'dan büyük geçerli bir sayı olmalıdır." };
+        }
+        if (!isFinite(P1) || P1 <= 0 || !isFinite(P2) || P2 <= 0 || (mode === 3 && (!isFinite(P3) || P3 <= 0))) {
+          return { error: "Tüm aktif kademe giriş fiyatları 0'dan büyük olmalıdır." };
+        }
+        if (!isFinite(TP) || TP <= 0) {
+          return { error: "Take Profit (TP) hedef fiyatı 0'dan büyük olmalıdır." };
+        }
+        if (!isFinite(b) || b <= 0 || b >= 1 || !isFinite(s) || s <= 0) {
+          return { error: "SL yüzdeleri geçerli aralıkta olmalıdır." };
+        }
+
+        // Ordering validation
+        if (TP >= P1) {
+          return { error: "Short işlem için Take Profit (TP) fiyatı, 1. Kademe giriş fiyatından küçük olmalıdır (TP < P1)." };
+        }
+        if (P1 >= P2) {
+          return { error: "Kademe giriş fiyatları artan sırada olmalıdır (1. Kademe < 2. Kademe)." };
+        }
+        if (mode === 3 && P2 >= P3) {
+          return { error: "Kademe giriş fiyatları artan sırada olmalıdır (1. Kademe < 2. Kademe < 3. Kademe)." };
+        }
+
+        if (mode === 2) {
+          const SL1 = P2 * (1 - b);
+          const SL2 = P2 * (1 + s);
+
+          if (SL1 <= P1) {
+            return {
+              error: `1. Kademe SL fiyatı ($${formatPriceRaw(SL1, P1)}), 1. Kademe giriş fiyatının ($${formatPriceRaw(P1, P1)}) üzerinde olmalıdır. 2. Kademeyi yükseltin veya Ara SL % payını düşürün.`
+            };
+          }
+
+          const rTP1 = L * (P1 - TP) / P1 - L * feeRate;
+          const rSL1 = L * (SL1 - P1) / P1 + L * feeRate;
+          const rTP2 = L * (P2 - TP) / P2 - L * feeRate;
+          const rSL2 = L * (SL2 - P2) / P2 + L * feeRate;
+
+          if (rTP1 <= 0 || rTP2 <= 0) {
+            return { error: "Komisyon düşüldükten sonra TP kâr oranı pozitif değil; TP hedefini aşağı çekin." };
+          }
+
+          const alpha2 = rTP2 / rSL2;
+          if (alpha2 <= 0.75) {
+            return {
+              error: `TP hedefi SL mesafesine göre çok yakın (α₂ = ${alpha2.toFixed(2)} ≤ 0.75); 3/4 net kâr için TP'yi aşağı çekin veya Son SL %'sini azaltın.`
+            };
+          }
+
+          const D1 = W * (alpha2 - 0.75) / (1 + alpha2);
+          const D2 = W - D1;
+
+          const M1 = D1 / rSL1;
+          const M2 = D2 / rSL2;
+
+          const tiers = [
+            buildTier(1, P1, SL1, TP, M1, D1, rTP1, rSL1, L, false),
+            buildTier(2, P2, SL2, TP, M2, D2, rTP2, rSL2, L, true)
+          ];
+
+          const s1Profit = M1 * rTP1;
+          const s2Gross = M2 * rTP2;
+          const s2Net = s2Gross - D1;
+
+          return {
+            error: null,
+            mode: 2,
+            W,
+            L,
+            TP,
+            alphaFinal: alpha2,
+            alphaLabel: `α₂ = ${alpha2.toFixed(2)}`,
+            tiers,
+            totalMargin: M1 + M2,
+            peakMargin: Math.max(M1, M2),
+            scenarios: [
+              {
+                id: "s1",
+                title: "Senaryo 1 (1. Kademeden Direkt TP)",
+                sub: "1. kademe stop olmadan doğrudan TP'ye ulaşır",
+                prevLoss: 0,
+                tierGross: s1Profit,
+                net: s1Profit,
+                badge: `${(s1Profit / D1).toFixed(2)}R`,
+                badgeType: "normal",
+                rowClass: ""
+              },
+              {
+                id: "s2",
+                title: "Senaryo 2 (1. Stop → 2. Kademeden TP)",
+                sub: "1. kademe stop olur, 2. kademeden TP'ye döner",
+                prevLoss: -D1,
+                tierGross: s2Gross,
+                net: s2Net,
+                badge: "Hedef 3/4",
+                badgeType: "target",
+                rowClass: "row-target"
+              },
+              {
+                id: "worst",
+                title: "En Kötü Senaryo (Tüm Kademeler Stop)",
+                sub: `Toplam Kademe Marjini: ${formatUSD(M1 + M2)} (Tekil maks: ${formatUSD(Math.max(M1, M2))})`,
+                prevLoss: -W,
+                tierGross: 0,
+                net: -W,
+                badge: "MaxLoss",
+                badgeType: "worst",
+                rowClass: "row-worst"
+              }
+            ]
+          };
+        } else {
+          // 3 Kademe Mode
+          const SL1 = P2 * (1 - b);
+          const SL2 = P3 * (1 - b);
+          const SL3 = P3 * (1 + s);
+
+          if (SL1 <= P1) {
+            return {
+              error: `1. Kademe SL fiyatı ($${formatPriceRaw(SL1, P1)}), 1. Kademe giriş fiyatının ($${formatPriceRaw(P1, P1)}) üzerinde olmalıdır. 2. Kademeyi yükseltin veya Ara SL % payını düşürün.`
+            };
+          }
+          if (SL2 <= P2) {
+            return {
+              error: `2. Kademe SL fiyatı ($${formatPriceRaw(SL2, P2)}), 2. Kademe giriş fiyatının ($${formatPriceRaw(P2, P2)}) üzerinde olmalıdır. 3. Kademeyi yükseltin veya Ara SL % payını düşürün.`
+            };
+          }
+
+          const rTP1 = L * (P1 - TP) / P1 - L * feeRate;
+          const rSL1 = L * (SL1 - P1) / P1 + L * feeRate;
+          const rTP2 = L * (P2 - TP) / P2 - L * feeRate;
+          const rSL2 = L * (SL2 - P2) / P2 + L * feeRate;
+          const rTP3 = L * (P3 - TP) / P3 - L * feeRate;
+          const rSL3 = L * (SL3 - P3) / P3 + L * feeRate;
+
+          if (rTP1 <= 0 || rTP2 <= 0 || rTP3 <= 0) {
+            return { error: "Komisyon düşüldükten sonra TP kâr oranı pozitif değil; TP hedefini aşağı çekin." };
+          }
+
+          const alpha3 = rTP3 / rSL3;
+          const alpha2 = rTP2 / rSL2;
+
+          if (alpha3 <= 0.75) {
+            return {
+              error: `TP hedefi SL mesafesine göre çok yakın (α₃ = ${alpha3.toFixed(2)} ≤ 0.75); 3/4 net kâr için TP'yi aşağı çekin veya Son SL %'sini azaltın.`
+            };
+          }
+
+          const D12 = W * (alpha3 - 0.75) / (1 + alpha3);
+          const D3 = W - D12;
+          const D1_raw = (D12 * alpha2 - 0.375 * W) / (1 + alpha2);
+          const D1 = Math.max(D12 * 0.25, Math.min(D12 * 0.65, D1_raw));
+          const D2 = D12 - D1;
+
+          const M1 = D1 / rSL1;
+          const M2 = D2 / rSL2;
+          const M3 = D3 / rSL3;
+
+          const tiers = [
+            buildTier(1, P1, SL1, TP, M1, D1, rTP1, rSL1, L, false),
+            buildTier(2, P2, SL2, TP, M2, D2, rTP2, rSL2, L, false),
+            buildTier(3, P3, SL3, TP, M3, D3, rTP3, rSL3, L, true)
+          ];
+
+          const s1Profit = M1 * rTP1;
+          const s2Gross = M2 * rTP2;
+          const s2Net = s2Gross - D1;
+          const s3Gross = M3 * rTP3;
+          const s3Net = s3Gross - (D1 + D2);
+
+          return {
+            error: null,
+            mode: 3,
+            W,
+            L,
+            TP,
+            alphaFinal: alpha3,
+            alphaLabel: `α₂ = ${alpha2.toFixed(2)} · α₃ = ${alpha3.toFixed(2)}`,
+            tiers,
+            totalMargin: M1 + M2 + M3,
+            peakMargin: Math.max(M1, M2, M3),
+            scenarios: [
+              {
+                id: "s1",
+                title: "Senaryo 1 (1. Kademeden Direkt TP)",
+                sub: "1. kademe stop olmadan doğrudan TP'ye ulaşır",
+                prevLoss: 0,
+                tierGross: s1Profit,
+                net: s1Profit,
+                badge: `${(s1Profit / D1).toFixed(2)}R`,
+                badgeType: "normal",
+                rowClass: ""
+              },
+              {
+                id: "s2",
+                title: "Senaryo 2 (1. Stop → 2. Kademeden TP)",
+                sub: "1. kademe stop, 2. kademeden dönüş (hedef 3/8)",
+                prevLoss: -D1,
+                tierGross: s2Gross,
+                net: s2Net,
+                badge: s2Net >= 0 ? `+${((s2Net / W) * 100).toFixed(0)}% W` : `${((s2Net / W) * 100).toFixed(0)}% W`,
+                badgeType: "normal",
+                rowClass: ""
+              },
+              {
+                id: "s3",
+                title: "Senaryo 3 (1. & 2. Stop → 3. Kademeden TP)",
+                sub: "Önceki 2 zarar düşülünce net kâr = MaxLoss × 3/4",
+                prevLoss: -(D1 + D2),
+                tierGross: s3Gross,
+                net: s3Net,
+                badge: "Hedef 3/4",
+                badgeType: "target",
+                rowClass: "row-target"
+              },
+              {
+                id: "worst",
+                title: "En Kötü Senaryo (Tüm Kademeler Stop)",
+                sub: `Toplam Kademe Marjini: ${formatUSD(M1 + M2 + M3)} (Tekil maks: ${formatUSD(Math.max(M1, M2, M3))})`,
+                prevLoss: -W,
+                tierGross: 0,
+                net: -W,
+                badge: "MaxLoss",
+                badgeType: "worst",
+                rowClass: "row-worst"
+              }
+            ]
+          };
+        }
+      }
+
+      function buildTier(index, entry, sl, tp, margin, riskUsd, rTP, rSL, leverage, isFinal) {
+        const positionSize = margin * leverage;
+        const coinQty = positionSize / entry;
+        const slPct = ((sl - entry) / entry) * 100;
+        const tpPct = ((entry - tp) / entry) * 100;
+        return {
+          index,
+          entry,
+          sl,
+          tp,
+          margin,
+          riskUsd,
+          positionSize,
+          coinQty,
+          slPct,
+          tpPct,
+          rTP,
+          rSL,
+          isFinal
+        };
+      }
+
+      /* ==================== RENDER FUNCTIONS ==================== */
+      function renderAll() {
+        const coinLabel = (state.coin || "PARITE").trim().toUpperCase() || "PARITE";
+        const baseCoin = extractBaseCoin(coinLabel);
+
+        // Header updates
+        el.headerCoin.textContent = coinLabel;
+        el.headerMode.textContent = `${state.mode}K · ${isFinite(state.leverage) ? state.leverage : 0}x`;
+        el.headerMaxLoss.textContent = isFinite(state.maxLoss) && state.maxLoss > 0
+          ? `-${formatUSD(state.maxLoss)}`
+          : "-$0.00";
+        el.headerTargetProfit.textContent = isFinite(state.maxLoss) && state.maxLoss > 0
+          ? `+${formatUSD(state.maxLoss * 0.75)}`
+          : "+$0.00";
+
+        // Min wallet balance (+5%)
+        el.minWalletVal.textContent = isFinite(state.maxLoss) && state.maxLoss > 0
+          ? formatUSD(state.maxLoss * 1.05)
+          : "$0.00";
+
+        // Hints & badges
+        el.midSlHintVal.textContent = `%${Number(state.midSlPct).toFixed(1)}`;
+        el.hardSlHintVal.textContent = `%${Math.round(Number(state.hardSlPct))}`;
+        el.feeStatusBadge.textContent = state.feeProtection
+          ? "Komisyon: Açık (%0.11)"
+          : "Komisyon: Kapalı";
+        el.feeStatusBadge.style.color = state.feeProtection ? "var(--orange)" : "var(--text-muted)";
+
+        // Tier 3 input enable/disable
+        el.p3Input.disabled = state.mode !== 3;
+        el.mode2Btn.classList.toggle("active", state.mode === 2);
+        el.mode3Btn.classList.toggle("active", state.mode === 3);
+        el.tiersGrid.classList.toggle("mode-3", state.mode === 3);
+
+        // Run mathematical engine
+        const result = calculateStrategy(state);
+
+        if (result.error) {
+          el.errorBanner.classList.add("visible");
+          el.errorMessage.textContent = result.error;
+          el.alphaBadge.textContent = "Geçersiz";
+          el.alphaBadge.style.color = "var(--red)";
+          renderInvalidPlaceholder(state.mode);
+          renderInvalidLadder(result.error);
+          return;
+        }
+
+        el.errorBanner.classList.remove("visible");
+        el.alphaBadge.textContent = result.alphaLabel;
+        el.alphaBadge.style.color = "var(--text-muted)";
+
+        renderTierCards(result, baseCoin);
+        renderSimulationTable(result);
+        renderPriceLadder(result);
+      }
+
+      function renderInvalidPlaceholder(mode) {
+        let cardsHtml = "";
+        for (let i = 1; i <= mode; i++) {
+          cardsHtml += `
+            <article class="tier-card invalid-state">
+              <div class="tier-card-header">
+                <div class="tier-card-title">
+                  <span class="tier-num-badge">${i}</span>
+                  <span>${i}. Kademe Short</span>
+                </div>
+                <span class="tier-risk-pill">Risk: <span>—</span></span>
+              </div>
+              <div class="tier-card-body">
+                <div class="margin-hero">
+                  <div class="margin-hero-left">
+                    <span class="margin-hero-label">Ayrılacak Marjin</span>
+                    <span class="margin-hero-value">—</span>
+                  </div>
+                </div>
+                <div class="tier-rows">
+                  <div class="tier-row"><span class="tier-row-label">Giriş Fiyatı</span><span class="tier-row-val">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">Pozisyon Büyüklüğü</span><span class="tier-row-val">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">Emir Miktarı</span><span class="tier-row-val">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">Stop-Loss (SL)</span><span class="tier-row-val val-sl">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">Take Profit (TP)</span><span class="tier-row-val val-tp">—</span></div>
+                </div>
+              </div>
+            </article>
+          `;
+        }
+        el.tiersGrid.innerHTML = cardsHtml;
+        el.simTableBody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; padding:26px 12px; color:var(--text-muted);">
+              Simülasyonu görüntülemek için yukarıdaki parametre hatasını düzeltin.
+            </td>
+          </tr>
+        `;
+      }
+
+      function renderTierCards(result, baseCoin) {
+        const refPrice = result.tiers[0].entry;
+        let html = "";
+
+        for (const t of result.tiers) {
+          const entryRaw = formatPriceRaw(t.entry, refPrice);
+          const marginRaw = t.margin.toFixed(2);
+          const posRaw = t.positionSize.toFixed(2);
+          const qtyRaw = formatQtyRaw(t.coinQty);
+          const slRaw = formatPriceRaw(t.sl, refPrice);
+          const tpRaw = formatPriceRaw(t.tp, refPrice);
+
+          const slLabel = t.isFinal ? "Ana Hard SL" : `Stop-Loss (SL ${t.index})`;
+
+          html += `
+            <article class="tier-card ${t.isFinal ? "final-tier" : ""}" data-tier="${t.index}">
+              <div class="tier-card-header">
+                <div class="tier-card-title">
+                  <span class="tier-num-badge">${t.index}</span>
+                  <span>${t.index}. Kademe${t.isFinal ? " (Son)" : ""}</span>
+                </div>
+                <div class="tier-risk-pill" title="Bu kademe stop olursa kaybedilecek tutar">
+                  Risk: <span>-${formatUSD(t.riskUsd)}</span>
+                </div>
+              </div>
+
+              <div class="tier-card-body">
+                <div class="margin-hero">
+                  <div class="margin-hero-left">
+                    <span class="margin-hero-label">Ayrılacak Marjin ($)</span>
+                    <span class="margin-hero-value">$${marginRaw}</span>
+                  </div>
+                  <button type="button" class="copy-btn" data-copy="${marginRaw}" title="Marjini kopyala" aria-label="Marjini kopyala">
+                    ${copyIconSvg()}
+                  </button>
+                </div>
+
+                <div class="tier-rows">
+                  <div class="tier-row">
+                    <span class="tier-row-label">Giriş Fiyatı</span>
+                    <div class="tier-row-right">
+                      <span class="tier-row-val">$${entryRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${entryRaw}" title="Giriş fiyatını kopyala" aria-label="Giriş fiyatını kopyala">${copyIconSvg()}</button>
+                    </div>
+                  </div>
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">Pozisyon Büyüklüğü</span>
+                    <div class="tier-row-right">
+                      <span class="tier-row-val">$${posRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${posRaw}" title="Pozisyon büyüklüğünü kopyala" aria-label="Pozisyon büyüklüğünü kopyala">${copyIconSvg()}</button>
+                    </div>
+                  </div>
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">Emir Miktarı (${escapeHtml(baseCoin)})</span>
+                    <div class="tier-row-right">
+                      <span class="tier-row-val">${qtyRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${qtyRaw}" title="Emir miktarını kopyala" aria-label="Emir miktarını kopyala">${copyIconSvg()}</button>
+                    </div>
+                  </div>
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">${slLabel}</span>
+                    <div class="tier-row-right">
+                      <span class="pct-tag sl">+${t.slPct.toFixed(1)}%</span>
+                      <span class="tier-row-val val-sl">$${slRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${slRaw}" title="Stop-Loss fiyatını kopyala" aria-label="Stop-Loss fiyatını kopyala">${copyIconSvg()}</button>
+                    </div>
+                  </div>
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">Take Profit (TP)</span>
+                    <div class="tier-row-right">
+                      <span class="pct-tag tp">-${t.tpPct.toFixed(1)}%</span>
+                      <span class="tier-row-val val-tp">$${tpRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${tpRaw}" title="Take Profit fiyatını kopyala" aria-label="Take Profit fiyatını kopyala">${copyIconSvg()}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `;
+        }
+
+        el.tiersGrid.innerHTML = html;
+
+        // Bind hover synchronization with SVG ladder
+        el.tiersGrid.querySelectorAll(".tier-card").forEach((card) => {
+          card.addEventListener("mouseenter", () => highlightTierInLadder(card.dataset.tier, true));
+          card.addEventListener("mouseleave", () => highlightTierInLadder(card.dataset.tier, false));
+        });
+      }
+
+      function renderSimulationTable(result) {
+        let rowsHtml = "";
+        for (const sc of result.scenarios) {
+          const prevStr = sc.prevLoss === 0
+            ? '<span class="val-muted">$0.00</span>'
+            : `<span class="val-neg">${formatUSDSigned(sc.prevLoss)}</span>`;
+
+          const grossStr = sc.tierGross === 0
+            ? '<span class="val-muted">—</span>'
+            : `<span class="val-pos">${formatUSDSigned(sc.tierGross)}</span>`;
+
+          const netClass = sc.net > 0 ? "val-pos" : (sc.net < 0 ? "val-neg" : "val-muted");
+
+          rowsHtml += `
+            <tr class="${sc.rowClass}">
+              <td>
+                <div class="scenario-name">
+                  <span class="scenario-title">${sc.title}</span>
+                  <span class="scenario-sub">${sc.sub}</span>
+                </div>
+              </td>
+              <td class="num mono">${prevStr}</td>
+              <td class="num mono">${grossStr}</td>
+              <td class="num mono ${netClass}">${formatUSDSigned(sc.net)}</td>
+              <td class="num"><span class="rr-badge ${sc.badgeType}">${sc.badge}</span></td>
+            </tr>
+          `;
+        }
+        el.simTableBody.innerHTML = rowsHtml;
+      }
+
+      /* ==================== INTERACTIVE SVG PRICE LADDER ==================== */
+      function renderInvalidLadder(msg) {
+        el.priceLadderSvg.innerHTML = `
+          <rect x="0" y="0" width="420" height="420" fill="transparent"></rect>
+          <text x="210" y="202" text-anchor="middle" fill="#687287" font-size="13" font-family="var(--font-sans)">Fiyat Merdiveni Bekleniyor</text>
+          <text x="210" y="224" text-anchor="middle" fill="#ff5252" font-size="11" font-family="var(--font-sans)">Geçerli fiyat seviyeleri giriniz</text>
+        `;
+      }
+
+      function renderPriceLadder(result) {
+        const svgW = 420;
+        const svgH = 420;
+        const padTop = 28;
+        const padBottom = 28;
+        const plotH = svgH - padTop - padBottom;
+        const axisX = 56;
+        const lineEndX = 148;
+        const pillX = 166;
+        const pillW = 244;
+
+        const refPrice = result.tiers[0].entry;
+
+        // Build sorted levels from bottom (TP) to top (Hard SL)
+        const levels = [];
+        levels.push({
+          id: "tp",
+          tier: null,
+          label: "TP HEDEF",
+          price: result.TP,
+          type: "tp",
+          color: "#00e676",
+          bg: "rgba(0, 230, 118, 0.12)",
+          border: "rgba(0, 230, 118, 0.42)",
+          marginText: null
+        });
+
+        for (const t of result.tiers) {
+          levels.push({
+            id: `p${t.index}`,
+            tier: String(t.index),
+            label: `${t.index}. KADEME`,
+            price: t.entry,
+            type: "entry",
+            color: t.isFinal ? "#ffb74d" : "#4d82ff",
+            bg: t.isFinal ? "rgba(255, 183, 77, 0.12)" : "rgba(41, 98, 255, 0.14)",
+            border: t.isFinal ? "rgba(255, 183, 77, 0.45)" : "rgba(41, 98, 255, 0.48)",
+            marginText: `M: $${t.margin.toFixed(2)}`
+          });
+
+          levels.push({
+            id: `sl${t.index}`,
+            tier: String(t.index),
+            label: t.isFinal ? "ANA HARD SL" : `SL ${t.index}`,
+            price: t.sl,
+            type: t.isFinal ? "hardsl" : "sl",
+            color: "#ff5252",
+            bg: t.isFinal ? "rgba(255, 82, 82, 0.18)" : "rgba(255, 82, 82, 0.10)",
+            border: t.isFinal ? "rgba(255, 82, 82, 0.65)" : "rgba(255, 82, 82, 0.35)",
+            marginText: null
+          });
+        }
+
+        levels.sort((a, b) => a.price - b.price);
+
+        const minP = levels[0].price;
+        const maxP = levels[levels.length - 1].price;
+        const rangeP = Math.max(maxP - minP, 1e-9);
+
+        const priceToY = (p) => padTop + ((maxP - p) / rangeP) * plotH;
+
+        // Compute percentage diff relative to previous (lower) level
+        for (let i = 0; i < levels.length; i++) {
+          levels[i].y = priceToY(levels[i].price);
+          if (i === 0) {
+            // Distance from P1 down to TP
+            const p1 = result.tiers[0].entry;
+            levels[i].diffText = `${(((levels[i].price - p1) / p1) * 100).toFixed(1)}%`;
+          } else {
+            const prev = levels[i - 1].price;
+            const diffPct = ((levels[i].price - prev) / prev) * 100;
+            levels[i].diffText = `+${diffPct.toFixed(1)}%`;
+          }
+        }
+
+        // Collision avoidance for pill label Y positions (sorted top-to-bottom: highest price first)
+        const topDown = [...levels].reverse();
+        const minGap = levels.length >= 7 ? 38 : 42;
+
+        topDown.forEach((lvl) => {
+          lvl.labelY = lvl.y;
+        });
+
+        // Iterative relaxation so pills never overlap while staying within bounds
+        for (let iter = 0; iter < 18; iter++) {
+          for (let i = 1; i < topDown.length; i++) {
+            const prev = topDown[i - 1];
+            const curr = topDown[i];
+            const overlap = (prev.labelY + minGap) - curr.labelY;
+            if (overlap > 0) {
+              prev.labelY -= overlap * 0.5;
+              curr.labelY += overlap * 0.5;
+            }
+          }
+          // Clamp top and bottom
+          if (topDown[0].labelY < 20) {
+            topDown[0].labelY = 20;
+          }
+          const lastIdx = topDown.length - 1;
+          if (topDown[lastIdx].labelY > svgH - 20) {
+            topDown[lastIdx].labelY = svgH - 20;
+          }
+          // Forward pass from top
+          for (let i = 1; i < topDown.length; i++) {
+            if (topDown[i].labelY < topDown[i - 1].labelY + minGap) {
+              topDown[i].labelY = topDown[i - 1].labelY + minGap;
+            }
+          }
+          // Backward pass from bottom
+          for (let i = lastIdx - 1; i >= 0; i--) {
+            if (topDown[i].labelY > topDown[i + 1].labelY - minGap) {
+              topDown[i].labelY = topDown[i + 1].labelY - minGap;
+            }
+          }
+        }
+
+        // Collision avoidance for left-side % tick labels
+        const minTickGap = 14;
+        topDown.forEach((lvl) => {
+          lvl.tickY = lvl.y;
+        });
+        for (let iter = 0; iter < 12; iter++) {
+          for (let i = 1; i < topDown.length; i++) {
+            const prev = topDown[i - 1];
+            const curr = topDown[i];
+            const overlap = (prev.tickY + minTickGap) - curr.tickY;
+            if (overlap > 0) {
+              prev.tickY -= overlap * 0.5;
+              curr.tickY += overlap * 0.5;
+            }
+          }
+          if (topDown[0].tickY < 14) topDown[0].tickY = 14;
+          const lastIdx = topDown.length - 1;
+          if (topDown[lastIdx].tickY > svgH - 14) topDown[lastIdx].tickY = svgH - 14;
+        }
+
+        // Zone coordinates
+        const yTP = priceToY(result.TP);
+        const yP1 = priceToY(result.tiers[0].entry);
+        const yPLast = priceToY(result.tiers[result.tiers.length - 1].entry);
+        const yHardSL = priceToY(result.tiers[result.tiers.length - 1].sl);
+
+        let svg = "";
+
+        // Subtle zone shading bands along the price rail
+        svg += `
+          <!-- Profit Zone (TP to P1) -->
+          <rect x="${axisX}" y="${yP1.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yTP - yP1).toFixed(1)}" fill="rgba(0, 230, 118, 0.07)" rx="2"></rect>
+          <!-- Scaling Zone (P1 to Last Entry) -->
+          <rect x="${axisX}" y="${yPLast.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yP1 - yPLast).toFixed(1)}" fill="rgba(41, 98, 255, 0.06)" rx="2"></rect>
+          <!-- Danger Zone (Last Entry to Hard SL) -->
+          <rect x="${axisX}" y="${yHardSL.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yPLast - yHardSL).toFixed(1)}" fill="rgba(255, 82, 82, 0.08)" rx="2"></rect>
+
+          <!-- Vertical Price Spine -->
+          <line x1="${axisX}" y1="${padTop - 8}" x2="${axisX}" y2="${svgH - padBottom + 8}" stroke="#2a3142" stroke-width="1.5"></line>
+        `;
+
+        // Zone side captions (only if zone is tall enough)
+        if (yTP - yP1 > 28) {
+          svg += `<text x="${axisX + 44}" y="${((yTP + yP1) / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(0,230,118,0.45)" font-size="9.5" font-weight="600" letter-spacing="0.06em" font-family="var(--font-sans)">KÂR BÖLGESİ</text>`;
+        }
+        if (yPLast - yHardSL > 28) {
+          svg += `<text x="${axisX + 44}" y="${((yPLast + yHardSL) / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(255,82,82,0.48)" font-size="9.5" font-weight="600" letter-spacing="0.06em" font-family="var(--font-sans)">STOP BÖLGESİ</text>`;
+        }
+
+        // Draw each level
+        for (const lvl of topDown) {
+          const y = lvl.y;
+          const ly = lvl.labelY;
+          const ty = lvl.tickY;
+          const isDashed = lvl.type === "sl";
+          const strokeDash = isDashed ? 'stroke-dasharray="4 3"' : "";
+          const priceStr = "$" + formatPriceRaw(lvl.price, refPrice);
+          const pillH = 30;
+          const pillTop = ly - pillH / 2;
+
+          // Elbow connector path from exact price line to pill left edge
+          const midX = lineEndX + 9;
+          const connectorPath = `M ${lineEndX} ${y.toFixed(1)} L ${midX} ${y.toFixed(1)} L ${pillX - 4} ${ly.toFixed(1)} L ${pillX} ${ly.toFixed(1)}`;
+
+          svg += `
+            <g class="ladder-group" data-tier="${lvl.tier || ""}" data-level="${lvl.id}">
+              <!-- Tick on left side of spine -->
+              <text x="${axisX - 7}" y="${(ty + 3.5).toFixed(1)}" text-anchor="end" fill="${lvl.color}" font-size="9.5" font-weight="600" font-family="var(--font-mono)" opacity="0.88">${lvl.diffText}</text>
+
+              <!-- Exact proportional horizontal price line -->
+              <line x1="${axisX}" y1="${y.toFixed(1)}" x2="${lineEndX}" y2="${y.toFixed(1)}" stroke="${lvl.color}" stroke-width="${lvl.type === "hardsl" || lvl.type === "tp" ? "2" : "1.5"}" ${strokeDash}></line>
+              <circle cx="${axisX}" cy="${y.toFixed(1)}" r="3.2" fill="${lvl.color}"></circle>
+
+              <!-- Connector to label card -->
+              <path d="${connectorPath}" fill="none" stroke="${lvl.color}" stroke-width="1" opacity="0.55"></path>
+
+              <!-- Label pill -->
+              <rect class="ladder-pill-bg" x="${pillX}" y="${pillTop.toFixed(1)}" width="${pillW}" height="${pillH}" rx="6" fill="${lvl.bg}" stroke="${lvl.border}" stroke-width="1"></rect>
+
+              <!-- Left: Label Name -->
+              <text x="${pillX + 9}" y="${(ly + 3.5).toFixed(1)}" fill="${lvl.color}" font-size="10.5" font-weight="700" font-family="var(--font-sans)">${lvl.label}</text>
+
+              <!-- Middle/Right: Margin (if entry) + Price -->
+              ${lvl.marginText
+                ? `<text x="${pillX + pillW - 76}" y="${(ly + 3.5).toFixed(1)}" text-anchor="end" fill="#9aa3b5" font-size="10" font-weight="600" font-family="var(--font-mono)">${lvl.marginText}</text>`
+                : ""
+              }
+              <text x="${pillX + pillW - 9}" y="${(ly + 4).toFixed(1)}" text-anchor="end" fill="#f0f3fa" font-size="11.5" font-weight="700" font-family="var(--font-mono)">${priceStr}</text>
+            </g>
+          `;
+        }
+
+        el.priceLadderSvg.innerHTML = svg;
+
+        // Bind hover synchronization with Tier Cards
+        el.priceLadderSvg.querySelectorAll(".ladder-group").forEach((grp) => {
+          const tier = grp.getAttribute("data-tier");
+          if (!tier) return;
+          grp.addEventListener("mouseenter", () => highlightTierCard(tier, true));
+          grp.addEventListener("mouseleave", () => highlightTierCard(tier, false));
+        });
+      }
+
+      function highlightTierCard(tierIndex, active) {
+        const card = el.tiersGrid.querySelector(`.tier-card[data-tier="${tierIndex}"]`);
+        if (card) card.classList.toggle("highlighted", active);
+      }
+
+      function highlightTierInLadder(tierIndex, active) {
+        const groups = el.priceLadderSvg.querySelectorAll(".ladder-group");
+        groups.forEach((g) => {
+          if (!active) {
+            g.style.opacity = "1";
+          } else {
+            const t = g.getAttribute("data-tier");
+            g.style.opacity = (t === String(tierIndex) || g.getAttribute("data-level") === "tp") ? "1" : "0.35";
+          }
+        });
+      }
+
+      /* ==================== PRESETS (LOCALSTORAGE) ==================== */
+      function loadPresets() {
+        try {
+          const raw = localStorage.getItem(STORAGE_PRESETS_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function savePresets(presets) {
+        try {
+          localStorage.setItem(STORAGE_PRESETS_KEY, JSON.stringify(presets));
+        } catch (_) {
+          showToast("Tarayıcı depolaması kullanılamıyor.");
+        }
+      }
+
+      function saveCurrentPreset() {
+        const coin = (state.coin || "").trim().toUpperCase() || "PARITE";
+        state.coin = coin;
+        el.coinInput.value = coin;
+
+        const presets = loadPresets();
+        const entry = {
+          coin,
+          mode: state.mode,
+          maxLoss: state.maxLoss,
+          leverage: state.leverage,
+          p1: state.p1,
+          p2: state.p2,
+          p3: state.p3,
+          tp: state.tp,
+          midSlPct: state.midSlPct,
+          hardSlPct: state.hardSlPct,
+          feeProtection: state.feeProtection,
+          savedAt: Date.now()
+        };
+
+        const existingIdx = presets.findIndex((p) => p.coin === coin);
+        if (existingIdx >= 0) {
+          presets[existingIdx] = entry;
+        } else {
+          presets.unshift(entry);
+        }
+
+        savePresets(presets);
+        renderPresets();
+        showToast(`<span class="toast-val">${escapeHtml(coin)}</span> kurgusu kaydedildi`);
+      }
+
+      function applyPreset(preset) {
+        state = {
+          coin: preset.coin || DEFAULTS.coin,
+          mode: preset.mode === 3 ? 3 : 2,
+          maxLoss: Number(preset.maxLoss),
+          leverage: Number(preset.leverage),
+          p1: Number(preset.p1),
+          p2: Number(preset.p2),
+          p3: Number(preset.p3),
+          tp: Number(preset.tp),
+          midSlPct: Number(preset.midSlPct),
+          hardSlPct: Number(preset.hardSlPct),
+          feeProtection: Boolean(preset.feeProtection)
+        };
+        syncInputsFromState();
+        renderAll();
+        renderPresets();
+        showToast(`<span class="toast-val">${escapeHtml(state.coin)}</span> yüklendi`);
+      }
+
+      function deletePreset(coin) {
+        const presets = loadPresets().filter((p) => p.coin !== coin);
+        savePresets(presets);
+        renderPresets();
+        showToast(`${escapeHtml(coin)} silindi`);
+      }
+
+      function renderPresets() {
+        const presets = loadPresets();
+        el.presetCount.textContent = `${presets.length} kayıt`;
+
+        if (presets.length === 0) {
+          el.presetsList.innerHTML = '<div class="preset-empty">Henüz kayıtlı kurgu yok. Mevcut ayarları Coin adıyla kaydedebilirsiniz.</div>';
+          return;
+        }
+
+        const currentCoin = (state.coin || "").trim().toUpperCase();
+        let html = "";
+        for (const p of presets) {
+          const isCurrent = p.coin === currentCoin;
+          html += `
+            <div class="preset-item ${isCurrent ? "active-preset" : ""}" role="listitem" data-load-coin="${escapeHtml(p.coin)}">
+              <div class="preset-info">
+                <span class="preset-coin">${escapeHtml(p.coin)}</span>
+                <span class="preset-badge">${p.mode}K</span>
+                <span class="preset-meta">$${Number(p.maxLoss).toFixed(0)} · ${p.leverage}x</span>
+              </div>
+              <button type="button" class="preset-del" data-del-coin="${escapeHtml(p.coin)}" title="Kurguyu sil" aria-label="${escapeHtml(p.coin)} kurgusunu sil">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          `;
+        }
+        el.presetsList.innerHTML = html;
+      }
+
+      /* ==================== INPUT SYNCHRONIZATION ==================== */
+      function syncInputsFromState() {
+        el.coinInput.value = state.coin;
+        el.maxLossInput.value = state.maxLoss;
+        el.leverageInput.value = state.leverage;
+        el.p1Input.value = state.p1;
+        el.p2Input.value = state.p2;
+        el.p3Input.value = state.p3;
+        el.tpInput.value = state.tp;
+        el.midSlRange.value = state.midSlPct;
+        el.midSlInput.value = Number(state.midSlPct).toFixed(1);
+        el.hardSlRange.value = state.hardSlPct;
+        el.hardSlInput.value = Math.round(Number(state.hardSlPct));
+        el.feeToggle.checked = state.feeProtection;
+      }
+
+      function readNumeric(inputEl) {
+        const val = parseFloat(inputEl.value);
+        return isNaN(val) ? NaN : val;
+      }
+
+      function bindEvents() {
+        // Coin name
+        el.coinInput.addEventListener("input", () => {
+          state.coin = el.coinInput.value.toUpperCase();
+          renderAll();
+          renderPresets();
+        });
+
+        // Segmented tier toggle
+        [el.mode2Btn, el.mode3Btn].forEach((btn) => {
+          btn.addEventListener("click", () => {
+            state.mode = Number(btn.dataset.mode);
+            renderAll();
+          });
+        });
+
+        // Numeric fields
+        el.maxLossInput.addEventListener("input", () => { state.maxLoss = readNumeric(el.maxLossInput); renderAll(); });
+        el.leverageInput.addEventListener("input", () => { state.leverage = readNumeric(el.leverageInput); renderAll(); });
+        el.p1Input.addEventListener("input", () => { state.p1 = readNumeric(el.p1Input); renderAll(); });
+        el.p2Input.addEventListener("input", () => { state.p2 = readNumeric(el.p2Input); renderAll(); });
+        el.p3Input.addEventListener("input", () => { state.p3 = readNumeric(el.p3Input); renderAll(); });
+        el.tpInput.addEventListener("input", () => { state.tp = readNumeric(el.tpInput); renderAll(); });
+
+        // Mid SL slider <-> number sync
+        el.midSlRange.addEventListener("input", () => {
+          state.midSlPct = parseFloat(el.midSlRange.value);
+          el.midSlInput.value = state.midSlPct.toFixed(1);
+          renderAll();
+        });
+        el.midSlInput.addEventListener("input", () => {
+          const v = readNumeric(el.midSlInput);
+          state.midSlPct = v;
+          if (isFinite(v)) {
+            el.midSlRange.value = Math.min(10, Math.max(1, v));
+          }
+          renderAll();
+        });
+
+        // Hard SL slider <-> number sync
+        el.hardSlRange.addEventListener("input", () => {
+          state.hardSlPct = parseFloat(el.hardSlRange.value);
+          el.hardSlInput.value = Math.round(state.hardSlPct);
+          renderAll();
+        });
+        el.hardSlInput.addEventListener("input", () => {
+          const v = readNumeric(el.hardSlInput);
+          state.hardSlPct = v;
+          if (isFinite(v)) {
+            el.hardSlRange.value = Math.min(60, Math.max(10, v));
+          }
+          renderAll();
+        });
+
+        // Fee toggle
+        el.feeToggle.addEventListener("change", () => {
+          state.feeProtection = el.feeToggle.checked;
+          renderAll();
+        });
+
+        // Presets save & reset
+        el.savePresetBtn.addEventListener("click", saveCurrentPreset);
+        el.resetDefaultsBtn.addEventListener("click", () => {
+          state = { ...DEFAULTS };
+          syncInputsFromState();
+          renderAll();
+          renderPresets();
+          showToast("Varsayılan değerlere sıfırlandı");
+        });
+
+        // Delegated click for presets list
+        el.presetsList.addEventListener("click", (e) => {
+          const delBtn = e.target.closest("[data-del-coin]");
+          if (delBtn) {
+            e.stopPropagation();
+            deletePreset(delBtn.getAttribute("data-del-coin"));
+            return;
+          }
+          const item = e.target.closest("[data-load-coin]");
+          if (item) {
+            const coin = item.getAttribute("data-load-coin");
+            const found = loadPresets().find((p) => p.coin === coin);
+            if (found) applyPreset(found);
+          }
+        });
+
+        // Delegated click for copy buttons inside tier cards
+        el.tiersGrid.addEventListener("click", (e) => {
+          const copyBtn = e.target.closest(".copy-btn");
+          if (!copyBtn) return;
+          const val = copyBtn.getAttribute("data-copy");
+          if (val !== null) {
+            copyToClipboard(val, copyBtn);
+          }
+        });
+      }
+
+      /* ==================== INIT ==================== */
+      syncInputsFromState();
+      bindEvents();
+      renderPresets();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
