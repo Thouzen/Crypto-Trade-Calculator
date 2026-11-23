@@ -1369,6 +1369,259 @@
         min-height: 380px;
       }
     }
+
+    /* ==================== APP MODE SWITCHER & MODE 2 STYLES ==================== */
+    .m2-hidden {
+      display: none !important;
+    }
+
+    .app-mode-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      gap: 2px;
+      margin-left: 6px;
+      flex-shrink: 0;
+    }
+
+    .app-mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .app-mode-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .app-mode-btn.active {
+      background: var(--blue);
+      color: #ffffff;
+      box-shadow: 0 1px 6px rgba(41, 98, 255, 0.35);
+    }
+
+    .app-mode-btn .mode-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.75;
+    }
+
+    .ticker-tag {
+      white-space: nowrap;
+    }
+
+    .ticker-tag.long-tag {
+      background: var(--green-dim);
+      color: var(--green);
+    }
+
+    .segmented-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--bg-input);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      height: 30px;
+      gap: 2px;
+    }
+
+    .segmented-3 .segmented-btn {
+      font-size: 11.5px;
+    }
+
+    .dir-btn.active-short {
+      background: rgba(255, 82, 82, 0.2);
+      color: var(--red);
+      border: 1px solid var(--red-border);
+      box-shadow: none;
+    }
+
+    .dir-btn.active-long {
+      background: rgba(0, 230, 118, 0.16);
+      color: var(--green);
+      border: 1px solid var(--green-border);
+      box-shadow: none;
+    }
+
+    .weight-presets {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .weight-chip {
+      border: 1px solid var(--border-strong);
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .weight-chip:hover {
+      border-color: var(--blue-border);
+      color: var(--text-primary);
+    }
+
+    .weight-chip.active {
+      background: var(--blue-dim);
+      border-color: var(--blue);
+      color: #8ab4ff;
+    }
+
+    .tiers-grid.mode-1 {
+      grid-template-columns: minmax(320px, 520px);
+    }
+
+    .tier-quota-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #7ea7ff;
+      background: var(--blue-dim);
+      border: 1px solid var(--blue-border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .tier-card.final-tier .tier-quota-pill {
+      color: var(--orange);
+      background: var(--orange-dim);
+      border-color: var(--orange-border);
+    }
+
+    .val-avg {
+      color: #38bdf8;
+    }
+
+    .val-liq {
+      color: #e879f9;
+      font-weight: 700;
+    }
+
+    .sim-table tr.row-stress {
+      background: rgba(255, 183, 77, 0.045);
+    }
+
+    .rr-badge.stress {
+      background: var(--orange-dim);
+      border-color: var(--orange-border);
+      color: var(--orange);
+    }
+
+    .rr-badge.liq {
+      background: rgba(232, 121, 249, 0.12);
+      border-color: rgba(232, 121, 249, 0.42);
+      color: #f0abfc;
+    }
+
+    .m2-liq-pill {
+      background: var(--bg-input);
+      border: 1px solid rgba(232, 121, 249, 0.42);
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
+      min-width: 126px;
+    }
+
+    .m2-liq-pill .wallet-balance-label {
+      color: #d8b4fe;
+    }
+
+    .m2-liq-pill .wallet-balance-val {
+      color: #f0abfc;
+      font-size: 14px;
+    }
+
+    .m2-liq-sub {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--text-muted);
+    }
+
+    #mode2Workspace .left-panel-body {
+      gap: 7px;
+      padding: 9px 12px;
+    }
+
+    #mode2Workspace .sub-section {
+      padding: 7px 9px;
+      gap: 6px;
+    }
+
+    #mode2Workspace input[type="text"],
+    #mode2Workspace input[type="number"],
+    #mode2Workspace .segmented {
+      height: 29px;
+      font-size: 12px;
+    }
+
+    #mode2Workspace .slider-num {
+      height: 24px !important;
+      width: 60px !important;
+      font-size: 11.5px !important;
+    }
+
+    #mode2Workspace .presets-section {
+      min-height: 82px;
+      padding: 7px 9px;
+      gap: 5px;
+    }
+
+    #mode2Workspace .switch-row {
+      padding: 6px 9px;
+    }
+
+    @media (max-width: 1360px) {
+      .brand-subtitle {
+        display: none;
+      }
+      .app-mode-btn {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+      .kpi-chip {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+    }
+
+    @media (max-width: 1120px) {
+      .topbar {
+        height: auto;
+        min-height: 46px;
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1382,11 +1635,20 @@
           <polyline points="17 18 23 18 23 12"></polyline>
         </svg>
       </div>
-      <h1 class="brand-title">Split-Stop Short Hesaplayıcı</h1>
-      <span class="brand-subtitle">2 &amp; 3 Kademeli Bağımsız Pozisyon &amp; Risk Motoru</span>
+      <h1 class="brand-title">Pozisyon &amp; Risk Hesaplayıcı</h1>
+
+      <div class="app-mode-switcher" role="tablist" aria-label="Hesaplayıcı Modu">
+        <button type="button" class="app-mode-btn active" id="appMode1Btn" role="tab" aria-selected="true">
+          <span class="mode-dot"></span>Mod 1: Split-Stop (Sabit Risk)
+        </button>
+        <button type="button" class="app-mode-btn" id="appMode2Btn" role="tab" aria-selected="false">
+          <span class="mode-dot"></span>Mod 2: %5 Kasa &amp; Fitil Korumalı (Cross)
+        </button>
+      </div>
     </div>
 
-    <div class="topbar-metrics">
+    <!-- Mode 1 Topbar Metrics (Unchanged IDs) -->
+    <div class="topbar-metrics" id="mode1TopbarMetrics">
       <div class="ticker-pill">
         <span class="ticker-symbol mono" id="headerCoin">VVVUSDT</span>
         <span class="ticker-tag">SHORT</span>
@@ -1401,10 +1663,29 @@
         <span class="kpi-val green mono" id="headerTargetProfit">+$30.00</span>
       </div>
     </div>
+
+    <!-- Mode 2 Topbar Metrics -->
+    <div class="topbar-metrics m2-hidden" id="mode2TopbarMetrics">
+      <div class="ticker-pill">
+        <span class="ticker-symbol mono" id="m2HeaderCoin">VVVUSDT</span>
+        <span class="ticker-tag" id="m2HeaderDir">SHORT</span>
+        <span class="ticker-tag mode-tag mono" id="m2HeaderMode">2K · 10x Cross</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label">Toplam Hacim:</span>
+        <span class="kpi-val mono" style="color:var(--text-primary);" id="m2HeaderNotional">$25.00 (%5.0)</span>
+        <span class="kpi-label" style="margin-left:3px;">| Marjin:</span>
+        <span class="kpi-val orange mono" id="m2HeaderMargin">$2.50</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label" id="m2HeaderTpLabel">2. Kademe TP Kârı:</span>
+        <span class="kpi-val green mono" id="m2HeaderTpProfit">+$13.23</span>
+      </div>
+    </div>
   </header>
 
-  <!-- ==================== MAIN 2-COLUMN DASHBOARD ==================== -->
-  <main class="workspace">
+  <!-- ==================== MAIN 2-COLUMN DASHBOARD (MODE 1) ==================== -->
+  <main class="workspace" id="mode1Workspace">
 
     <!-- LEFT PANEL: PARAMETERS & PRESETS -->
     <section class="panel" aria-label="Strateji Parametreleri">
@@ -1669,6 +1950,352 @@
           </div>
           <div class="ladder-container">
             <svg id="priceLadderSvg" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="İnteraktif Fiyat Merdiveni Diyagramı"></svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MAIN 2-COLUMN DASHBOARD (MODE 2: %5 KASA & FİTİL KORUMALI CROSS) ==================== -->
+  <main class="workspace m2-hidden" id="mode2Workspace">
+
+    <!-- LEFT PANEL: MODE 2 PARAMETERS & PRESETS -->
+    <section class="panel" aria-label="Mod 2 Parametreleri">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          %5 Kasa · Cross
+        </div>
+        <span class="mono" style="font-size:10.5px; color:var(--text-muted); white-space:nowrap;" id="m2FeeStatusBadge">Komisyon: Kapalı</span>
+      </div>
+
+      <div class="left-panel-body">
+
+        <!-- Row 1: Coin & Direction -->
+        <div class="field-grid-2">
+          <div class="field">
+            <label class="field-label" for="m2CoinInput">Coin / Parite</label>
+            <input type="text" id="m2CoinInput" value="VVVUSDT" placeholder="Örn: VVVUSDT" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="field">
+            <span class="field-label">İşlem Yönü</span>
+            <div class="segmented" role="group" aria-label="İşlem Yönü Seçici">
+              <button type="button" class="segmented-btn dir-btn active-short" id="m2DirShortBtn" data-dir="SHORT">SHORT ↓</button>
+              <button type="button" class="segmented-btn dir-btn" id="m2DirLongBtn" data-dir="LONG">LONG ↑</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Tier Count (1K / 2K / 3K) -->
+        <div class="field">
+          <span class="field-label">Kademe Sayısı</span>
+          <div class="segmented-3" role="group" aria-label="Mod 2 Kademe Sayısı">
+            <button type="button" class="segmented-btn" id="m2Tier1Btn" data-tiers="1">1 Kademe</button>
+            <button type="button" class="segmented-btn active" id="m2Tier2Btn" data-tiers="2">2 Kademe</button>
+            <button type="button" class="segmented-btn" id="m2Tier3Btn" data-tiers="3">3 Kademe</button>
+          </div>
+        </div>
+
+        <!-- Row 3: Wallet Balance, Leverage, Basket Size -->
+        <div class="field-grid-3">
+          <div class="field">
+            <label class="field-label" for="m2BalanceInput">Ana Cüzdan <span class="unit">($)</span></label>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="number" id="m2BalanceInput" class="has-prefix" value="500" min="1" step="any" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="m2LeverageInput">Kaldıraç <span class="unit">(Cross)</span></label>
+            <div class="input-wrap">
+              <input type="number" id="m2LeverageInput" class="has-suffix" value="10" min="1" max="150" step="1" />
+              <span class="input-suffix">x</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="m2BasketInput">Açık Sepet <span class="unit">(Adet)</span></label>
+            <div class="input-wrap">
+              <input type="number" id="m2BasketInput" value="10" min="1" max="50" step="1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Max Position Quota (%) + Tier Weights -->
+        <div class="sub-section">
+          <div class="slider-block">
+            <div class="slider-top">
+              <label class="field-label" for="m2QuotaInput">Coin Başı Maks. Pozisyon Kotası</label>
+              <span class="mono" style="font-size:10.5px; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $25.00</span>
+            </div>
+            <div class="slider-controls">
+              <input type="range" id="m2QuotaRange" min="1" max="15" step="0.5" value="5.0" aria-label="Maksimum Pozisyon Kotası Slider" />
+              <div class="input-wrap">
+                <input type="number" id="m2QuotaInput" class="slider-num" min="1" max="15" step="0.5" value="5.0" />
+                <span class="input-suffix" style="right:6px;">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Weight Distribution -->
+          <div class="slider-block" style="margin-top:2px;">
+            <div class="slider-top">
+              <span class="field-label">Ağırlık Dağılımı</span>
+              <div class="weight-presets" id="m2WeightPresets"></div>
+            </div>
+
+            <!-- 1K info -->
+            <div id="m2Weight1Wrap" class="m2-hidden" style="font-size:11px; color:var(--text-secondary); padding:3px 2px;">
+              Tek kademe: <strong class="mono" style="color:var(--text-primary);">%100</strong> (Kasanın <strong class="mono" id="m2W1SingleWallet">%5.0</strong>'i)
+            </div>
+
+            <!-- 2K manual inputs -->
+            <div id="m2Weight2Wrap" class="field-grid-2">
+              <div class="input-wrap">
+                <span class="input-prefix" style="font-size:10px; left:7px;">K1</span>
+                <input type="number" id="m2W2_1" value="32" min="5" max="95" step="1" style="padding-left:26px; padding-right:22px; text-align:right;" />
+                <span class="input-suffix" style="right:7px;">%</span>
+              </div>
+              <div class="input-wrap">
+                <span class="input-prefix" style="font-size:10px; left:7px;">K2</span>
+                <input type="number" id="m2W2_2" value="68" min="5" max="95" step="1" style="padding-left:26px; padding-right:22px; text-align:right;" />
+                <span class="input-suffix" style="right:7px;">%</span>
+              </div>
+            </div>
+
+            <!-- 3K manual inputs -->
+            <div id="m2Weight3Wrap" class="field-grid-3 m2-hidden">
+              <div class="input-wrap">
+                <span class="input-prefix" style="font-size:10px; left:6px;">K1</span>
+                <input type="number" id="m2W3_1" value="16.7" min="1" max="90" step="0.1" style="padding-left:23px; padding-right:18px; text-align:right;" />
+                <span class="input-suffix" style="right:5px;">%</span>
+              </div>
+              <div class="input-wrap">
+                <span class="input-prefix" style="font-size:10px; left:6px;">K2</span>
+                <input type="number" id="m2W3_2" value="33.3" min="1" max="90" step="0.1" style="padding-left:23px; padding-right:18px; text-align:right;" />
+                <span class="input-suffix" style="right:5px;">%</span>
+              </div>
+              <div class="input-wrap">
+                <span class="input-prefix" style="font-size:10px; left:6px;">K3</span>
+                <input type="number" id="m2W3_3" value="50.0" min="1" max="90" step="0.1" style="padding-left:23px; padding-right:18px; text-align:right;" readonly title="Otomatik 100% tamamlama" />
+                <span class="input-suffix" style="right:5px;">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5: Entry Prices & TP -->
+        <div class="sub-section">
+          <div class="sub-section-title">
+            <span>Kademe Giriş Fiyatları &amp; TP Hedefi</span>
+            <span class="mono" id="m2PriceDirBadge" style="color:var(--red);">SHORT ↓</span>
+          </div>
+
+          <div class="field-grid-3">
+            <div class="field">
+              <label class="field-label" for="m2P1Input">1. Kademe</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="m2P1Input" class="has-prefix" value="25.00" min="0" step="any" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="m2P2Input">2. Kademe</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="m2P2Input" class="has-prefix" value="40.00" min="0" step="any" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="m2P3Input">3. Kademe</label>
+              <div class="input-wrap">
+                <span class="input-prefix">$</span>
+                <input type="number" id="m2P3Input" class="has-prefix" value="55.00" min="0" step="any" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="m2TpInput">
+              Take Profit (TP) Hedef Fiyatı
+              <span class="unit" style="color:var(--green);">Kâr Al ($)</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix" style="color:var(--green);">$</span>
+              <input type="number" id="m2TpInput" class="has-prefix input-tp" value="15.80" min="0" step="any" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 6: Weekly Close Manual SL & Wick Stress -->
+        <div class="sub-section">
+          <div class="sub-section-title">
+            <span>Haftalık Kapanış Manuel SL &amp; Fitil Stres</span>
+            <span class="mono" style="color:var(--orange);">STRETCH TEST</span>
+          </div>
+
+          <div class="slider-block">
+            <div class="slider-top">
+              <label class="field-label" for="m2WeeklySlInput">Haftalık Kapanış Manuel SL Mesafesi</label>
+            </div>
+            <div class="slider-controls">
+              <input type="range" id="m2WeeklySlRange" min="3" max="30" step="1" value="10" aria-label="Haftalık Kapanış Manuel SL Slider" />
+              <div class="input-wrap">
+                <input type="number" id="m2WeeklySlInput" class="slider-num" min="3" max="30" step="1" value="10" />
+                <span class="input-suffix" style="right:6px;">%</span>
+              </div>
+            </div>
+            <div class="slider-hint" id="m2WeeklySlHint">Son kademenin <strong>+%10</strong> dışında manuel kapanış</div>
+          </div>
+
+          <div class="slider-block" style="margin-top:2px;">
+            <div class="slider-top">
+              <label class="field-label" for="m2WickInput">Uzun Fitil Stres Testi (1. Kademeden)</label>
+            </div>
+            <div class="slider-controls">
+              <input type="range" id="m2WickRange" min="30" max="300" step="5" value="120" aria-label="Uzun Fitil Stres Testi Slider" />
+              <div class="input-wrap">
+                <input type="number" id="m2WickInput" class="slider-num" min="30" max="300" step="5" value="120" />
+                <span class="input-suffix" style="right:6px;">%</span>
+              </div>
+            </div>
+            <div class="slider-hint" id="m2WickHint">1. kademeden <strong>+%120</strong> sert iğne anında yüzen zarar</div>
+          </div>
+        </div>
+
+        <!-- Row 7: Fee Protection Toggle -->
+        <label class="switch-row" for="m2FeeToggle">
+          <div class="switch-text">
+            <span class="switch-title">Borsa Komisyon Koruması</span>
+            <span class="switch-desc">Açılış + kapanış taker (%0.055 × 2) dahil edilir</span>
+          </div>
+          <div class="toggle-switch">
+            <input type="checkbox" id="m2FeeToggle" />
+            <span class="toggle-track"></span>
+          </div>
+        </label>
+
+        <!-- Row 8: Presets Memory (Separate localStorage key: cross_5pct_presets) -->
+        <div class="presets-section">
+          <div class="sub-section-title">
+            <span>Kurgu Hafızası (Cross Presets)</span>
+            <span class="mono" id="m2PresetCount">0 kayıt</span>
+          </div>
+          <div class="presets-actions">
+            <button type="button" class="btn btn-primary" id="m2SavePresetBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              Kurguyu Kaydet
+            </button>
+            <button type="button" class="btn btn-ghost" id="m2ResetDefaultsBtn" title="Varsayılan değerlere dön">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+              Sıfırla
+            </button>
+          </div>
+          <div class="presets-list" id="m2PresetsList" role="list" aria-label="Mod 2 Kayıtlı Kurgular"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: MODE 2 ORDER CARDS, SCENARIO SIMULATION & PRICE LADDER -->
+    <section class="right-panel" aria-label="Mod 2 Hesaplama Çıktıları">
+
+      <!-- Validation Error Banner -->
+      <div class="error-banner" id="m2ErrorBanner" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <div><strong>Geçersiz Kurgu:</strong> <span id="m2ErrorMessage"></span></div>
+      </div>
+
+      <!-- Tier Order Cards (1, 2, or 3 side-by-side) -->
+      <div class="tiers-grid" id="m2TiersGrid"></div>
+
+      <!-- Bottom Area: Simulation + Basket/Liq Box | Interactive Price Ladder SVG -->
+      <div class="bottom-grid">
+
+        <!-- Left: Scenario Simulation + Basket Control Box -->
+        <div class="sim-column">
+          <div class="panel sim-panel">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                Senaryo Simülasyonu &amp; Stres Testi
+              </div>
+              <span class="mono" style="font-size:10.5px; color:#38bdf8;" id="m2AvgHeaderBadge">Ort. Maliyet: $33.56</span>
+            </div>
+
+            <div class="sim-table-wrap">
+              <table class="sim-table" aria-label="Mod 2 Senaryo Simülasyon Tablosu">
+                <thead>
+                  <tr>
+                    <th>Senaryo</th>
+                    <th class="num">Net Kâr / Zarar</th>
+                    <th class="num">Marjin ROI / Teminat</th>
+                    <th class="num">Kasa Etkisi / Liq</th>
+                  </tr>
+                </thead>
+                <tbody id="m2SimTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Basket Control & Estimated Cross Liq Footer Box -->
+          <aside class="wallet-box" aria-label="Sepet Kontrolü ve Tahmini Cross Likidasyon">
+            <div class="wallet-box-left">
+              <div class="wallet-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="wallet-text" id="m2BasketText">
+                10 açık coinin tamamında tüm kademeler dolarsa toplam pozisyon hacmi: <strong>$250.00 (%50.0)</strong> — Kalan Serbest Teminat: <strong>$475.00</strong>
+              </div>
+            </div>
+            <div class="m2-liq-pill">
+              <span class="wallet-balance-label">TAHMİNİ CROSS LİQ</span>
+              <span class="wallet-balance-val" id="m2FooterLiqVal">$704.70</span>
+              <span class="m2-liq-sub" id="m2FooterLiqSub">~21.0x yukarı</span>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Right: Interactive Price Ladder SVG (Mode 2) -->
+        <div class="panel ladder-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              Fiyat Merdiveni (Cross)
+            </div>
+            <div class="ladder-legend">
+              <span class="legend-dot"><i style="background:var(--green)"></i>TP</span>
+              <span class="legend-dot"><i style="background:#38bdf8"></i>Ort</span>
+              <span class="legend-dot"><i style="background:var(--red)"></i>SL</span>
+              <span class="legend-dot"><i style="background:#e879f9"></i>Liq</span>
+            </div>
+          </div>
+          <div class="ladder-container">
+            <svg id="m2PriceLadderSvg" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mod 2 İnteraktif Fiyat Merdiveni Diyagramı"></svg>
           </div>
         </div>
 
@@ -2844,6 +3471,1421 @@
       bindEvents();
       renderPresets();
       renderAll();
+    })();
+  </script>
+
+  <!-- ==================== INDEPENDENT MODE SWITCHER & MODE 2 ENGINE ==================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* -------------------- TOPBAR MODE SWITCHER -------------------- */
+      const mode1Workspace = document.getElementById("mode1Workspace");
+      const mode2Workspace = document.getElementById("mode2Workspace");
+      const mode1Metrics = document.getElementById("mode1TopbarMetrics");
+      const mode2Metrics = document.getElementById("mode2TopbarMetrics");
+      const appMode1Btn = document.getElementById("appMode1Btn");
+      const appMode2Btn = document.getElementById("appMode2Btn");
+
+      function switchAppMode(modeNum) {
+        const isMode2 = modeNum === 2;
+        mode1Workspace.classList.toggle("m2-hidden", isMode2);
+        mode2Workspace.classList.toggle("m2-hidden", !isMode2);
+        mode1Metrics.classList.toggle("m2-hidden", isMode2);
+        mode2Metrics.classList.toggle("m2-hidden", !isMode2);
+
+        appMode1Btn.classList.toggle("active", !isMode2);
+        appMode2Btn.classList.toggle("active", isMode2);
+        appMode1Btn.setAttribute("aria-selected", String(!isMode2));
+        appMode2Btn.setAttribute("aria-selected", String(isMode2));
+      }
+
+      appMode1Btn.addEventListener("click", () => switchAppMode(1));
+      appMode2Btn.addEventListener("click", () => switchAppMode(2));
+
+      /* -------------------- MODE 2 CONSTANTS & STATE -------------------- */
+      const M2_PRESETS_KEY = "cross_5pct_presets";
+      const TAKER_SIDE_FEE = 0.00055; // 0.055% per side (open + close = 0.11%)
+
+      const M2_DEFAULTS = {
+        coin: "VVVUSDT",
+        direction: "SHORT",
+        tiers: 2,
+        balance: 500,
+        quotaPct: 5.0,
+        leverage: 10,
+        basketCount: 10,
+        weights2: [32, 68],
+        weights3: [16.7, 33.3, 50.0],
+        p1: 25.00,
+        p2: 40.00,
+        p3: 55.00,
+        tp: 15.80,
+        weeklySlPct: 10,
+        wickPct: 120,
+        feeProtection: false
+      };
+
+      let lastShortPrices = { p1: 25.00, p2: 40.00, p3: 55.00, tp: 15.80 };
+      let lastLongPrices = { p1: 40.00, p2: 28.00, p3: 20.00, tp: 58.00 };
+
+      let m2 = {
+        ...M2_DEFAULTS,
+        weights2: [...M2_DEFAULTS.weights2],
+        weights3: [...M2_DEFAULTS.weights3]
+      };
+
+      let m2ToastTimer = null;
+
+      /* -------------------- MODE 2 DOM REFS -------------------- */
+      const dom = {
+        coinInput: document.getElementById("m2CoinInput"),
+        dirShortBtn: document.getElementById("m2DirShortBtn"),
+        dirLongBtn: document.getElementById("m2DirLongBtn"),
+        tier1Btn: document.getElementById("m2Tier1Btn"),
+        tier2Btn: document.getElementById("m2Tier2Btn"),
+        tier3Btn: document.getElementById("m2Tier3Btn"),
+        balanceInput: document.getElementById("m2BalanceInput"),
+        leverageInput: document.getElementById("m2LeverageInput"),
+        basketInput: document.getElementById("m2BasketInput"),
+        quotaRange: document.getElementById("m2QuotaRange"),
+        quotaInput: document.getElementById("m2QuotaInput"),
+        quotaUsdHint: document.getElementById("m2QuotaUsdHint"),
+
+        weightPresets: document.getElementById("m2WeightPresets"),
+        weight1Wrap: document.getElementById("m2Weight1Wrap"),
+        w1SingleWallet: document.getElementById("m2W1SingleWallet"),
+        weight2Wrap: document.getElementById("m2Weight2Wrap"),
+        w2_1: document.getElementById("m2W2_1"),
+        w2_2: document.getElementById("m2W2_2"),
+        weight3Wrap: document.getElementById("m2Weight3Wrap"),
+        w3_1: document.getElementById("m2W3_1"),
+        w3_2: document.getElementById("m2W3_2"),
+        w3_3: document.getElementById("m2W3_3"),
+
+        priceDirBadge: document.getElementById("m2PriceDirBadge"),
+        p1Input: document.getElementById("m2P1Input"),
+        p2Input: document.getElementById("m2P2Input"),
+        p3Input: document.getElementById("m2P3Input"),
+        tpInput: document.getElementById("m2TpInput"),
+
+        weeklySlRange: document.getElementById("m2WeeklySlRange"),
+        weeklySlInput: document.getElementById("m2WeeklySlInput"),
+        weeklySlHint: document.getElementById("m2WeeklySlHint"),
+        wickRange: document.getElementById("m2WickRange"),
+        wickInput: document.getElementById("m2WickInput"),
+        wickHint: document.getElementById("m2WickHint"),
+
+        feeToggle: document.getElementById("m2FeeToggle"),
+        feeStatusBadge: document.getElementById("m2FeeStatusBadge"),
+
+        savePresetBtn: document.getElementById("m2SavePresetBtn"),
+        resetDefaultsBtn: document.getElementById("m2ResetDefaultsBtn"),
+        presetsList: document.getElementById("m2PresetsList"),
+        presetCount: document.getElementById("m2PresetCount"),
+
+        headerCoin: document.getElementById("m2HeaderCoin"),
+        headerDir: document.getElementById("m2HeaderDir"),
+        headerMode: document.getElementById("m2HeaderMode"),
+        headerNotional: document.getElementById("m2HeaderNotional"),
+        headerMargin: document.getElementById("m2HeaderMargin"),
+        headerTpLabel: document.getElementById("m2HeaderTpLabel"),
+        headerTpProfit: document.getElementById("m2HeaderTpProfit"),
+
+        errorBanner: document.getElementById("m2ErrorBanner"),
+        errorMessage: document.getElementById("m2ErrorMessage"),
+        tiersGrid: document.getElementById("m2TiersGrid"),
+        avgHeaderBadge: document.getElementById("m2AvgHeaderBadge"),
+        simTableBody: document.getElementById("m2SimTableBody"),
+        basketText: document.getElementById("m2BasketText"),
+        footerLiqVal: document.getElementById("m2FooterLiqVal"),
+        footerLiqSub: document.getElementById("m2FooterLiqSub"),
+        ladderSvg: document.getElementById("m2PriceLadderSvg"),
+
+        toast: document.getElementById("toast"),
+        toastMsg: document.getElementById("toastMsg")
+      };
+
+      /* -------------------- HELPERS -------------------- */
+      function m2PriceDecimals(price) {
+        const abs = Math.abs(price);
+        if (!isFinite(abs) || abs === 0) return 2;
+        if (abs >= 1) return 2;
+        if (abs >= 0.01) return 4;
+        if (abs >= 0.0001) return 6;
+        return 8;
+      }
+
+      function m2FmtPrice(val, refPrice) {
+        if (!isFinite(val)) return "0.00";
+        const ref = refPrice !== undefined ? refPrice : val;
+        let dec = m2PriceDecimals(ref);
+        if (dec === 2 && Math.abs(val) < 10) {
+          const r2 = Math.round(val * 100) / 100;
+          if (Math.abs(val - r2) > 1e-6) {
+            dec = Math.abs(val - Math.round(val * 1000) / 1000) > 1e-6 ? 4 : 3;
+          }
+        }
+        return val.toFixed(dec);
+      }
+
+      function m2FmtUSD(val) {
+        if (!isFinite(val)) return "$0.00";
+        return (val < 0 ? "-" : "") + "$" + Math.abs(val).toFixed(2);
+      }
+
+      function m2FmtUSDSigned(val) {
+        if (!isFinite(val)) return "$0.00";
+        const sign = val > 0 ? "+" : (val < 0 ? "-" : "");
+        return sign + "$" + Math.abs(val).toFixed(2);
+      }
+
+      function m2FmtQty(qty) {
+        if (!isFinite(qty)) return "0";
+        const abs = Math.abs(qty);
+        if (abs >= 10000) return qty.toFixed(0);
+        if (abs >= 100) return qty.toFixed(2);
+        if (abs >= 1) return qty.toFixed(4);
+        return qty.toFixed(6);
+      }
+
+      function m2BaseCoin(pair) {
+        const cleaned = (pair || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+        if (!cleaned) return "Adet";
+        const quotes = ["USDT", "USDC", "BUSD", "FDUSD", "PERP", "USD", "BTC", "ETH"];
+        for (const q of quotes) {
+          if (cleaned.endsWith(q) && cleaned.length > q.length) {
+            return cleaned.slice(0, -q.length);
+          }
+        }
+        return cleaned;
+      }
+
+      function m2Escape(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function m2CopySvg() {
+        return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+      }
+
+      function m2CheckSvg() {
+        return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      }
+
+      function m2ShowToast(htmlMsg) {
+        dom.toastMsg.innerHTML = htmlMsg;
+        dom.toast.classList.add("show");
+        clearTimeout(m2ToastTimer);
+        m2ToastTimer = setTimeout(() => {
+          dom.toast.classList.remove("show");
+        }, 1800);
+      }
+
+      function m2Copy(text, btn) {
+        const done = () => {
+          if (btn) {
+            btn.classList.add("copied");
+            btn.innerHTML = m2CheckSvg();
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.innerHTML = m2CopySvg();
+            }, 1200);
+          }
+          m2ShowToast('Kopyalandı! <span class="toast-val">' + m2Escape(text) + "</span>");
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(() => {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand("copy"); } catch (_) {}
+            document.body.removeChild(ta);
+            done();
+          });
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (_) {}
+          document.body.removeChild(ta);
+          done();
+        }
+      }
+
+      /* -------------------- MODE 2 MATH ENGINE -------------------- */
+      function calculateMode2(cfg) {
+        const isShort = cfg.direction === "SHORT";
+        const n = cfg.tiers;
+        const B = cfg.balance;
+        const Qpct = cfg.quotaPct;
+        const L = cfg.leverage;
+        const basket = cfg.basketCount;
+        const TP = cfg.tp;
+        const weeklyPct = cfg.weeklySlPct;
+        const wickPct = cfg.wickPct;
+        const feeOn = cfg.feeProtection;
+
+        if (!isFinite(B) || B <= 0) return { error: "Ana Cüzdan Bakiyesi ($) 0'dan büyük olmalıdır." };
+        if (!isFinite(Qpct) || Qpct <= 0 || Qpct > 100) return { error: "Pozisyon Kotası (%) 0 ile 100 arasında olmalıdır." };
+        if (!isFinite(L) || L <= 0) return { error: "Kaldıraç oranı (x) 0'dan büyük olmalıdır." };
+        if (!isFinite(basket) || basket < 1) return { error: "Eşzamanlı Açık Coin Sepeti en az 1 olmalıdır." };
+        if (!isFinite(TP) || TP <= 0) return { error: "Take Profit (TP) hedef fiyatı 0'dan büyük olmalıdır." };
+        if (!isFinite(weeklyPct) || weeklyPct <= 0) return { error: "Haftalık Kapanış Manuel SL yüzdesi 0'dan büyük olmalıdır." };
+        if (!isFinite(wickPct) || wickPct <= 0) return { error: "Fitil Stres Testi yüzdesi 0'dan büyük olmalıdır." };
+
+        const rawEntries = [cfg.p1, cfg.p2, cfg.p3].slice(0, n);
+        for (let i = 0; i < n; i++) {
+          if (!isFinite(rawEntries[i]) || rawEntries[i] <= 0) {
+            return { error: `${i + 1}. Kademe giriş fiyatı 0'dan büyük olmalıdır.` };
+          }
+        }
+
+        // Direction-specific ordering checks
+        if (isShort) {
+          if (TP >= rawEntries[0]) {
+            return { error: "SHORT işlemde Take Profit (TP) fiyatı, 1. Kademe giriş fiyatından küçük olmalıdır (TP < P1)." };
+          }
+          for (let i = 1; i < n; i++) {
+            if (rawEntries[i] <= rawEntries[i - 1]) {
+              return { error: `SHORT kademeleri artan sırada olmalıdır (1. Kademe < 2. Kademe${n === 3 ? " < 3. Kademe" : ""}).` };
+            }
+          }
+        } else {
+          if (TP <= rawEntries[0]) {
+            return { error: "LONG işlemde Take Profit (TP) fiyatı, 1. Kademe giriş fiyatından büyük olmalıdır (TP > P1)." };
+          }
+          for (let i = 1; i < n; i++) {
+            if (rawEntries[i] >= rawEntries[i - 1]) {
+              return { error: `LONG kademeleri düşen sırada olmalıdır (1. Kademe > 2. Kademe${n === 3 ? " > 3. Kademe" : ""}).` };
+            }
+          }
+        }
+
+        // Active weights
+        let weights;
+        if (n === 1) {
+          weights = [100];
+        } else if (n === 2) {
+          weights = [...cfg.weights2];
+        } else {
+          weights = [...cfg.weights3];
+        }
+        const weightSum = weights.reduce((acc, w) => acc + (isFinite(w) ? w : 0), 0);
+        if (weights.some((w) => !isFinite(w) || w <= 0) || Math.abs(weightSum - 100) > 0.5) {
+          return { error: "Kademe ağırlık yüzdeleri pozitif olmalı ve toplamı %100 etmelidir." };
+        }
+
+        const totalNotional = B * (Qpct / 100);
+        const totalMargin = totalNotional / L;
+
+        const calcFee = (openNotional, closeNotional) =>
+          feeOn ? (openNotional * TAKER_SIDE_FEE + closeNotional * TAKER_SIDE_FEE) : 0;
+
+        // Build tiers with cumulative weighted average cost
+        const tiers = [];
+        let cumNotional = 0;
+        let cumQty = 0;
+        let cumMargin = 0;
+
+        for (let i = 0; i < n; i++) {
+          const wFrac = weights[i] / weightSum;
+          const walletPct = Qpct * wFrac;
+          const entry = rawEntries[i];
+          const notional = totalNotional * wFrac;
+          const margin = notional / L;
+          const qty = notional / entry;
+
+          cumNotional += notional;
+          cumQty += qty;
+          cumMargin += margin;
+
+          const avgCost = cumNotional / cumQty;
+
+          // Single-tier profit at TP
+          const singleGross = isShort ? qty * (entry - TP) : qty * (TP - entry);
+          const singleFee = calcFee(notional, qty * TP);
+          const singleNet = singleGross - singleFee;
+
+          // Combined (cumulative up to this tier) profit at TP
+          const cumGross = isShort ? cumQty * (avgCost - TP) : cumQty * (TP - avgCost);
+          const cumFee = calcFee(cumNotional, cumQty * TP);
+          const cumNet = cumGross - cumFee;
+          const cumRoiPct = (cumNet / cumMargin) * 100;
+          const cumWalletPct = (cumNet / B) * 100;
+
+          const tpPctFromEntry = isShort
+            ? ((entry - TP) / entry) * 100
+            : ((TP - entry) / entry) * 100;
+
+          tiers.push({
+            index: i + 1,
+            isFinal: i === n - 1,
+            weightPct: weights[i],
+            walletPct,
+            entry,
+            notional,
+            margin,
+            qty,
+            cumNotional,
+            cumQty,
+            cumMargin,
+            avgCost,
+            singleNet,
+            cumNet,
+            cumRoiPct,
+            cumWalletPct,
+            tpPctFromEntry
+          });
+        }
+
+        const finalTier = tiers[n - 1];
+        const finalAvg = finalTier.avgCost;
+        const finalQty = finalTier.cumQty;
+
+        // Estimated Cross Liquidation Price: Avg ± (Balance / TotalQty)
+        let liqPrice;
+        let liqNoLiq = false;
+        if (isShort) {
+          liqPrice = finalAvg + (B / finalQty);
+        } else {
+          const rawLiq = finalAvg - (B / finalQty);
+          if (rawLiq <= 0) {
+            liqPrice = 0;
+            liqNoLiq = true;
+          } else {
+            liqPrice = rawLiq;
+          }
+        }
+
+        const liqMultFromAvg = isShort
+          ? liqPrice / finalAvg
+          : (liqNoLiq ? Infinity : finalAvg / liqPrice);
+
+        // Weekly Close Manual SL
+        const lastEntry = finalTier.entry;
+        const manualSlPrice = isShort
+          ? lastEntry * (1 + weeklyPct / 100)
+          : Math.max(0, lastEntry * (1 - weeklyPct / 100));
+
+        const manualSlGross = isShort
+          ? finalQty * (finalAvg - manualSlPrice)
+          : finalQty * (manualSlPrice - finalAvg);
+        const manualSlFee = calcFee(finalTier.cumNotional, finalQty * manualSlPrice);
+        const manualSlNet = manualSlGross - manualSlFee;
+        const manualSlWalletPct = (manualSlNet / B) * 100;
+
+        // Long Wick Stress Test (from Tier 1 entry)
+        const p1 = tiers[0].entry;
+        const wickPrice = isShort
+          ? p1 * (1 + wickPct / 100)
+          : Math.max(0, p1 * (1 - wickPct / 100));
+        const wickCappedZero = !isShort && (p1 * (1 - wickPct / 100) <= 0);
+
+        // Determine which tiers are filled along the wick path
+        let wickNotional = 0;
+        let wickQty = 0;
+        let wickMargin = 0;
+        let wickFilledCount = 0;
+        for (const t of tiers) {
+          const filled = isShort ? (t.entry <= wickPrice) : (t.entry >= wickPrice);
+          if (filled) {
+            wickNotional += t.notional;
+            wickQty += t.qty;
+            wickMargin += t.margin;
+            wickFilledCount++;
+          }
+        }
+        const wickAvg = wickQty > 0 ? wickNotional / wickQty : p1;
+        const wickFloatingPnL = isShort
+          ? wickQty * (wickAvg - wickPrice)
+          : wickQty * (wickPrice - wickAvg);
+        const wickWalletImpactPct = (wickFloatingPnL / B) * 100;
+        const wickFreeCollateral = B - wickMargin + wickFloatingPnL;
+
+        // Basket control metrics
+        const basketNotional = totalNotional * basket;
+        const basketNotionalPct = (basketNotional / B) * 100;
+        const basketTotalMargin = totalMargin * basket;
+        const basketFreeCollateral = B - basketTotalMargin;
+
+        return {
+          error: null,
+          isShort,
+          direction: cfg.direction,
+          n,
+          B,
+          Qpct,
+          L,
+          TP,
+          basket,
+          weeklyPct,
+          wickPct,
+          totalNotional,
+          totalMargin,
+          tiers,
+          finalTier,
+          finalAvg,
+          finalQty,
+          liqPrice,
+          liqNoLiq,
+          liqMultFromAvg,
+          manualSlPrice,
+          manualSlNet,
+          manualSlWalletPct,
+          wickPrice,
+          wickCappedZero,
+          wickFilledCount,
+          wickFloatingPnL,
+          wickWalletImpactPct,
+          wickFreeCollateral,
+          basketNotional,
+          basketNotionalPct,
+          basketTotalMargin,
+          basketFreeCollateral
+        };
+      }
+
+      /* -------------------- WEIGHT PRESETS RENDER -------------------- */
+      function renderWeightControls() {
+        const n = m2.tiers;
+        dom.weight1Wrap.classList.toggle("m2-hidden", n !== 1);
+        dom.weight2Wrap.classList.toggle("m2-hidden", n !== 2);
+        dom.weight3Wrap.classList.toggle("m2-hidden", n !== 3);
+
+        if (n === 1) {
+          dom.weightPresets.innerHTML = "";
+          dom.w1SingleWallet.textContent = `%${Number(m2.quotaPct).toFixed(1)}`;
+          return;
+        }
+
+        if (n === 2) {
+          const presets2 = [
+            { label: "20/80", w: [20, 80] },
+            { label: "32/68", w: [32, 68] },
+            { label: "40/60", w: [40, 60] }
+          ];
+          dom.weightPresets.innerHTML = presets2.map((p) => {
+            const active = Math.abs(m2.weights2[0] - p.w[0]) < 0.05 && Math.abs(m2.weights2[1] - p.w[1]) < 0.05;
+            return `<button type="button" class="weight-chip ${active ? "active" : ""}" data-wpreset="2:${p.w[0]},${p.w[1]}">${p.label}</button>`;
+          }).join("");
+        } else {
+          const presets3 = [
+            { label: "1x-2x-3x", w: [16.7, 33.3, 50.0] },
+            { label: "20/30/50", w: [20, 30, 50] },
+            { label: "33/33/34", w: [33.3, 33.3, 33.4] }
+          ];
+          dom.weightPresets.innerHTML = presets3.map((p) => {
+            const active = Math.abs(m2.weights3[0] - p.w[0]) < 0.2 && Math.abs(m2.weights3[1] - p.w[1]) < 0.2;
+            return `<button type="button" class="weight-chip ${active ? "active" : ""}" data-wpreset="3:${p.w[0]},${p.w[1]},${p.w[2]}">${p.label}</button>`;
+          }).join("");
+        }
+      }
+
+      /* -------------------- RENDER MODE 2 ALL -------------------- */
+      function renderMode2() {
+        const coinLabel = (m2.coin || "PARITE").trim().toUpperCase() || "PARITE";
+        const baseCoin = m2BaseCoin(coinLabel);
+        const isShort = m2.direction === "SHORT";
+
+        // Direction button styling
+        dom.dirShortBtn.className = "segmented-btn dir-btn" + (isShort ? " active-short" : "");
+        dom.dirLongBtn.className = "segmented-btn dir-btn" + (!isShort ? " active-long" : "");
+
+        dom.priceDirBadge.textContent = isShort ? "SHORT ↓" : "LONG ↑";
+        dom.priceDirBadge.style.color = isShort ? "var(--red)" : "var(--green)";
+
+        // Tier count buttons & entry input states
+        dom.tier1Btn.classList.toggle("active", m2.tiers === 1);
+        dom.tier2Btn.classList.toggle("active", m2.tiers === 2);
+        dom.tier3Btn.classList.toggle("active", m2.tiers === 3);
+        dom.p2Input.disabled = m2.tiers < 2;
+        dom.p3Input.disabled = m2.tiers < 3;
+
+        dom.tiersGrid.classList.remove("mode-1", "mode-3");
+        if (m2.tiers === 1) dom.tiersGrid.classList.add("mode-1");
+        if (m2.tiers === 3) dom.tiersGrid.classList.add("mode-3");
+
+        // Quota hint & slider labels
+        const rawNotional = (isFinite(m2.balance) && isFinite(m2.quotaPct)) ? m2.balance * (m2.quotaPct / 100) : 0;
+        dom.quotaUsdHint.textContent = `Hacim: ${m2FmtUSD(rawNotional)}`;
+
+        const signTxt = isShort ? "+" : "-";
+        dom.weeklySlHint.innerHTML = `Son kademenin <strong>${signTxt}%${Math.round(m2.weeklySlPct || 0)}</strong> dışında manuel kapanış`;
+        dom.wickHint.innerHTML = `1. kademeden <strong>${signTxt}%${Math.round(m2.wickPct || 0)}</strong> sert iğne anında yüzen zarar`;
+
+        dom.feeStatusBadge.textContent = m2.feeProtection ? "Komisyon: Açık (%0.11)" : "Komisyon: Kapalı";
+        dom.feeStatusBadge.style.color = m2.feeProtection ? "var(--orange)" : "var(--text-muted)";
+
+        renderWeightControls();
+
+        // Topbar pills baseline
+        dom.headerCoin.textContent = coinLabel;
+        dom.headerDir.textContent = m2.direction;
+        dom.headerDir.className = "ticker-tag" + (isShort ? "" : " long-tag");
+        dom.headerMode.textContent = `${m2.tiers}K · ${isFinite(m2.leverage) ? m2.leverage : 0}x Cross`;
+
+        const res = calculateMode2(m2);
+
+        if (res.error) {
+          dom.errorBanner.classList.add("visible");
+          dom.errorMessage.textContent = res.error;
+          dom.avgHeaderBadge.textContent = "Geçersiz Kurgu";
+          dom.avgHeaderBadge.style.color = "var(--red)";
+          dom.headerNotional.textContent = "—";
+          dom.headerMargin.textContent = "—";
+          dom.headerTpProfit.textContent = "—";
+          renderM2Invalid(m2.tiers);
+          return;
+        }
+
+        dom.errorBanner.classList.remove("visible");
+
+        // Update top-right summary pills
+        dom.headerNotional.textContent = `${m2FmtUSD(res.totalNotional)} (%${res.Qpct.toFixed(1)})`;
+        dom.headerMargin.textContent = m2FmtUSD(res.totalMargin);
+        dom.headerTpLabel.textContent = `${res.n}. Kademe TP Kârı:`;
+        dom.headerTpProfit.textContent = m2FmtUSDSigned(res.finalTier.cumNet);
+
+        // Simulation header badge
+        const refPrice = res.tiers[0].entry;
+        dom.avgHeaderBadge.textContent = `Birleşik Ort: $${m2FmtPrice(res.finalAvg, refPrice)}`;
+        dom.avgHeaderBadge.style.color = "#38bdf8";
+
+        // Basket control footer
+        const freeColor = res.basketFreeCollateral < 0 ? "var(--red)" : "var(--green)";
+        dom.basketText.innerHTML =
+          `<strong>${res.basket} açık coinin</strong> tamamında tüm kademeler dolarsa toplam pozisyon hacmi: ` +
+          `<strong class="mono">${m2FmtUSD(res.basketNotional)} (%${res.basketNotionalPct.toFixed(1)})</strong> ` +
+          `— Kalan Serbest Teminat: <strong class="mono" style="color:${freeColor};">${m2FmtUSD(res.basketFreeCollateral)}</strong>`;
+
+        if (res.liqNoLiq) {
+          dom.footerLiqVal.textContent = "$0.00";
+          dom.footerLiqSub.textContent = "Likidasyon Yok";
+        } else {
+          dom.footerLiqVal.textContent = "$" + m2FmtPrice(res.liqPrice, refPrice);
+          dom.footerLiqSub.textContent = res.isShort
+            ? `~${res.liqMultFromAvg.toFixed(1)}x yukarı`
+            : `-${(((res.finalAvg - res.liqPrice) / res.finalAvg) * 100).toFixed(1)}% aşağı`;
+        }
+
+        renderM2TierCards(res, baseCoin);
+        renderM2Simulation(res);
+        renderM2Ladder(res);
+      }
+
+      function renderM2Invalid(n) {
+        let html = "";
+        for (let i = 1; i <= n; i++) {
+          html += `
+            <article class="tier-card invalid-state">
+              <div class="tier-card-header">
+                <div class="tier-card-title"><span class="tier-num-badge">${i}</span><span>${i}. Kademe</span></div>
+                <span class="tier-quota-pill">—</span>
+              </div>
+              <div class="tier-card-body">
+                <div class="margin-hero"><div class="margin-hero-left"><span class="margin-hero-label">Ayrılacak Marjin ($)</span><span class="margin-hero-value">—</span></div></div>
+                <div class="tier-rows">
+                  <div class="tier-row"><span class="tier-row-label">Giriş Fiyatı</span><span class="tier-row-val">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">Pozisyon Büyüklüğü</span><span class="tier-row-val">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">Emir Miktarı</span><span class="tier-row-val">—</span></div>
+                  <div class="tier-row"><span class="tier-row-label">TP Hedefi</span><span class="tier-row-val val-tp">—</span></div>
+                </div>
+              </div>
+            </article>`;
+        }
+        dom.tiersGrid.innerHTML = html;
+        dom.simTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:24px 12px; color:var(--text-muted);">Simülasyonu görüntülemek için yukarıdaki parametre hatasını düzeltin.</td></tr>`;
+        dom.ladderSvg.innerHTML = `
+          <text x="210" y="202" text-anchor="middle" fill="#687287" font-size="13" font-family="var(--font-sans)">Fiyat Merdiveni Bekleniyor</text>
+          <text x="210" y="224" text-anchor="middle" fill="#ff5252" font-size="11" font-family="var(--font-sans)">Geçerli fiyat seviyeleri giriniz</text>
+        `;
+      }
+
+      function renderM2TierCards(res, baseCoin) {
+        const refPrice = res.tiers[0].entry;
+        const tpRaw = m2FmtPrice(res.TP, refPrice);
+        let html = "";
+
+        for (const t of res.tiers) {
+          const marginRaw = t.margin.toFixed(2);
+          const entryRaw = m2FmtPrice(t.entry, refPrice);
+          const notionalRaw = t.notional.toFixed(2);
+          const qtyRaw = m2FmtQty(t.qty);
+          const avgRaw = m2FmtPrice(t.avgCost, refPrice);
+          const tpSign = res.isShort ? "-" : "+";
+
+          const avgRowHtml = t.index >= 2
+            ? `
+              <div class="tier-row">
+                <span class="tier-row-label">Birleşik Ort. Maliyet</span>
+                <div class="tier-row-right">
+                  <span class="tier-row-val val-avg">$${avgRaw}</span>
+                  <button type="button" class="copy-btn" data-copy="${avgRaw}" title="Ortalama maliyeti kopyala" aria-label="Ortalama maliyeti kopyala">${m2CopySvg()}</button>
+                </div>
+              </div>`
+            : "";
+
+          html += `
+            <article class="tier-card ${t.isFinal && res.n > 1 ? "final-tier" : ""}" data-m2-tier="${t.index}">
+              <div class="tier-card-header">
+                <div class="tier-card-title">
+                  <span class="tier-num-badge">${t.index}</span>
+                  <span>${t.index}. Kademe${t.isFinal && res.n > 1 ? " (Son)" : ""}</span>
+                </div>
+                <span class="tier-quota-pill" title="Ana kasa oranı ve ağırlık">Kasa %${t.walletPct.toFixed(2)} · %${t.weightPct.toFixed(res.n === 3 ? 1 : 0)}</span>
+              </div>
+
+              <div class="tier-card-body">
+                <div class="margin-hero">
+                  <div class="margin-hero-left">
+                    <span class="margin-hero-label">Ayrılacak Marjin (${res.L}x IM)</span>
+                    <span class="margin-hero-value">$${marginRaw}</span>
+                  </div>
+                  <button type="button" class="copy-btn" data-copy="${marginRaw}" title="Marjini kopyala" aria-label="Marjini kopyala">
+                    ${m2CopySvg()}
+                  </button>
+                </div>
+
+                <div class="tier-rows">
+                  <div class="tier-row">
+                    <span class="tier-row-label">Giriş Fiyatı</span>
+                    <div class="tier-row-right">
+                      <span class="tier-row-val">$${entryRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${entryRaw}" title="Giriş fiyatını kopyala">${m2CopySvg()}</button>
+                    </div>
+                  </div>
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">Pozisyon Büyüklüğü</span>
+                    <div class="tier-row-right">
+                      <span class="pct-tag" style="background:var(--blue-dim); color:#8ab4ff;">%${t.walletPct.toFixed(1)}</span>
+                      <span class="tier-row-val">$${notionalRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${notionalRaw}" title="Pozisyon büyüklüğünü kopyala">${m2CopySvg()}</button>
+                    </div>
+                  </div>
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">Emir Miktarı (${m2Escape(baseCoin)})</span>
+                    <div class="tier-row-right">
+                      <span class="tier-row-val">${qtyRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${qtyRaw}" title="Emir miktarını kopyala">${m2CopySvg()}</button>
+                    </div>
+                  </div>
+
+                  ${avgRowHtml}
+
+                  <div class="tier-row">
+                    <span class="tier-row-label">TP Hedefi · Tekil Kâr</span>
+                    <div class="tier-row-right">
+                      <span class="pct-tag tp">${m2FmtUSDSigned(t.singleNet)}</span>
+                      <span class="tier-row-val val-tp">$${tpRaw}</span>
+                      <button type="button" class="copy-btn" data-copy="${tpRaw}" title="TP fiyatını kopyala">${m2CopySvg()}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `;
+        }
+
+        dom.tiersGrid.innerHTML = html;
+
+        dom.tiersGrid.querySelectorAll(".tier-card").forEach((card) => {
+          card.addEventListener("mouseenter", () => highlightM2Ladder(card.dataset.m2Tier, true));
+          card.addEventListener("mouseleave", () => highlightM2Ladder(card.dataset.m2Tier, false));
+        });
+      }
+
+      function renderM2Simulation(res) {
+        const refPrice = res.tiers[0].entry;
+        let rows = "";
+
+        // TP Scenarios for each tier 1..N
+        for (const t of res.tiers) {
+          const isFinal = t.isFinal;
+          const title = t.index === 1
+            ? "Senaryo 1 (1. Kademeden Direkt TP)"
+            : (t.index === 2
+              ? "Senaryo 2 (2. Kademe Dolup TP)"
+              : "Senaryo 3 (3. Kademe Dolup TP)");
+          const sub = t.index === 1
+            ? `Sadece 1. kademe ($${m2FmtPrice(t.entry, refPrice)}) → TP`
+            : `1..${t.index}. kademe dolu · Ort: $${m2FmtPrice(t.avgCost, refPrice)} → TP`;
+
+          rows += `
+            <tr class="${isFinal ? "row-target" : ""}">
+              <td>
+                <div class="scenario-name">
+                  <span class="scenario-title">${title}</span>
+                  <span class="scenario-sub">${sub}</span>
+                </div>
+              </td>
+              <td class="num mono val-pos">${m2FmtUSDSigned(t.cumNet)}</td>
+              <td class="num mono" style="color:var(--text-primary);">${t.cumRoiPct >= 0 ? "+" : ""}${t.cumRoiPct.toFixed(1)}% ROI</td>
+              <td class="num"><span class="rr-badge ${isFinal ? "target" : ""}">Kasa ${t.cumWalletPct >= 0 ? "+" : ""}%${t.cumWalletPct.toFixed(2)}</span></td>
+            </tr>
+          `;
+        }
+
+        // Row 4: Wick Stress Test
+        const wickDirSign = res.isShort ? "+" : "-";
+        const wickPriceStr = "$" + m2FmtPrice(res.wickPrice, refPrice);
+        const liqBadge = res.liqNoLiq
+          ? `<span class="rr-badge liq">Liq Yok ($0)</span>`
+          : `<span class="rr-badge liq">Liq $${m2FmtPrice(res.liqPrice, refPrice)}</span>`;
+        const freeClass = res.wickFreeCollateral > 0 ? "color:var(--orange);" : "color:var(--red); font-weight:700;";
+
+        rows += `
+          <tr class="row-stress">
+            <td>
+              <div class="scenario-name">
+                <span class="scenario-title">Fitil Stres Testi (${wickDirSign}%${Math.round(res.wickPct)} İğne)</span>
+                <span class="scenario-sub">İğne: ${wickPriceStr} (${res.wickFilledCount}/${res.n} kademe dolu · Kasa %${res.wickWalletImpactPct.toFixed(2)})</span>
+              </div>
+            </td>
+            <td class="num mono val-neg">${m2FmtUSDSigned(res.wickFloatingPnL)}</td>
+            <td class="num mono" style="${freeClass}">Serbest: ${m2FmtUSD(res.wickFreeCollateral)}</td>
+            <td class="num">${liqBadge}</td>
+          </tr>
+        `;
+
+        // Row 5: Weekly Close Manual Stop
+        const slSign = res.isShort ? "+" : "-";
+        const slPriceStr = "$" + m2FmtPrice(res.manualSlPrice, refPrice);
+
+        rows += `
+          <tr class="row-worst">
+            <td>
+              <div class="scenario-name">
+                <span class="scenario-title">Haftalık Mum Kapanışı (Manuel Stop)</span>
+                <span class="scenario-sub">Son kademe ${slSign}%${Math.round(res.weeklyPct)} (${slPriceStr}) kapanışta elle çıkış</span>
+              </div>
+            </td>
+            <td class="num mono val-neg">${m2FmtUSDSigned(res.manualSlNet)}</td>
+            <td class="num mono val-muted">Ort: $${m2FmtPrice(res.finalAvg, refPrice)}</td>
+            <td class="num"><span class="rr-badge worst">Kasa %${res.manualSlWalletPct.toFixed(2)}</span></td>
+          </tr>
+        `;
+
+        dom.simTableBody.innerHTML = rows;
+      }
+
+      /* -------------------- MODE 2 SVG PRICE LADDER (SHORT & LONG AUTO-FLIP + BREAK AXIS) -------------------- */
+      function renderM2Ladder(res) {
+        const svgW = 420;
+        const svgH = 420;
+        const axisX = 58;
+        const lineEndX = 148;
+        const pillX = 166;
+        const pillW = 244;
+        const refPrice = res.tiers[0].entry;
+        const isShort = res.isShort;
+
+        // Core proportional levels (excluding extreme Cross Liq which sits on a break-axis band)
+        const coreLevels = [];
+
+        coreLevels.push({
+          id: "tp",
+          tier: null,
+          label: "TP HEDEF",
+          price: res.TP,
+          type: "tp",
+          color: "#00e676",
+          bg: "rgba(0, 230, 118, 0.12)",
+          border: "rgba(0, 230, 118, 0.45)",
+          subText: m2FmtUSDSigned(res.finalTier.cumNet),
+          diffText: (isShort ? "-" : "+") + Math.abs(((res.TP - res.tiers[0].entry) / res.tiers[0].entry) * 100).toFixed(1) + "%"
+        });
+
+        for (const t of res.tiers) {
+          const isAmber = t.isFinal && res.n > 1;
+          coreLevels.push({
+            id: `p${t.index}`,
+            tier: String(t.index),
+            label: `${t.index}. KADEME`,
+            price: t.entry,
+            type: "entry",
+            color: isAmber ? "#ffb74d" : "#4d82ff",
+            bg: isAmber ? "rgba(255, 183, 77, 0.12)" : "rgba(41, 98, 255, 0.14)",
+            border: isAmber ? "rgba(255, 183, 77, 0.48)" : "rgba(41, 98, 255, 0.48)",
+            subText: `M: $${t.margin.toFixed(2)}`,
+            diffText: `%${t.walletPct.toFixed(1)}`
+          });
+        }
+
+        if (res.n >= 2) {
+          coreLevels.push({
+            id: "avg",
+            tier: null,
+            label: "BİRLEŞİK ORT.",
+            price: res.finalAvg,
+            type: "avg",
+            color: "#38bdf8",
+            bg: "rgba(56, 189, 248, 0.11)",
+            border: "rgba(56, 189, 248, 0.48)",
+            subText: `${res.n}K Ort`,
+            diffText: "ORT"
+          });
+        }
+
+        coreLevels.push({
+          id: "manualsl",
+          tier: null,
+          label: "HAFTALIK SL",
+          price: res.manualSlPrice,
+          type: "sl",
+          color: "#ff5252",
+          bg: "rgba(255, 82, 82, 0.15)",
+          border: "rgba(255, 82, 82, 0.58)",
+          subText: m2FmtUSDSigned(res.manualSlNet),
+          diffText: (isShort ? "+" : "-") + `${Math.round(res.weeklyPct)}%`
+        });
+
+        // Main plot range (leaves room at top in SHORT or bottom in LONG for break-axis Cross Liq)
+        const liqBandY = isShort ? 26 : svgH - 26;
+        const breakY = isShort ? 56 : svgH - 56;
+        const plotTop = isShort ? 78 : 26;
+        const plotBottom = isShort ? svgH - 26 : svgH - 78;
+        const plotH = plotBottom - plotTop;
+
+        const prices = coreLevels.map((l) => l.price);
+        const minP = Math.min(...prices);
+        const maxP = Math.max(...prices);
+        const rangeP = Math.max(maxP - minP, 1e-9);
+
+        // Always map higher price to upper Y (smaller pixel Y)
+        // In SHORT: manualSL is highest (top of plot), TP is lowest (bottom of plot)
+        // In LONG: TP is highest (top of plot), manualSL is lowest (bottom of plot)
+        const priceToY = (p) => plotTop + ((maxP - p) / rangeP) * plotH;
+
+        coreLevels.forEach((l) => {
+          l.y = priceToY(l.price);
+        });
+
+        // Sort top-down by visual Y
+        const topDown = [...coreLevels].sort((a, b) => a.y - b.y);
+        const minGap = topDown.length >= 6 ? 37 : 41;
+        topDown.forEach((l) => { l.labelY = l.y; });
+
+        for (let iter = 0; iter < 18; iter++) {
+          for (let i = 1; i < topDown.length; i++) {
+            const prev = topDown[i - 1];
+            const curr = topDown[i];
+            const overlap = (prev.labelY + minGap) - curr.labelY;
+            if (overlap > 0) {
+              prev.labelY -= overlap * 0.5;
+              curr.labelY += overlap * 0.5;
+            }
+          }
+          if (topDown[0].labelY < plotTop - 4) topDown[0].labelY = plotTop - 4;
+          const last = topDown.length - 1;
+          if (topDown[last].labelY > plotBottom + 4) topDown[last].labelY = plotBottom + 4;
+          for (let i = 1; i < topDown.length; i++) {
+            if (topDown[i].labelY < topDown[i - 1].labelY + minGap) {
+              topDown[i].labelY = topDown[i - 1].labelY + minGap;
+            }
+          }
+          for (let i = last - 1; i >= 0; i--) {
+            if (topDown[i].labelY > topDown[i + 1].labelY - minGap) {
+              topDown[i].labelY = topDown[i + 1].labelY - minGap;
+            }
+          }
+        }
+
+        // Tick collision avoidance
+        topDown.forEach((l) => { l.tickY = l.y; });
+        for (let iter = 0; iter < 12; iter++) {
+          for (let i = 1; i < topDown.length; i++) {
+            const prev = topDown[i - 1];
+            const curr = topDown[i];
+            const overlap = (prev.tickY + 14) - curr.tickY;
+            if (overlap > 0) {
+              prev.tickY -= overlap * 0.5;
+              curr.tickY += overlap * 0.5;
+            }
+          }
+          if (topDown[0].tickY < plotTop - 8) topDown[0].tickY = plotTop - 8;
+          const last = topDown.length - 1;
+          if (topDown[last].tickY > plotBottom + 8) topDown[last].tickY = plotBottom + 8;
+        }
+
+        const yTP = priceToY(res.TP);
+        const yP1 = priceToY(res.tiers[0].entry);
+        const yLast = priceToY(res.finalTier.entry);
+        const ySL = priceToY(res.manualSlPrice);
+
+        const profitTop = Math.min(yTP, yP1);
+        const profitH = Math.abs(yTP - yP1);
+        const scaleTop = Math.min(yP1, yLast);
+        const scaleH = Math.abs(yP1 - yLast);
+        const riskTop = Math.min(yLast, ySL);
+        const riskH = Math.abs(yLast - ySL);
+
+        let svg = `
+          <!-- Profit Zone -->
+          <rect x="${axisX}" y="${profitTop.toFixed(1)}" width="${lineEndX - axisX}" height="${profitH.toFixed(1)}" fill="rgba(0, 230, 118, 0.08)" rx="2"></rect>
+          <!-- Scaling Zone -->
+          <rect x="${axisX}" y="${scaleTop.toFixed(1)}" width="${lineEndX - axisX}" height="${scaleH.toFixed(1)}" fill="rgba(41, 98, 255, 0.06)" rx="2"></rect>
+          <!-- Manual SL Zone -->
+          <rect x="${axisX}" y="${riskTop.toFixed(1)}" width="${lineEndX - axisX}" height="${riskH.toFixed(1)}" fill="rgba(255, 82, 82, 0.09)" rx="2"></rect>
+
+          <!-- Main Spine -->
+          <line x1="${axisX}" y1="${plotTop - 10}" x2="${axisX}" y2="${plotBottom + 10}" stroke="#2a3142" stroke-width="1.5"></line>
+          <!-- Break-axis connector to Cross Liq -->
+          <line x1="${axisX}" y1="${liqBandY}" x2="${axisX}" y2="${breakY + (isShort ? -5 : 5)}" stroke="#e879f9" stroke-width="1.3" stroke-dasharray="3 3" opacity="0.65"></line>
+          <path d="M ${axisX - 6} ${breakY + 3} L ${axisX + 6} ${breakY - 3} M ${axisX - 6} ${breakY + 7} L ${axisX + 6} ${breakY + 1}" stroke="#687287" stroke-width="1.3" fill="none"></path>
+        `;
+
+        if (profitH > 26) {
+          svg += `<text x="${axisX + 45}" y="${(profitTop + profitH / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(0,230,118,0.48)" font-size="9.5" font-weight="600" letter-spacing="0.06em" font-family="var(--font-sans)">KÂR BÖLGESİ</text>`;
+        }
+        if (riskH > 24) {
+          svg += `<text x="${axisX + 45}" y="${(riskTop + riskH / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(255,82,82,0.52)" font-size="9" font-weight="600" letter-spacing="0.05em" font-family="var(--font-sans)">MANUEL SL</text>`;
+        }
+
+        // Cross Liquidation Level (Pinned on break-axis extreme)
+        const liqPriceLabel = res.liqNoLiq ? "LİQ YOK" : "$" + m2FmtPrice(res.liqPrice, refPrice);
+        const liqMultText = res.liqNoLiq
+          ? "$0.00"
+          : (isShort ? `~${res.liqMultFromAvg.toFixed(1)}x` : `-${(((res.finalAvg - res.liqPrice) / res.finalAvg) * 100).toFixed(0)}%`);
+        const liqSubTag = res.liqNoLiq
+          ? "Tam Korumalı"
+          : (isShort ? `~${res.liqMultFromAvg.toFixed(1)}x yukarı` : `Aşağıda`);
+        const liqPillTop = liqBandY - 15;
+
+        svg += `
+          <g class="ladder-group" data-m2-level="liq">
+            <text x="${axisX - 7}" y="${(liqBandY + 3.5).toFixed(1)}" text-anchor="end" fill="#e879f9" font-size="9.5" font-weight="700" font-family="var(--font-mono)">${liqMultText}</text>
+            <line x1="${axisX}" y1="${liqBandY}" x2="${lineEndX}" y2="${liqBandY}" stroke="#e879f9" stroke-width="2" stroke-dasharray="5 3"></line>
+            <circle cx="${axisX}" cy="${liqBandY}" r="3.4" fill="#e879f9"></circle>
+            <path d="M ${lineEndX} ${liqBandY} L ${pillX} ${liqBandY}" fill="none" stroke="#e879f9" stroke-width="1" opacity="0.65"></path>
+            <rect class="ladder-pill-bg" x="${pillX}" y="${liqPillTop}" width="${pillW}" height="30" rx="6" fill="rgba(232, 121, 249, 0.13)" stroke="rgba(232, 121, 249, 0.58)" stroke-width="1.1"></rect>
+            <text x="${pillX + 9}" y="${liqBandY + 3.5}" fill="#f0abfc" font-size="10" font-weight="700" font-family="var(--font-sans)">TAHMİNİ CROSS LİQ</text>
+            <text x="${pillX + pillW - 9}" y="${liqBandY + 4}" text-anchor="end" fill="#ffffff" font-size="11.5" font-weight="700" font-family="var(--font-mono)">${liqPriceLabel}</text>
+          </g>
+        `;
+
+        // Render proportional core levels
+        for (const lvl of topDown) {
+          const y = lvl.y;
+          const ly = lvl.labelY;
+          const ty = lvl.tickY;
+          const strokeDash = lvl.type === "avg" ? 'stroke-dasharray="4 3"' : "";
+          const priceStr = "$" + m2FmtPrice(lvl.price, refPrice);
+          const pillH = 29;
+          const pillTop = ly - pillH / 2;
+          const midX = lineEndX + 9;
+          const connectorPath = `M ${lineEndX} ${y.toFixed(1)} L ${midX} ${y.toFixed(1)} L ${pillX - 4} ${ly.toFixed(1)} L ${pillX} ${ly.toFixed(1)}`;
+
+          svg += `
+            <g class="ladder-group" data-m2-tier="${lvl.tier || ""}" data-m2-level="${lvl.id}">
+              <text x="${axisX - 7}" y="${(ty + 3.5).toFixed(1)}" text-anchor="end" fill="${lvl.color}" font-size="9.5" font-weight="600" font-family="var(--font-mono)" opacity="0.9">${lvl.diffText}</text>
+              <line x1="${axisX}" y1="${y.toFixed(1)}" x2="${lineEndX}" y2="${y.toFixed(1)}" stroke="${lvl.color}" stroke-width="${lvl.type === "tp" || lvl.type === "sl" ? "2" : "1.5"}" ${strokeDash}></line>
+              <circle cx="${axisX}" cy="${y.toFixed(1)}" r="3.1" fill="${lvl.color}"></circle>
+              <path d="${connectorPath}" fill="none" stroke="${lvl.color}" stroke-width="1" opacity="0.55"></path>
+              <rect class="ladder-pill-bg" x="${pillX}" y="${pillTop.toFixed(1)}" width="${pillW}" height="${pillH}" rx="6" fill="${lvl.bg}" stroke="${lvl.border}" stroke-width="1"></rect>
+              <text x="${pillX + 9}" y="${(ly + 3.5).toFixed(1)}" fill="${lvl.color}" font-size="10" font-weight="700" font-family="var(--font-sans)">${lvl.label}</text>
+              ${lvl.subText
+                ? `<text x="${pillX + pillW - 76}" y="${(ly + 3.5).toFixed(1)}" text-anchor="end" fill="#9aa3b5" font-size="9.5" font-weight="600" font-family="var(--font-mono)">${lvl.subText}</text>`
+                : ""
+              }
+              <text x="${pillX + pillW - 9}" y="${(ly + 4).toFixed(1)}" text-anchor="end" fill="#f0f3fa" font-size="11.5" font-weight="700" font-family="var(--font-mono)">${priceStr}</text>
+            </g>
+          `;
+        }
+
+        dom.ladderSvg.innerHTML = svg;
+
+        dom.ladderSvg.querySelectorAll(".ladder-group").forEach((grp) => {
+          const tier = grp.getAttribute("data-m2-tier");
+          if (!tier) return;
+          grp.addEventListener("mouseenter", () => {
+            const card = dom.tiersGrid.querySelector(`.tier-card[data-m2-tier="${tier}"]`);
+            if (card) card.classList.add("highlighted");
+          });
+          grp.addEventListener("mouseleave", () => {
+            const card = dom.tiersGrid.querySelector(`.tier-card[data-m2-tier="${tier}"]`);
+            if (card) card.classList.remove("highlighted");
+          });
+        });
+      }
+
+      function highlightM2Ladder(tierIdx, active) {
+        dom.ladderSvg.querySelectorAll(".ladder-group").forEach((g) => {
+          if (!active) {
+            g.style.opacity = "1";
+          } else {
+            const t = g.getAttribute("data-m2-tier");
+            const lvl = g.getAttribute("data-m2-level");
+            g.style.opacity = (t === String(tierIdx) || lvl === "tp" || lvl === "avg") ? "1" : "0.35";
+          }
+        });
+      }
+
+      /* -------------------- MODE 2 PRESETS (SEPARATE LOCALSTORAGE KEY) -------------------- */
+      function loadM2Presets() {
+        try {
+          const raw = localStorage.getItem(M2_PRESETS_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function saveM2Presets(list) {
+        try {
+          localStorage.setItem(M2_PRESETS_KEY, JSON.stringify(list));
+        } catch (_) {
+          m2ShowToast("Tarayıcı depolaması kullanılamıyor.");
+        }
+      }
+
+      function saveCurrentM2Preset() {
+        const coin = (m2.coin || "").trim().toUpperCase() || "PARITE";
+        m2.coin = coin;
+        dom.coinInput.value = coin;
+
+        const key = `${coin} (${m2.direction})`;
+        const list = loadM2Presets();
+        const entry = {
+          key,
+          coin,
+          direction: m2.direction,
+          tiers: m2.tiers,
+          balance: m2.balance,
+          quotaPct: m2.quotaPct,
+          leverage: m2.leverage,
+          basketCount: m2.basketCount,
+          weights2: [...m2.weights2],
+          weights3: [...m2.weights3],
+          p1: m2.p1,
+          p2: m2.p2,
+          p3: m2.p3,
+          tp: m2.tp,
+          weeklySlPct: m2.weeklySlPct,
+          wickPct: m2.wickPct,
+          feeProtection: m2.feeProtection,
+          savedAt: Date.now()
+        };
+
+        const idx = list.findIndex((p) => p.key === key);
+        if (idx >= 0) list[idx] = entry;
+        else list.unshift(entry);
+
+        saveM2Presets(list);
+        renderM2Presets();
+        m2ShowToast(`<span class="toast-val">${m2Escape(coin)}</span> (${m2.direction}) kaydedildi`);
+      }
+
+      function applyM2Preset(p) {
+        m2 = {
+          coin: p.coin || M2_DEFAULTS.coin,
+          direction: p.direction === "LONG" ? "LONG" : "SHORT",
+          tiers: [1, 2, 3].includes(p.tiers) ? p.tiers : 2,
+          balance: Number(p.balance),
+          quotaPct: Number(p.quotaPct),
+          leverage: Number(p.leverage),
+          basketCount: Number(p.basketCount) || 10,
+          weights2: Array.isArray(p.weights2) ? [...p.weights2] : [...M2_DEFAULTS.weights2],
+          weights3: Array.isArray(p.weights3) ? [...p.weights3] : [...M2_DEFAULTS.weights3],
+          p1: Number(p.p1),
+          p2: Number(p.p2),
+          p3: Number(p.p3),
+          tp: Number(p.tp),
+          weeklySlPct: Number(p.weeklySlPct),
+          wickPct: Number(p.wickPct),
+          feeProtection: Boolean(p.feeProtection)
+        };
+        rememberDirectionPrices();
+        syncM2Inputs();
+        renderMode2();
+        renderM2Presets();
+        m2ShowToast(`<span class="toast-val">${m2Escape(m2.coin)}</span> yüklendi`);
+      }
+
+      function deleteM2Preset(key) {
+        saveM2Presets(loadM2Presets().filter((p) => p.key !== key));
+        renderM2Presets();
+        m2ShowToast("Kayıt silindi");
+      }
+
+      function renderM2Presets() {
+        const list = loadM2Presets();
+        dom.presetCount.textContent = `${list.length} kayıt`;
+
+        if (list.length === 0) {
+          dom.presetsList.innerHTML = '<div class="preset-empty">Mod 2 için henüz kayıt yok. Ayarlarınız <code>cross_5pct_presets</code> altında ayrı saklanır.</div>';
+          return;
+        }
+
+        const activeKey = `${(m2.coin || "").trim().toUpperCase()} (${m2.direction})`;
+        dom.presetsList.innerHTML = list.map((p) => {
+          const dirColor = p.direction === "LONG" ? "var(--green)" : "var(--red)";
+          return `
+            <div class="preset-item ${p.key === activeKey ? "active-preset" : ""}" role="listitem" data-m2-load="${m2Escape(p.key)}">
+              <div class="preset-info">
+                <span class="preset-coin">${m2Escape(p.coin)}</span>
+                <span class="preset-badge" style="color:${dirColor}; background:rgba(255,255,255,0.05);">${p.direction === "LONG" ? "L" : "S"}</span>
+                <span class="preset-badge">${p.tiers}K</span>
+                <span class="preset-meta">$${Number(p.balance).toFixed(0)} · %${Number(p.quotaPct).toFixed(1)}</span>
+              </div>
+              <button type="button" class="preset-del" data-m2-del="${m2Escape(p.key)}" title="Kurguyu sil">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          `;
+        }).join("");
+      }
+
+      /* -------------------- INPUT SYNC & EVENTS -------------------- */
+      function rememberDirectionPrices() {
+        const pack = { p1: m2.p1, p2: m2.p2, p3: m2.p3, tp: m2.tp };
+        if (m2.direction === "SHORT") lastShortPrices = pack;
+        else lastLongPrices = pack;
+      }
+
+      function syncM2Inputs() {
+        dom.coinInput.value = m2.coin;
+        dom.balanceInput.value = m2.balance;
+        dom.leverageInput.value = m2.leverage;
+        dom.basketInput.value = m2.basketCount;
+        dom.quotaRange.value = m2.quotaPct;
+        dom.quotaInput.value = Number(m2.quotaPct).toFixed(1);
+        dom.w2_1.value = m2.weights2[0];
+        dom.w2_2.value = m2.weights2[1];
+        dom.w3_1.value = m2.weights3[0];
+        dom.w3_2.value = m2.weights3[1];
+        dom.w3_3.value = m2.weights3[2];
+        dom.p1Input.value = m2.p1;
+        dom.p2Input.value = m2.p2;
+        dom.p3Input.value = m2.p3;
+        dom.tpInput.value = m2.tp;
+        dom.weeklySlRange.value = m2.weeklySlPct;
+        dom.weeklySlInput.value = Math.round(m2.weeklySlPct);
+        dom.wickRange.value = m2.wickPct;
+        dom.wickInput.value = Math.round(m2.wickPct);
+        dom.feeToggle.checked = m2.feeProtection;
+      }
+
+      function numVal(inputEl) {
+        const v = parseFloat(inputEl.value);
+        return isNaN(v) ? NaN : v;
+      }
+
+      function bindM2Events() {
+        dom.coinInput.addEventListener("input", () => {
+          m2.coin = dom.coinInput.value.toUpperCase();
+          renderMode2();
+          renderM2Presets();
+        });
+
+        // Direction switcher (remembers & swaps SHORT / LONG prices seamlessly)
+        [dom.dirShortBtn, dom.dirLongBtn].forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const nextDir = btn.dataset.dir;
+            if (nextDir === m2.direction) return;
+            rememberDirectionPrices();
+            m2.direction = nextDir;
+            const restored = nextDir === "SHORT" ? lastShortPrices : lastLongPrices;
+            m2.p1 = restored.p1;
+            m2.p2 = restored.p2;
+            m2.p3 = restored.p3;
+            m2.tp = restored.tp;
+            syncM2Inputs();
+            renderMode2();
+            renderM2Presets();
+          });
+        });
+
+        // Tiers 1 / 2 / 3
+        [dom.tier1Btn, dom.tier2Btn, dom.tier3Btn].forEach((btn) => {
+          btn.addEventListener("click", () => {
+            m2.tiers = Number(btn.dataset.tiers);
+            renderMode2();
+          });
+        });
+
+        dom.balanceInput.addEventListener("input", () => { m2.balance = numVal(dom.balanceInput); renderMode2(); });
+        dom.leverageInput.addEventListener("input", () => { m2.leverage = numVal(dom.leverageInput); renderMode2(); });
+        dom.basketInput.addEventListener("input", () => { m2.basketCount = numVal(dom.basketInput); renderMode2(); });
+
+        // Quota slider <-> input
+        dom.quotaRange.addEventListener("input", () => {
+          m2.quotaPct = parseFloat(dom.quotaRange.value);
+          dom.quotaInput.value = m2.quotaPct.toFixed(1);
+          renderMode2();
+        });
+        dom.quotaInput.addEventListener("input", () => {
+          const v = numVal(dom.quotaInput);
+          m2.quotaPct = v;
+          if (isFinite(v)) dom.quotaRange.value = Math.min(15, Math.max(1, v));
+          renderMode2();
+        });
+
+        // Weight preset chips
+        dom.weightPresets.addEventListener("click", (e) => {
+          const chip = e.target.closest("[data-wpreset]");
+          if (!chip) return;
+          const [modeStr, valsStr] = chip.getAttribute("data-wpreset").split(":");
+          const vals = valsStr.split(",").map(Number);
+          if (modeStr === "2") {
+            m2.weights2 = [vals[0], vals[1]];
+            dom.w2_1.value = vals[0];
+            dom.w2_2.value = vals[1];
+          } else {
+            m2.weights3 = [vals[0], vals[1], vals[2]];
+            dom.w3_1.value = vals[0];
+            dom.w3_2.value = vals[1];
+            dom.w3_3.value = vals[2];
+          }
+          renderMode2();
+        });
+
+        // Manual weight inputs (auto-balance to 100%)
+        dom.w2_1.addEventListener("input", () => {
+          const v = numVal(dom.w2_1);
+          if (isFinite(v)) {
+            const clamped = Math.min(95, Math.max(5, v));
+            m2.weights2 = [clamped, Number((100 - clamped).toFixed(1))];
+            dom.w2_2.value = m2.weights2[1];
+          } else {
+            m2.weights2[0] = NaN;
+          }
+          renderMode2();
+        });
+        dom.w2_2.addEventListener("input", () => {
+          const v = numVal(dom.w2_2);
+          if (isFinite(v)) {
+            const clamped = Math.min(95, Math.max(5, v));
+            m2.weights2 = [Number((100 - clamped).toFixed(1)), clamped];
+            dom.w2_1.value = m2.weights2[0];
+          } else {
+            m2.weights2[1] = NaN;
+          }
+          renderMode2();
+        });
+
+        const sync3Weights = () => {
+          const w1 = numVal(dom.w3_1);
+          const w2 = numVal(dom.w3_2);
+          if (isFinite(w1) && isFinite(w2)) {
+            const w3 = Number((100 - w1 - w2).toFixed(1));
+            m2.weights3 = [w1, w2, w3];
+            dom.w3_3.value = w3;
+          } else {
+            m2.weights3 = [w1, w2, NaN];
+          }
+          renderMode2();
+        };
+        dom.w3_1.addEventListener("input", sync3Weights);
+        dom.w3_2.addEventListener("input", sync3Weights);
+
+        // Price inputs
+        [
+          [dom.p1Input, "p1"],
+          [dom.p2Input, "p2"],
+          [dom.p3Input, "p3"],
+          [dom.tpInput, "tp"]
+        ].forEach(([inp, key]) => {
+          inp.addEventListener("input", () => {
+            m2[key] = numVal(inp);
+            rememberDirectionPrices();
+            renderMode2();
+          });
+        });
+
+        // Weekly SL slider <-> input
+        dom.weeklySlRange.addEventListener("input", () => {
+          m2.weeklySlPct = parseFloat(dom.weeklySlRange.value);
+          dom.weeklySlInput.value = Math.round(m2.weeklySlPct);
+          renderMode2();
+        });
+        dom.weeklySlInput.addEventListener("input", () => {
+          const v = numVal(dom.weeklySlInput);
+          m2.weeklySlPct = v;
+          if (isFinite(v)) dom.weeklySlRange.value = Math.min(30, Math.max(3, v));
+          renderMode2();
+        });
+
+        // Wick stress slider <-> input
+        dom.wickRange.addEventListener("input", () => {
+          m2.wickPct = parseFloat(dom.wickRange.value);
+          dom.wickInput.value = Math.round(m2.wickPct);
+          renderMode2();
+        });
+        dom.wickInput.addEventListener("input", () => {
+          const v = numVal(dom.wickInput);
+          m2.wickPct = v;
+          if (isFinite(v)) dom.wickRange.value = Math.min(300, Math.max(30, v));
+          renderMode2();
+        });
+
+        // Fee toggle
+        dom.feeToggle.addEventListener("change", () => {
+          m2.feeProtection = dom.feeToggle.checked;
+          renderMode2();
+        });
+
+        // Presets
+        dom.savePresetBtn.addEventListener("click", saveCurrentM2Preset);
+        dom.resetDefaultsBtn.addEventListener("click", () => {
+          lastShortPrices = { p1: 25.00, p2: 40.00, p3: 55.00, tp: 15.80 };
+          lastLongPrices = { p1: 40.00, p2: 28.00, p3: 20.00, tp: 58.00 };
+          m2 = {
+            ...M2_DEFAULTS,
+            weights2: [...M2_DEFAULTS.weights2],
+            weights3: [...M2_DEFAULTS.weights3]
+          };
+          syncM2Inputs();
+          renderMode2();
+          renderM2Presets();
+          m2ShowToast("Mod 2 varsayılanlarına sıfırlandı");
+        });
+
+        dom.presetsList.addEventListener("click", (e) => {
+          const delBtn = e.target.closest("[data-m2-del]");
+          if (delBtn) {
+            e.stopPropagation();
+            deleteM2Preset(delBtn.getAttribute("data-m2-del"));
+            return;
+          }
+          const item = e.target.closest("[data-m2-load]");
+          if (item) {
+            const key = item.getAttribute("data-m2-load");
+            const found = loadM2Presets().find((p) => p.key === key);
+            if (found) applyM2Preset(found);
+          }
+        });
+
+        // Delegated copy buttons in Mode 2 cards
+        dom.tiersGrid.addEventListener("click", (e) => {
+          const btn = e.target.closest(".copy-btn");
+          if (!btn) return;
+          const val = btn.getAttribute("data-copy");
+          if (val !== null) m2Copy(val, btn);
+        });
+      }
+
+      /* -------------------- INIT MODE 2 -------------------- */
+      syncM2Inputs();
+      bindM2Events();
+      renderM2Presets();
+      renderMode2();
     })();
   </script>
 </body>
