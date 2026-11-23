@@ -53,11 +53,13 @@
 
     html, body {
       height: 100%;
+      width: 100%;
       background-color: var(--bg-main);
       color: var(--text-primary);
       font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.4;
+      font-size: 15px;
+      line-height: 1.42;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -65,6 +67,7 @@
     body {
       display: flex;
       flex-direction: column;
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -92,29 +95,30 @@
 
     /* ==================== TOP HEADER ==================== */
     .topbar {
-      height: 46px;
-      min-height: 46px;
+      height: 58px;
+      min-height: 58px;
       background: var(--bg-card);
       border-bottom: 1px solid var(--border);
-      padding: 0 16px;
+      padding: 0 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
       z-index: 10;
+      flex-shrink: 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       min-width: 0;
     }
 
     .brand-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
       background: var(--blue-dim);
       border: 1px solid var(--blue-border);
       display: flex;
@@ -124,19 +128,24 @@
       flex-shrink: 0;
     }
 
+    .brand-icon svg {
+      width: 19px;
+      height: 19px;
+    }
+
     .brand-title {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       color: var(--text-primary);
       letter-spacing: -0.01em;
       white-space: nowrap;
     }
 
     .brand-subtitle {
-      font-size: 11px;
+      font-size: 12.5px;
       color: var(--text-muted);
       border-left: 1px solid var(--border-strong);
-      padding-left: 10px;
+      padding-left: 12px;
       white-space: nowrap;
     }
 
@@ -144,17 +153,18 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-shrink: 0;
     }
 
     .ticker-pill {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       background: var(--bg-input);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      padding: 4px 10px;
-      font-size: 12px;
+      padding: 6px 12px;
+      font-size: 13.5px;
     }
 
     .ticker-symbol {
@@ -163,9 +173,9 @@
     }
 
     .ticker-tag {
-      font-size: 10.5px;
-      font-weight: 600;
-      padding: 1px 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
       border-radius: 4px;
       background: var(--red-dim);
       color: var(--red);
@@ -180,17 +190,18 @@
     .kpi-chip {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 7px;
+      padding: 6px 12px;
       border-radius: var(--radius-sm);
       background: var(--bg-input);
       border: 1px solid var(--border);
-      font-size: 11.5px;
+      font-size: 13.5px;
       white-space: nowrap;
     }
 
     .kpi-chip .kpi-label {
-      color: var(--text-muted);
+      color: var(--text-secondary);
+      font-weight: 500;
     }
 
     .kpi-chip .kpi-val {
@@ -201,14 +212,15 @@
     .kpi-val.red { color: var(--red); }
     .kpi-val.orange { color: var(--orange); }
 
-    /* ==================== MAIN WORKSPACE ==================== */
+    /* ==================== MAIN WORKSPACE (3-COLUMN FULL-HEIGHT GRID) ==================== */
     .workspace {
       flex: 1;
       min-height: 0;
+      width: 100%;
       display: grid;
-      grid-template-columns: 356px 1fr;
-      gap: 12px;
-      padding: 12px;
+      grid-template-columns: 376px minmax(0, 1.35fr) minmax(400px, 1fr);
+      gap: 14px;
+      padding: 14px;
       overflow: hidden;
     }
 
@@ -219,67 +231,72 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
+      min-width: 0;
       overflow: hidden;
     }
 
     .panel-header {
-      padding: 9px 14px;
+      padding: 11px 16px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
       flex-shrink: 0;
     }
 
     .panel-title {
-      font-size: 11.5px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
 
     .panel-title svg {
-      color: var(--text-muted);
+      color: var(--text-secondary);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
     }
 
     /* ==================== LEFT PANEL (CONTROLS) ==================== */
     .left-panel-body {
       flex: 1;
       min-height: 0;
-      padding: 11px 13px;
+      padding: 13px 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 11px;
       overflow-y: auto;
+      overflow-x: hidden;
     }
 
     .field-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
     }
 
     .field-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
+      gap: 8px;
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
       min-width: 0;
     }
 
     .field-label {
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 12.5px;
+      font-weight: 600;
       color: var(--text-secondary);
       display: flex;
       align-items: center;
@@ -290,7 +307,8 @@
 
     .field-label .unit {
       color: var(--text-muted);
-      font-size: 10.5px;
+      font-size: 11.5px;
+      font-weight: 500;
     }
 
     .input-wrap {
@@ -303,33 +321,34 @@
     .input-suffix {
       position: absolute;
       font-family: var(--font-mono);
-      font-size: 11.5px;
+      font-size: 13.5px;
+      font-weight: 600;
       color: var(--text-muted);
       pointer-events: none;
       user-select: none;
     }
 
-    .input-prefix { left: 9px; }
-    .input-suffix { right: 9px; }
+    .input-prefix { left: 10px; }
+    .input-suffix { right: 10px; }
 
     input[type="text"],
     input[type="number"] {
       width: 100%;
-      height: 32px;
+      height: 41px;
       background: var(--bg-input);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
       color: var(--text-primary);
       font-family: var(--font-mono);
-      font-size: 12.5px;
-      font-weight: 500;
-      padding: 0 9px;
+      font-size: 14.5px;
+      font-weight: 700;
+      padding: 0 11px;
       outline: none;
       transition: border-color var(--transition), background-color var(--transition), box-shadow var(--transition);
     }
 
-    input.has-prefix { padding-left: 22px; }
-    input.has-suffix { padding-right: 24px; }
+    input.has-prefix { padding-left: 25px; }
+    input.has-suffix { padding-right: 26px; }
 
     input[type="text"]:hover,
     input[type="number"]:hover {
@@ -339,7 +358,7 @@
     input[type="text"]:focus,
     input[type="number"]:focus {
       border-color: var(--blue);
-      box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.22);
+      box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.24);
       background: #101521;
     }
 
@@ -377,9 +396,9 @@
       background: var(--bg-input);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      padding: 2px;
-      height: 32px;
-      gap: 2px;
+      padding: 3px;
+      height: 41px;
+      gap: 3px;
     }
 
     .segmented-btn {
@@ -387,14 +406,15 @@
       background: transparent;
       color: var(--text-secondary);
       font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 5px;
       cursor: pointer;
       transition: all var(--transition);
       display: flex;
       align-items: center;
       justify-content: center;
+      white-space: nowrap;
     }
 
     .segmented-btn:hover {
@@ -404,7 +424,7 @@
     .segmented-btn.active {
       background: var(--blue);
       color: #ffffff;
-      box-shadow: 0 1px 4px rgba(41, 98, 255, 0.35);
+      box-shadow: 0 1px 5px rgba(41, 98, 255, 0.38);
     }
 
     /* Section divider inside left panel */
@@ -412,18 +432,18 @@
       background: var(--bg-card-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 8px 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 9px;
     }
 
     .sub-section-title {
-      font-size: 10.5px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -433,7 +453,7 @@
     .slider-block {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 5px;
     }
 
     .slider-top {
@@ -446,14 +466,14 @@
     .slider-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
       flex: 1;
-      height: 4px;
+      height: 6px;
       border-radius: 99px;
       background: #252c3d;
       outline: none;
@@ -463,12 +483,12 @@
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 14px;
-      height: 14px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background: var(--blue);
       border: 2px solid #e6eaf2;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
       cursor: pointer;
       transition: transform var(--transition);
     }
@@ -478,33 +498,35 @@
     }
 
     input[type="range"]::-moz-range-thumb {
-      width: 14px;
-      height: 14px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background: var(--blue);
       border: 2px solid #e6eaf2;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
       cursor: pointer;
     }
 
     .slider-num {
-      width: 62px !important;
-      height: 26px !important;
-      font-size: 12px !important;
+      width: 74px !important;
+      height: 34px !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
       text-align: right;
-      padding-right: 20px !important;
-      padding-left: 6px !important;
+      padding-right: 24px !important;
+      padding-left: 8px !important;
     }
 
     .slider-hint {
-      font-size: 10.5px;
+      font-size: 12px;
       color: var(--text-muted);
+      line-height: 1.35;
     }
 
     .slider-hint strong {
-      color: var(--text-secondary);
+      color: var(--text-primary);
       font-family: var(--font-mono);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* Switch Toggle */
@@ -512,11 +534,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       background: var(--bg-card-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 8px 10px;
+      padding: 10px 12px;
       cursor: pointer;
       user-select: none;
       transition: border-color var(--transition);
@@ -529,24 +551,24 @@
     .switch-text {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
     }
 
     .switch-title {
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13.5px;
+      font-weight: 700;
       color: var(--text-primary);
     }
 
     .switch-desc {
-      font-size: 10.5px;
+      font-size: 11.5px;
       color: var(--text-muted);
     }
 
     .toggle-switch {
       position: relative;
-      width: 38px;
-      height: 20px;
+      width: 44px;
+      height: 24px;
       flex-shrink: 0;
     }
 
@@ -571,8 +593,8 @@
       position: absolute;
       top: 2px;
       left: 2px;
-      width: 14px;
-      height: 14px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       background: #9aa3b5;
       transition: transform var(--transition), background-color var(--transition);
@@ -584,45 +606,50 @@
     }
 
     .toggle-switch input:checked + .toggle-track::after {
-      transform: translateX(18px);
+      transform: translateX(20px);
       background: var(--blue);
     }
 
     /* Presets Section */
     .presets-section {
       flex: 1;
-      min-height: 92px;
+      min-height: 110px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 9px;
       background: var(--bg-card-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 8px 10px;
+      padding: 10px 12px;
       overflow: hidden;
     }
 
     .presets-actions {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 6px;
+      gap: 8px;
     }
 
     .btn {
-      height: 30px;
+      height: 38px;
       border-radius: var(--radius-sm);
       font-family: var(--font-sans);
-      font-size: 11.5px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      padding: 0 10px;
+      gap: 6px;
+      padding: 0 13px;
       transition: all var(--transition);
       border: 1px solid transparent;
       white-space: nowrap;
+    }
+
+    .btn svg {
+      width: 15px;
+      height: 15px;
     }
 
     .btn-primary {
@@ -648,18 +675,18 @@
 
     .presets-list {
       flex: 1;
-      min-height: 36px;
+      min-height: 44px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .preset-empty {
-      font-size: 11px;
+      font-size: 12.5px;
       color: var(--text-muted);
       text-align: center;
-      padding: 10px 6px;
+      padding: 12px 8px;
       border: 1px dashed var(--border-strong);
       border-radius: var(--radius-sm);
     }
@@ -668,8 +695,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 6px;
-      padding: 5px 7px;
+      gap: 8px;
+      padding: 7px 9px;
       background: var(--bg-input);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
@@ -690,13 +717,13 @@
     .preset-info {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       min-width: 0;
     }
 
     .preset-coin {
       font-family: var(--font-mono);
-      font-size: 11.5px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text-primary);
       overflow: hidden;
@@ -706,23 +733,23 @@
 
     .preset-meta {
       font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-size: 12px;
       color: var(--text-muted);
       white-space: nowrap;
     }
 
     .preset-badge {
-      font-size: 9.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 1px 4px;
-      border-radius: 3px;
+      padding: 2px 6px;
+      border-radius: 4px;
       background: var(--blue-dim);
       color: #7ea7ff;
     }
 
     .preset-del {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       border: none;
       background: transparent;
       color: var(--text-muted);
@@ -740,12 +767,14 @@
       color: var(--red);
     }
 
-    /* ==================== RIGHT PANEL ==================== */
+    /* ==================== MIDDLE PANEL (CARDS + SIMULATION + FOOTER) ==================== */
     .right-panel {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      justify-content: space-between;
+      gap: 14px;
       min-height: 0;
+      min-width: 0;
       overflow: hidden;
     }
 
@@ -753,14 +782,14 @@
     .error-banner {
       display: none;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       background: rgba(255, 82, 82, 0.11);
       border: 1px solid var(--red-border);
-      border-left: 3px solid var(--red);
+      border-left: 4px solid var(--red);
       border-radius: var(--radius-md);
-      padding: 9px 13px;
+      padding: 12px 16px;
       color: #ffd0d0;
-      font-size: 12.5px;
+      font-size: 14px;
       flex-shrink: 0;
     }
 
@@ -771,6 +800,8 @@
     .error-banner svg {
       color: var(--red);
       flex-shrink: 0;
+      width: 20px;
+      height: 20px;
     }
 
     .error-banner strong {
@@ -782,8 +813,12 @@
     .tiers-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 12px;
       flex-shrink: 0;
+    }
+
+    .tiers-grid.mode-1 {
+      grid-template-columns: 1fr;
     }
 
     .tiers-grid.mode-3 {
@@ -796,6 +831,7 @@
       border-radius: var(--radius-lg);
       display: flex;
       flex-direction: column;
+      min-width: 0;
       overflow: hidden;
       transition: border-color var(--transition), transform var(--transition);
     }
@@ -811,7 +847,7 @@
     }
 
     .tier-card-header {
-      padding: 8px 12px;
+      padding: 10px 14px;
       background: var(--bg-card-elevated);
       border-bottom: 1px solid var(--border);
       display: flex;
@@ -823,25 +859,27 @@
     .tier-card-title {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: 12.5px;
+      gap: 8px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--text-primary);
+      white-space: nowrap;
     }
 
     .tier-num-badge {
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
       background: var(--blue-dim);
       border: 1px solid var(--blue-border);
       color: #7ea7ff;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .tier-card.final-tier .tier-num-badge {
@@ -852,67 +890,74 @@
 
     .tier-risk-pill {
       font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-size: 12px;
       color: var(--text-secondary);
       background: var(--bg-input);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px 6px;
+      border-radius: 5px;
+      padding: 3px 8px;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      white-space: nowrap;
     }
 
     .tier-risk-pill span {
       color: var(--red);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .tier-card-body {
-      padding: 9px 12px 10px;
+      padding: 12px 14px 14px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 10px;
     }
 
     /* Highlighted Margin Block */
     .margin-hero {
-      background: linear-gradient(180deg, rgba(41, 98, 255, 0.08) 0%, rgba(14, 18, 27, 0.7) 100%);
+      background: linear-gradient(180deg, rgba(41, 98, 255, 0.10) 0%, rgba(14, 18, 27, 0.78) 100%);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-md);
-      padding: 7px 10px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
     }
 
     .margin-hero-left {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
+      min-width: 0;
     }
 
     .margin-hero-label {
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
 
     .margin-hero-value {
       font-family: var(--font-mono);
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 30px;
+      font-weight: 800;
       color: #ffffff;
-      line-height: 1.15;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .tiers-grid.mode-3 .margin-hero-value {
+      font-size: 28px;
     }
 
     .tier-rows {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 5px;
     }
 
     .tier-row {
@@ -920,8 +965,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 3.5px 6px;
-      border-radius: 5px;
+      padding: 5px 8px;
+      border-radius: 6px;
       transition: background-color var(--transition);
     }
 
@@ -930,22 +975,26 @@
     }
 
     .tier-row-label {
-      font-size: 11.5px;
+      font-size: 14px;
+      font-weight: 500;
       color: var(--text-secondary);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .tier-row-right {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       min-width: 0;
+      flex-shrink: 0;
     }
 
     .tier-row-val {
       font-family: var(--font-mono);
-      font-size: 12.5px;
-      font-weight: 600;
+      font-size: 14.5px;
+      font-weight: 700;
       color: var(--text-primary);
       white-space: nowrap;
     }
@@ -955,10 +1004,10 @@
 
     .pct-tag {
       font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 600;
-      padding: 1px 5px;
-      border-radius: 3px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
       white-space: nowrap;
     }
 
@@ -972,20 +1021,70 @@
       color: var(--green);
     }
 
+    /* Slight horizontal tightening for 3-card layout on 1920px screens to prevent clipping */
+    @media (max-width: 2100px) {
+      .tiers-grid.mode-3 {
+        gap: 10px;
+      }
+      .tiers-grid.mode-3 .tier-card-header {
+        padding: 9px 10px;
+        gap: 6px;
+      }
+      .tiers-grid.mode-3 .tier-card-title {
+        font-size: 13px;
+        gap: 6px;
+      }
+      .tiers-grid.mode-3 .tier-num-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 11.5px;
+      }
+      .tiers-grid.mode-3 .tier-quota-pill,
+      .tiers-grid.mode-3 .tier-risk-pill {
+        font-size: 10.5px;
+        padding: 2px 6px;
+      }
+      .tiers-grid.mode-3 .tier-card-body {
+        padding: 10px 11px 12px;
+      }
+      .tiers-grid.mode-3 .margin-hero {
+        padding: 9px 11px;
+      }
+      .tiers-grid.mode-3 .tier-row {
+        padding: 5px 5px;
+        gap: 5px;
+      }
+      .tiers-grid.mode-3 .tier-row-label {
+        font-size: 13px;
+      }
+      .tiers-grid.mode-3 .tier-row-val {
+        font-size: 13.5px;
+      }
+      .tiers-grid.mode-3 .pct-tag {
+        font-size: 10.5px;
+        padding: 2px 5px;
+      }
+    }
+
     /* Copy Button */
     .copy-btn {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       border: 1px solid transparent;
       background: transparent;
       color: var(--text-muted);
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       transition: all var(--transition);
+    }
+
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
     }
 
     .copy-btn:hover {
@@ -1001,30 +1100,18 @@
     }
 
     .margin-hero .copy-btn {
-      width: 28px;
-      height: 28px;
-      background: rgba(255, 255, 255, 0.04);
+      width: 34px;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.05);
       border-color: var(--border-strong);
     }
 
-    /* ==================== BOTTOM SPLIT (SIMULATION + SVG LADDER) ==================== */
-    .bottom-grid {
-      flex: 1;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: minmax(420px, 1.32fr) minmax(320px, 1fr);
-      gap: 10px;
-      overflow: hidden;
+    .margin-hero .copy-btn svg {
+      width: 16px;
+      height: 16px;
     }
 
-    .sim-column {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 0;
-      overflow: hidden;
-    }
-
+    /* ==================== SCENARIO SIMULATION TABLE ==================== */
     .sim-panel {
       flex: 1;
       min-height: 0;
@@ -1033,29 +1120,31 @@
     .sim-table-wrap {
       flex: 1;
       min-height: 0;
-      overflow: auto;
-      padding: 4px 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0;
     }
 
     table.sim-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .sim-table thead th {
       text-align: left;
-      font-size: 10.5px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      padding: 7px 12px;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      padding: 11px 14px;
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
-      background: var(--bg-card);
+      background: var(--bg-card-elevated);
       position: sticky;
       top: 0;
+      z-index: 2;
     }
 
     .sim-table thead th.num,
@@ -1064,7 +1153,7 @@
     }
 
     .sim-table tbody tr {
-      border-bottom: 1px solid rgba(30, 34, 45, 0.7);
+      border-bottom: 1px solid rgba(30, 34, 45, 0.8);
       transition: background-color var(--transition);
     }
 
@@ -1077,35 +1166,41 @@
     }
 
     .sim-table tbody td {
-      padding: 7px 10px;
+      padding: 15px 14px;
       vertical-align: middle;
+    }
+
+    .sim-table tbody td.num {
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     .scenario-name {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 3px;
     }
 
     .scenario-title {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-primary);
-      font-size: 11.5px;
-      line-height: 1.25;
+      font-size: 14px;
+      line-height: 1.3;
     }
 
     .scenario-sub {
-      font-size: 10px;
-      color: var(--text-muted);
-      line-height: 1.25;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.35;
     }
 
     .sim-table tr.row-target {
-      background: rgba(0, 230, 118, 0.04);
+      background: rgba(0, 230, 118, 0.05);
     }
 
     .sim-table tr.row-worst {
-      background: rgba(255, 82, 82, 0.05);
+      background: rgba(255, 82, 82, 0.06);
     }
 
     .val-pos {
@@ -1119,19 +1214,19 @@
     }
 
     .val-muted {
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
 
     .rr-badge {
       display: inline-block;
       font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 5px;
       background: var(--bg-input);
       border: 1px solid var(--border-strong);
-      color: var(--text-secondary);
+      color: var(--text-primary);
       white-space: nowrap;
     }
 
@@ -1149,89 +1244,100 @@
 
     /* Wallet & Margin Reminder Box */
     .wallet-box {
-      background: linear-gradient(90deg, rgba(255, 183, 77, 0.09) 0%, rgba(19, 23, 34, 0.96) 100%);
+      background: linear-gradient(90deg, rgba(255, 183, 77, 0.11) 0%, rgba(19, 23, 34, 0.98) 100%);
       border: 1px solid var(--orange-border);
-      border-left: 3px solid var(--orange);
+      border-left: 4px solid var(--orange);
       border-radius: var(--radius-md);
-      padding: 9px 12px;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 16px;
       flex-shrink: 0;
     }
 
     .wallet-box-left {
       display: flex;
-      align-items: flex-start;
-      gap: 9px;
+      align-items: center;
+      gap: 12px;
       min-width: 0;
     }
 
     .wallet-icon {
       color: var(--orange);
-      margin-top: 1px;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .wallet-icon svg {
+      width: 22px;
+      height: 22px;
     }
 
     .wallet-text {
-      font-size: 11.5px;
-      color: var(--text-secondary);
-      line-height: 1.42;
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.48;
     }
 
     .wallet-text strong {
       color: var(--orange);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .wallet-balance-pill {
       background: var(--bg-input);
       border: 1px solid var(--orange-border);
       border-radius: var(--radius-sm);
-      padding: 6px 10px;
+      padding: 9px 14px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       flex-shrink: 0;
+      min-width: 146px;
     }
 
     .wallet-balance-label {
-      font-size: 9.5px;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
     }
 
     .wallet-balance-val {
       font-family: var(--font-mono);
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       color: var(--orange);
+      line-height: 1.25;
     }
 
-    /* ==================== SVG PRICE LADDER ==================== */
+    /* ==================== SVG PRICE LADDER (RIGHT COLUMN) ==================== */
     .ladder-panel {
       min-height: 0;
+      min-width: 0;
     }
 
     .ladder-legend {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 10.5px;
-      color: var(--text-muted);
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
     }
 
     .legend-dot {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
     .legend-dot i {
-      width: 7px;
-      height: 7px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       display: inline-block;
     }
@@ -1240,13 +1346,14 @@
       flex: 1;
       min-height: 0;
       position: relative;
-      padding: 6px 8px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    #priceLadderSvg {
+    #priceLadderSvg,
+    #m2PriceLadderSvg {
       width: 100%;
       height: 100%;
       display: block;
@@ -1265,19 +1372,19 @@
     /* ==================== TOAST NOTIFICATION ==================== */
     .toast {
       position: fixed;
-      bottom: 18px;
-      right: 18px;
+      bottom: 20px;
+      right: 20px;
       background: #171e2e;
       border: 1px solid var(--green-border);
       color: var(--text-primary);
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: var(--radius-md);
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 13.5px;
+      font-weight: 600;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       opacity: 0;
       transform: translateY(10px);
       pointer-events: none;
@@ -1302,47 +1409,41 @@
       font-weight: 700;
     }
 
-    /* ==================== COMPACT 720P DESKTOP FIT ==================== */
-    @media (max-height: 790px) and (min-width: 1181px) {
-      .topbar { height: 40px; min-height: 40px; }
-      .workspace { gap: 9px; padding: 9px; grid-template-columns: 344px 1fr; }
-      .panel-header { padding: 6px 12px; }
-      .left-panel-body { padding: 8px 11px; gap: 7px; }
-      input[type="text"], input[type="number"], .segmented { height: 28px; font-size: 12px; }
-      .sub-section { padding: 6px 8px; gap: 5px; }
-      .switch-row { padding: 6px 8px; }
-      .presets-section { padding: 6px 8px; gap: 5px; min-height: 74px; }
-      .btn { height: 27px; }
-      .right-panel { gap: 8px; }
-      .tier-card-header { padding: 6px 10px; }
-      .tier-card-body { padding: 7px 10px 8px; gap: 4px; }
-      .margin-hero { padding: 5px 9px; }
-      .margin-hero-value { font-size: 18px; }
-      .tier-row { padding: 2px 5px; }
-      .sim-table thead th { padding: 5px 9px; }
-      .sim-table tbody td { padding: 5px 9px; }
-      .wallet-box { padding: 7px 10px; }
-      .wallet-balance-val { font-size: 13.5px; }
+    /* ==================== COMPACT HEIGHT FALLBACK (< 840px HEIGHT) ==================== */
+    @media (max-height: 840px) and (min-width: 1281px) {
+      .workspace { gap: 10px; padding: 10px; }
+      .panel-header { padding: 8px 14px; }
+      .left-panel-body { padding: 10px 12px; gap: 8px; }
+      .sub-section { padding: 8px 10px; gap: 7px; }
+      .right-panel { gap: 10px; }
+      .tier-card-body { padding: 10px 12px 11px; gap: 7px; }
+      .margin-hero { padding: 8px 12px; }
+      .tier-rows { gap: 3px; }
+      .tier-row { padding: 4px 6px; }
+      .sim-table tbody td { padding: 11px 12px; }
+      .wallet-box { padding: 10px 14px; }
     }
 
     /* ==================== RESPONSIVE FALLBACK ==================== */
-    @media (max-width: 1180px), (max-height: 670px) {
+    @media (max-width: 1280px), (max-height: 680px) {
       body {
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
         height: auto;
       }
       .workspace {
-        grid-template-columns: 340px 1fr;
+        grid-template-columns: 360px 1fr;
         overflow: visible;
         height: auto;
       }
-      .right-panel,
-      .bottom-grid,
-      .sim-column {
+      .ladder-panel {
+        grid-column: 1 / -1;
+      }
+      .right-panel {
         overflow: visible;
       }
       .ladder-container {
-        min-height: 360px;
+        min-height: 520px;
       }
     }
 
@@ -1362,11 +1463,8 @@
       .tiers-grid.mode-3 {
         grid-template-columns: 1fr;
       }
-      .bottom-grid {
-        grid-template-columns: 1fr;
-      }
       .ladder-container {
-        min-height: 380px;
+        min-height: 460px;
       }
     }
 
@@ -1381,9 +1479,9 @@
       background: var(--bg-input);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      padding: 2px;
-      gap: 2px;
-      margin-left: 6px;
+      padding: 3px;
+      gap: 3px;
+      margin-left: 8px;
       flex-shrink: 0;
     }
 
@@ -1392,35 +1490,35 @@
       background: transparent;
       color: var(--text-secondary);
       font-family: var(--font-sans);
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: 4px;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 5px;
       cursor: pointer;
       white-space: nowrap;
       transition: all var(--transition);
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
     }
 
     .app-mode-btn:hover {
       color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .app-mode-btn.active {
       background: var(--blue);
       color: #ffffff;
-      box-shadow: 0 1px 6px rgba(41, 98, 255, 0.35);
+      box-shadow: 0 2px 8px rgba(41, 98, 255, 0.4);
     }
 
     .app-mode-btn .mode-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: currentColor;
-      opacity: 0.75;
+      opacity: 0.85;
     }
 
     .ticker-tag {
@@ -1438,24 +1536,24 @@
       background: var(--bg-input);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      padding: 2px;
-      height: 30px;
-      gap: 2px;
+      padding: 3px;
+      height: 41px;
+      gap: 3px;
     }
 
     .segmented-3 .segmented-btn {
-      font-size: 11.5px;
+      font-size: 13px;
     }
 
     .dir-btn.active-short {
-      background: rgba(255, 82, 82, 0.2);
+      background: rgba(255, 82, 82, 0.22);
       color: var(--red);
       border: 1px solid var(--red-border);
       box-shadow: none;
     }
 
     .dir-btn.active-long {
-      background: rgba(0, 230, 118, 0.16);
+      background: rgba(0, 230, 118, 0.18);
       color: var(--green);
       border: 1px solid var(--green-border);
       box-shadow: none;
@@ -1464,7 +1562,7 @@
     .weight-presets {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       flex-wrap: wrap;
     }
 
@@ -1473,9 +1571,9 @@
       background: var(--bg-input);
       color: var(--text-secondary);
       font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 8px;
       border-radius: 4px;
       cursor: pointer;
       transition: all var(--transition);
@@ -1492,19 +1590,15 @@
       color: #8ab4ff;
     }
 
-    .tiers-grid.mode-1 {
-      grid-template-columns: minmax(320px, 520px);
-    }
-
     .tier-quota-pill {
       font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-size: 12px;
       color: #7ea7ff;
       background: var(--blue-dim);
       border: 1px solid var(--blue-border);
-      border-radius: 4px;
-      padding: 2px 6px;
-      font-weight: 600;
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-weight: 700;
       white-space: nowrap;
     }
 
@@ -1524,7 +1618,7 @@
     }
 
     .sim-table tr.row-stress {
-      background: rgba(255, 183, 77, 0.045);
+      background: rgba(255, 183, 77, 0.055);
     }
 
     .rr-badge.stress {
@@ -1534,21 +1628,21 @@
     }
 
     .rr-badge.liq {
-      background: rgba(232, 121, 249, 0.12);
-      border-color: rgba(232, 121, 249, 0.42);
+      background: rgba(232, 121, 249, 0.14);
+      border-color: rgba(232, 121, 249, 0.45);
       color: #f0abfc;
     }
 
     .m2-liq-pill {
       background: var(--bg-input);
-      border: 1px solid rgba(232, 121, 249, 0.42);
+      border: 1px solid rgba(232, 121, 249, 0.48);
       border-radius: var(--radius-sm);
-      padding: 5px 10px;
+      padding: 9px 14px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       flex-shrink: 0;
-      min-width: 126px;
+      min-width: 168px;
     }
 
     .m2-liq-pill .wallet-balance-label {
@@ -1557,69 +1651,78 @@
 
     .m2-liq-pill .wallet-balance-val {
       color: #f0abfc;
-      font-size: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.25;
     }
 
     .m2-liq-sub {
       font-family: var(--font-mono);
-      font-size: 9.5px;
-      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
     }
 
     #mode2Workspace .left-panel-body {
-      gap: 7px;
-      padding: 9px 12px;
+      gap: 9px;
+      padding: 11px 14px;
     }
 
     #mode2Workspace .sub-section {
-      padding: 7px 9px;
-      gap: 6px;
+      padding: 9px 11px;
+      gap: 8px;
     }
 
     #mode2Workspace input[type="text"],
     #mode2Workspace input[type="number"],
-    #mode2Workspace .segmented {
-      height: 29px;
-      font-size: 12px;
+    #mode2Workspace .segmented,
+    #mode2Workspace .segmented-3 {
+      height: 40px;
+      font-size: 14.5px;
     }
 
     #mode2Workspace .slider-num {
-      height: 24px !important;
-      width: 60px !important;
-      font-size: 11.5px !important;
+      height: 33px !important;
+      width: 72px !important;
+      font-size: 14px !important;
     }
 
     #mode2Workspace .presets-section {
-      min-height: 82px;
-      padding: 7px 9px;
-      gap: 5px;
+      min-height: 98px;
+      padding: 9px 11px;
+      gap: 7px;
     }
 
     #mode2Workspace .switch-row {
-      padding: 6px 9px;
+      padding: 9px 11px;
     }
 
-    @media (max-width: 1360px) {
-      .brand-subtitle {
-        display: none;
+    @media (max-width: 1540px) {
+      .topbar {
+        padding: 0 14px;
+        gap: 10px;
+      }
+      .brand-title {
+        font-size: 15px;
       }
       .app-mode-btn {
-        font-size: 11px;
-        padding: 4px 8px;
+        font-size: 12.5px;
+        padding: 6px 10px;
       }
+      .ticker-pill,
       .kpi-chip {
-        font-size: 11px;
-        padding: 4px 8px;
+        font-size: 12.5px;
+        padding: 5px 10px;
       }
     }
 
-    @media (max-width: 1120px) {
+    @media (max-width: 1260px) {
       .topbar {
         height: auto;
-        min-height: 46px;
-        padding: 8px 12px;
+        min-height: 58px;
+        padding: 10px 14px;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 10px;
       }
     }
   </style>
@@ -1700,7 +1803,7 @@
           </svg>
           Parametreler
         </div>
-        <span class="mono" style="font-size:10.5px; color:var(--text-muted);" id="feeStatusBadge">Komisyon: Kapalı</span>
+        <span class="mono" style="font-size:12.5px; font-weight:600; color:var(--text-secondary);" id="feeStatusBadge">Komisyon: Kapalı</span>
       </div>
 
       <div class="left-panel-body">
@@ -1860,12 +1963,12 @@
       </div>
     </section>
 
-    <!-- RIGHT PANEL: ORDER CARDS, SIMULATION & SVG PRICE LADDER -->
+    <!-- MIDDLE PANEL: ORDER CARDS, SIMULATION & WALLET FOOTER -->
     <section class="right-panel" aria-label="Hesaplama Çıktıları">
 
       <!-- Validation Error Banner -->
       <div class="error-banner" id="errorBanner" role="alert">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -1876,83 +1979,76 @@
       <!-- Order Cards (2 or 3 side-by-side) -->
       <div class="tiers-grid" id="tiersGrid"></div>
 
-      <!-- Bottom Area: Simulation + Wallet Box | Interactive Price Ladder SVG -->
-      <div class="bottom-grid">
-
-        <!-- Left: Scenario Simulation + Wallet Reminder -->
-        <div class="sim-column">
-          <div class="panel sim-panel">
-            <div class="panel-header">
-              <div class="panel-title">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="3" y1="9" x2="21" y2="9"></line>
-                  <line x1="9" y1="21" x2="9" y2="9"></line>
-                </svg>
-                Senaryo Simülasyonu
-              </div>
-              <span class="mono" style="font-size:10.5px; color:var(--text-muted);" id="alphaBadge">α = 2.02</span>
-            </div>
-
-            <div class="sim-table-wrap">
-              <table class="sim-table" aria-label="Senaryo Simülasyon Tablosu">
-                <thead>
-                  <tr>
-                    <th>Senaryo</th>
-                    <th class="num">Önceki Zarar</th>
-                    <th class="num">Kademe Kârı</th>
-                    <th class="num">Net Sonuç</th>
-                    <th class="num">Oran / Not</th>
-                  </tr>
-                </thead>
-                <tbody id="simTableBody"></tbody>
-              </table>
-            </div>
+      <!-- Scenario Simulation Table -->
+      <div class="panel sim-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            Senaryo Simülasyonu
           </div>
-
-          <!-- Wallet & Margin Mode Reminder Box -->
-          <aside class="wallet-box" aria-label="Cüzdan ve Marjin Modu Hatırlatması">
-            <div class="wallet-box-left">
-              <div class="wallet-icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                  <line x1="12" y1="9" x2="12" y2="13"></line>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
-              <div class="wallet-text">
-                Ara fitillerde erken likidasyonu önlemek için borsada mutlaka <strong>Çapraz (Cross) Marjin</strong> modu seçilmelidir. Vadeli cüzdanda en az <strong>Maks. Kayıp + %5</strong> bakiye bulundurun.
-              </div>
-            </div>
-            <div class="wallet-balance-pill">
-              <span class="wallet-balance-label">Min. Cüzdan</span>
-              <span class="wallet-balance-val" id="minWalletVal">$42.00</span>
-            </div>
-          </aside>
+          <span class="mono" style="font-size:12.5px; font-weight:600; color:var(--text-secondary);" id="alphaBadge">α = 2.02</span>
         </div>
 
-        <!-- Right: Interactive Price Ladder SVG -->
-        <div class="panel ladder-panel">
-          <div class="panel-header">
-            <div class="panel-title">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg>
-              Fiyat Merdiveni
-            </div>
-            <div class="ladder-legend">
-              <span class="legend-dot"><i style="background:var(--green)"></i>TP</span>
-              <span class="legend-dot"><i style="background:var(--blue)"></i>Giriş</span>
-              <span class="legend-dot"><i style="background:var(--red)"></i>SL</span>
-            </div>
+        <div class="sim-table-wrap">
+          <table class="sim-table" aria-label="Senaryo Simülasyon Tablosu">
+            <thead>
+              <tr>
+                <th>Senaryo</th>
+                <th class="num">Önceki Zarar</th>
+                <th class="num">Kademe Kârı</th>
+                <th class="num">Net Sonuç</th>
+                <th class="num">Oran / Not</th>
+              </tr>
+            </thead>
+            <tbody id="simTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Wallet & Margin Mode Reminder Box -->
+      <aside class="wallet-box" aria-label="Cüzdan ve Marjin Modu Hatırlatması">
+        <div class="wallet-box-left">
+          <div class="wallet-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
           </div>
-          <div class="ladder-container">
-            <svg id="priceLadderSvg" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="İnteraktif Fiyat Merdiveni Diyagramı"></svg>
+          <div class="wallet-text">
+            Ara fitillerde erken likidasyonu önlemek için borsada mutlaka <strong>Çapraz (Cross) Marjin</strong> modu seçilmelidir. Vadeli cüzdanda en az <strong>Maks. Kayıp + %5</strong> bakiye bulundurun.
           </div>
         </div>
+        <div class="wallet-balance-pill">
+          <span class="wallet-balance-label">Min. Cüzdan</span>
+          <span class="wallet-balance-val" id="minWalletVal">$42.00</span>
+        </div>
+      </aside>
+    </section>
 
+    <!-- RIGHT PANEL: FULL-HEIGHT INTERACTIVE PRICE LADDER SVG -->
+    <section class="panel ladder-panel" aria-label="Fiyat Merdiveni">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Fiyat Merdiveni
+        </div>
+        <div class="ladder-legend">
+          <span class="legend-dot"><i style="background:var(--green)"></i>TP</span>
+          <span class="legend-dot"><i style="background:var(--blue)"></i>Giriş</span>
+          <span class="legend-dot"><i style="background:var(--red)"></i>SL</span>
+        </div>
+      </div>
+      <div class="ladder-container">
+        <svg id="priceLadderSvg" viewBox="0 0 460 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="İnteraktif Fiyat Merdiveni Diyagramı"></svg>
       </div>
     </section>
 
@@ -1970,7 +2066,7 @@
           </svg>
           %5 Kasa · Cross
         </div>
-        <span class="mono" style="font-size:10.5px; color:var(--text-muted); white-space:nowrap;" id="m2FeeStatusBadge">Komisyon: Kapalı</span>
+        <span class="mono" style="font-size:12.5px; font-weight:600; color:var(--text-secondary); white-space:nowrap;" id="m2FeeStatusBadge">Komisyon: Kapalı</span>
       </div>
 
       <div class="left-panel-body">
@@ -2029,7 +2125,7 @@
           <div class="slider-block">
             <div class="slider-top">
               <label class="field-label" for="m2QuotaInput">Coin Başı Maks. Pozisyon Kotası</label>
-              <span class="mono" style="font-size:10.5px; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $25.00</span>
+              <span class="mono" style="font-size:12.5px; font-weight:700; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $25.00</span>
             </div>
             <div class="slider-controls">
               <input type="range" id="m2QuotaRange" min="1" max="15" step="0.5" value="5.0" aria-label="Maksimum Pozisyon Kotası Slider" />
@@ -2048,40 +2144,40 @@
             </div>
 
             <!-- 1K info -->
-            <div id="m2Weight1Wrap" class="m2-hidden" style="font-size:11px; color:var(--text-secondary); padding:3px 2px;">
+            <div id="m2Weight1Wrap" class="m2-hidden" style="font-size:13px; color:var(--text-secondary); padding:4px 2px;">
               Tek kademe: <strong class="mono" style="color:var(--text-primary);">%100</strong> (Kasanın <strong class="mono" id="m2W1SingleWallet">%5.0</strong>'i)
             </div>
 
             <!-- 2K manual inputs -->
             <div id="m2Weight2Wrap" class="field-grid-2">
               <div class="input-wrap">
-                <span class="input-prefix" style="font-size:10px; left:7px;">K1</span>
-                <input type="number" id="m2W2_1" value="32" min="5" max="95" step="1" style="padding-left:26px; padding-right:22px; text-align:right;" />
-                <span class="input-suffix" style="right:7px;">%</span>
+                <span class="input-prefix" style="font-size:12px; left:8px;">K1</span>
+                <input type="number" id="m2W2_1" value="32" min="5" max="95" step="1" style="padding-left:30px; padding-right:24px; text-align:right;" />
+                <span class="input-suffix" style="right:8px;">%</span>
               </div>
               <div class="input-wrap">
-                <span class="input-prefix" style="font-size:10px; left:7px;">K2</span>
-                <input type="number" id="m2W2_2" value="68" min="5" max="95" step="1" style="padding-left:26px; padding-right:22px; text-align:right;" />
-                <span class="input-suffix" style="right:7px;">%</span>
+                <span class="input-prefix" style="font-size:12px; left:8px;">K2</span>
+                <input type="number" id="m2W2_2" value="68" min="5" max="95" step="1" style="padding-left:30px; padding-right:24px; text-align:right;" />
+                <span class="input-suffix" style="right:8px;">%</span>
               </div>
             </div>
 
             <!-- 3K manual inputs -->
             <div id="m2Weight3Wrap" class="field-grid-3 m2-hidden">
               <div class="input-wrap">
-                <span class="input-prefix" style="font-size:10px; left:6px;">K1</span>
-                <input type="number" id="m2W3_1" value="16.7" min="1" max="90" step="0.1" style="padding-left:23px; padding-right:18px; text-align:right;" />
-                <span class="input-suffix" style="right:5px;">%</span>
+                <span class="input-prefix" style="font-size:11.5px; left:6px;">K1</span>
+                <input type="number" id="m2W3_1" value="16.7" min="1" max="90" step="0.1" style="padding-left:26px; padding-right:20px; text-align:right;" />
+                <span class="input-suffix" style="right:6px;">%</span>
               </div>
               <div class="input-wrap">
-                <span class="input-prefix" style="font-size:10px; left:6px;">K2</span>
-                <input type="number" id="m2W3_2" value="33.3" min="1" max="90" step="0.1" style="padding-left:23px; padding-right:18px; text-align:right;" />
-                <span class="input-suffix" style="right:5px;">%</span>
+                <span class="input-prefix" style="font-size:11.5px; left:6px;">K2</span>
+                <input type="number" id="m2W3_2" value="33.3" min="1" max="90" step="0.1" style="padding-left:26px; padding-right:20px; text-align:right;" />
+                <span class="input-suffix" style="right:6px;">%</span>
               </div>
               <div class="input-wrap">
-                <span class="input-prefix" style="font-size:10px; left:6px;">K3</span>
-                <input type="number" id="m2W3_3" value="50.0" min="1" max="90" step="0.1" style="padding-left:23px; padding-right:18px; text-align:right;" readonly title="Otomatik 100% tamamlama" />
-                <span class="input-suffix" style="right:5px;">%</span>
+                <span class="input-prefix" style="font-size:11.5px; left:6px;">K3</span>
+                <input type="number" id="m2W3_3" value="50.0" min="1" max="90" step="0.1" style="padding-left:26px; padding-right:20px; text-align:right;" readonly title="Otomatik 100% tamamlama" />
+                <span class="input-suffix" style="right:6px;">%</span>
               </div>
             </div>
           </div>
@@ -2207,12 +2303,12 @@
       </div>
     </section>
 
-    <!-- RIGHT PANEL: MODE 2 ORDER CARDS, SCENARIO SIMULATION & PRICE LADDER -->
+    <!-- MIDDLE PANEL: MODE 2 ORDER CARDS, SCENARIO SIMULATION & CROSS LIQ FOOTER -->
     <section class="right-panel" aria-label="Mod 2 Hesaplama Çıktıları">
 
       <!-- Validation Error Banner -->
       <div class="error-banner" id="m2ErrorBanner" role="alert">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -2223,82 +2319,75 @@
       <!-- Tier Order Cards (1, 2, or 3 side-by-side) -->
       <div class="tiers-grid" id="m2TiersGrid"></div>
 
-      <!-- Bottom Area: Simulation + Basket/Liq Box | Interactive Price Ladder SVG -->
-      <div class="bottom-grid">
-
-        <!-- Left: Scenario Simulation + Basket Control Box -->
-        <div class="sim-column">
-          <div class="panel sim-panel">
-            <div class="panel-header">
-              <div class="panel-title">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="3" y1="9" x2="21" y2="9"></line>
-                  <line x1="9" y1="21" x2="9" y2="9"></line>
-                </svg>
-                Senaryo Simülasyonu &amp; Stres Testi
-              </div>
-              <span class="mono" style="font-size:10.5px; color:#38bdf8;" id="m2AvgHeaderBadge">Ort. Maliyet: $33.56</span>
-            </div>
-
-            <div class="sim-table-wrap">
-              <table class="sim-table" aria-label="Mod 2 Senaryo Simülasyon Tablosu">
-                <thead>
-                  <tr>
-                    <th>Senaryo</th>
-                    <th class="num">Net Kâr / Zarar</th>
-                    <th class="num">Marjin ROI / Teminat</th>
-                    <th class="num">Kasa Etkisi / Liq</th>
-                  </tr>
-                </thead>
-                <tbody id="m2SimTableBody"></tbody>
-              </table>
-            </div>
+      <!-- Scenario Simulation & Stress Test Table -->
+      <div class="panel sim-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            Senaryo Simülasyonu &amp; Stres Testi
           </div>
-
-          <!-- Basket Control & Estimated Cross Liq Footer Box -->
-          <aside class="wallet-box" aria-label="Sepet Kontrolü ve Tahmini Cross Likidasyon">
-            <div class="wallet-box-left">
-              <div class="wallet-icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <div class="wallet-text" id="m2BasketText">
-                10 açık coinin tamamında tüm kademeler dolarsa toplam pozisyon hacmi: <strong>$250.00 (%50.0)</strong> — Kalan Serbest Teminat: <strong>$475.00</strong>
-              </div>
-            </div>
-            <div class="m2-liq-pill">
-              <span class="wallet-balance-label">TAHMİNİ CROSS LİQ</span>
-              <span class="wallet-balance-val" id="m2FooterLiqVal">$704.70</span>
-              <span class="m2-liq-sub" id="m2FooterLiqSub">~21.0x yukarı</span>
-            </div>
-          </aside>
+          <span class="mono" style="font-size:12.5px; font-weight:700; color:#38bdf8;" id="m2AvgHeaderBadge">Ort. Maliyet: $33.56</span>
         </div>
 
-        <!-- Right: Interactive Price Ladder SVG (Mode 2) -->
-        <div class="panel ladder-panel">
-          <div class="panel-header">
-            <div class="panel-title">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg>
-              Fiyat Merdiveni (Cross)
-            </div>
-            <div class="ladder-legend">
-              <span class="legend-dot"><i style="background:var(--green)"></i>TP</span>
-              <span class="legend-dot"><i style="background:#38bdf8"></i>Ort</span>
-              <span class="legend-dot"><i style="background:var(--red)"></i>SL</span>
-              <span class="legend-dot"><i style="background:#e879f9"></i>Liq</span>
-            </div>
+        <div class="sim-table-wrap">
+          <table class="sim-table" aria-label="Mod 2 Senaryo Simülasyon Tablosu">
+            <thead>
+              <tr>
+                <th>Senaryo</th>
+                <th class="num">Net Kâr / Zarar</th>
+                <th class="num">Marjin ROI / Teminat</th>
+                <th class="num">Kasa Etkisi / Liq</th>
+              </tr>
+            </thead>
+            <tbody id="m2SimTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Basket Control & Estimated Cross Liq Footer Box -->
+      <aside class="wallet-box" aria-label="Sepet Kontrolü ve Tahmini Cross Likidasyon">
+        <div class="wallet-box-left">
+          <div class="wallet-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
           </div>
-          <div class="ladder-container">
-            <svg id="m2PriceLadderSvg" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mod 2 İnteraktif Fiyat Merdiveni Diyagramı"></svg>
+          <div class="wallet-text" id="m2BasketText">
+            10 açık coinin tamamında tüm kademeler dolarsa toplam pozisyon hacmi: <strong>$250.00 (%50.0)</strong> — Kalan Serbest Teminat: <strong>$475.00</strong>
           </div>
         </div>
+        <div class="m2-liq-pill">
+          <span class="wallet-balance-label">TAHMİNİ CROSS LİQ</span>
+          <span class="wallet-balance-val" id="m2FooterLiqVal">$704.70</span>
+          <span class="m2-liq-sub" id="m2FooterLiqSub">~21.0x yukarı</span>
+        </div>
+      </aside>
+    </section>
 
+    <!-- RIGHT PANEL: FULL-HEIGHT INTERACTIVE PRICE LADDER SVG (MODE 2) -->
+    <section class="panel ladder-panel" aria-label="Fiyat Merdiveni (Cross)">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Fiyat Merdiveni (Cross)
+        </div>
+        <div class="ladder-legend">
+          <span class="legend-dot"><i style="background:var(--green)"></i>TP</span>
+          <span class="legend-dot"><i style="background:#38bdf8"></i>Ort</span>
+          <span class="legend-dot"><i style="background:var(--red)"></i>SL</span>
+          <span class="legend-dot"><i style="background:#e879f9"></i>Liq</span>
+        </div>
+      </div>
+      <div class="ladder-container">
+        <svg id="m2PriceLadderSvg" viewBox="0 0 460 680" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mod 2 İnteraktif Fiyat Merdiveni Diyagramı"></svg>
       </div>
     </section>
 
@@ -2995,22 +3084,22 @@
       /* ==================== INTERACTIVE SVG PRICE LADDER ==================== */
       function renderInvalidLadder(msg) {
         el.priceLadderSvg.innerHTML = `
-          <rect x="0" y="0" width="420" height="420" fill="transparent"></rect>
-          <text x="210" y="202" text-anchor="middle" fill="#687287" font-size="13" font-family="var(--font-sans)">Fiyat Merdiveni Bekleniyor</text>
-          <text x="210" y="224" text-anchor="middle" fill="#ff5252" font-size="11" font-family="var(--font-sans)">Geçerli fiyat seviyeleri giriniz</text>
+          <rect x="0" y="0" width="460" height="680" fill="transparent"></rect>
+          <text x="230" y="330" text-anchor="middle" fill="#687287" font-size="16" font-weight="600" font-family="var(--font-sans)">Fiyat Merdiveni Bekleniyor</text>
+          <text x="230" y="358" text-anchor="middle" fill="#ff5252" font-size="13.5" font-family="var(--font-sans)">Geçerli fiyat seviyeleri giriniz</text>
         `;
       }
 
       function renderPriceLadder(result) {
-        const svgW = 420;
-        const svgH = 420;
-        const padTop = 28;
-        const padBottom = 28;
+        const svgW = 460;
+        const svgH = 680;
+        const padTop = 36;
+        const padBottom = 36;
         const plotH = svgH - padTop - padBottom;
-        const axisX = 56;
-        const lineEndX = 148;
-        const pillX = 166;
-        const pillW = 244;
+        const axisX = 72;
+        const lineEndX = 172;
+        const pillX = 190;
+        const pillW = 262;
 
         const refPrice = result.tiers[0].entry;
 
@@ -3023,8 +3112,8 @@
           price: result.TP,
           type: "tp",
           color: "#00e676",
-          bg: "rgba(0, 230, 118, 0.12)",
-          border: "rgba(0, 230, 118, 0.42)",
+          bg: "rgba(0, 230, 118, 0.14)",
+          border: "rgba(0, 230, 118, 0.52)",
           marginText: null
         });
 
@@ -3035,9 +3124,9 @@
             label: `${t.index}. KADEME`,
             price: t.entry,
             type: "entry",
-            color: t.isFinal ? "#ffb74d" : "#4d82ff",
-            bg: t.isFinal ? "rgba(255, 183, 77, 0.12)" : "rgba(41, 98, 255, 0.14)",
-            border: t.isFinal ? "rgba(255, 183, 77, 0.45)" : "rgba(41, 98, 255, 0.48)",
+            color: t.isFinal ? "#ffb74d" : "#6ea0ff",
+            bg: t.isFinal ? "rgba(255, 183, 77, 0.14)" : "rgba(41, 98, 255, 0.16)",
+            border: t.isFinal ? "rgba(255, 183, 77, 0.55)" : "rgba(41, 98, 255, 0.58)",
             marginText: `M: $${t.margin.toFixed(2)}`
           });
 
@@ -3048,8 +3137,8 @@
             price: t.sl,
             type: t.isFinal ? "hardsl" : "sl",
             color: "#ff5252",
-            bg: t.isFinal ? "rgba(255, 82, 82, 0.18)" : "rgba(255, 82, 82, 0.10)",
-            border: t.isFinal ? "rgba(255, 82, 82, 0.65)" : "rgba(255, 82, 82, 0.35)",
+            bg: t.isFinal ? "rgba(255, 82, 82, 0.22)" : "rgba(255, 82, 82, 0.12)",
+            border: t.isFinal ? "rgba(255, 82, 82, 0.72)" : "rgba(255, 82, 82, 0.45)",
             marginText: null
           });
         }
@@ -3078,7 +3167,7 @@
 
         // Collision avoidance for pill label Y positions (sorted top-to-bottom: highest price first)
         const topDown = [...levels].reverse();
-        const minGap = levels.length >= 7 ? 38 : 42;
+        const minGap = levels.length >= 7 ? 56 : 62;
 
         topDown.forEach((lvl) => {
           lvl.labelY = lvl.y;
@@ -3096,12 +3185,12 @@
             }
           }
           // Clamp top and bottom
-          if (topDown[0].labelY < 20) {
-            topDown[0].labelY = 20;
+          if (topDown[0].labelY < 28) {
+            topDown[0].labelY = 28;
           }
           const lastIdx = topDown.length - 1;
-          if (topDown[lastIdx].labelY > svgH - 20) {
-            topDown[lastIdx].labelY = svgH - 20;
+          if (topDown[lastIdx].labelY > svgH - 28) {
+            topDown[lastIdx].labelY = svgH - 28;
           }
           // Forward pass from top
           for (let i = 1; i < topDown.length; i++) {
@@ -3118,7 +3207,7 @@
         }
 
         // Collision avoidance for left-side % tick labels
-        const minTickGap = 14;
+        const minTickGap = 20;
         topDown.forEach((lvl) => {
           lvl.tickY = lvl.y;
         });
@@ -3132,9 +3221,9 @@
               curr.tickY += overlap * 0.5;
             }
           }
-          if (topDown[0].tickY < 14) topDown[0].tickY = 14;
+          if (topDown[0].tickY < 20) topDown[0].tickY = 20;
           const lastIdx = topDown.length - 1;
-          if (topDown[lastIdx].tickY > svgH - 14) topDown[lastIdx].tickY = svgH - 14;
+          if (topDown[lastIdx].tickY > svgH - 20) topDown[lastIdx].tickY = svgH - 20;
         }
 
         // Zone coordinates
@@ -3148,22 +3237,22 @@
         // Subtle zone shading bands along the price rail
         svg += `
           <!-- Profit Zone (TP to P1) -->
-          <rect x="${axisX}" y="${yP1.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yTP - yP1).toFixed(1)}" fill="rgba(0, 230, 118, 0.07)" rx="2"></rect>
+          <rect x="${axisX}" y="${yP1.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yTP - yP1).toFixed(1)}" fill="rgba(0, 230, 118, 0.11)" rx="3"></rect>
           <!-- Scaling Zone (P1 to Last Entry) -->
-          <rect x="${axisX}" y="${yPLast.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yP1 - yPLast).toFixed(1)}" fill="rgba(41, 98, 255, 0.06)" rx="2"></rect>
+          <rect x="${axisX}" y="${yPLast.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yP1 - yPLast).toFixed(1)}" fill="rgba(41, 98, 255, 0.08)" rx="3"></rect>
           <!-- Danger Zone (Last Entry to Hard SL) -->
-          <rect x="${axisX}" y="${yHardSL.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yPLast - yHardSL).toFixed(1)}" fill="rgba(255, 82, 82, 0.08)" rx="2"></rect>
+          <rect x="${axisX}" y="${yHardSL.toFixed(1)}" width="${(lineEndX - axisX)}" height="${Math.max(0, yPLast - yHardSL).toFixed(1)}" fill="rgba(255, 82, 82, 0.12)" rx="3"></rect>
 
           <!-- Vertical Price Spine -->
-          <line x1="${axisX}" y1="${padTop - 8}" x2="${axisX}" y2="${svgH - padBottom + 8}" stroke="#2a3142" stroke-width="1.5"></line>
+          <line x1="${axisX}" y1="${padTop - 10}" x2="${axisX}" y2="${svgH - padBottom + 10}" stroke="#313a4f" stroke-width="2"></line>
         `;
 
         // Zone side captions (only if zone is tall enough)
-        if (yTP - yP1 > 28) {
-          svg += `<text x="${axisX + 44}" y="${((yTP + yP1) / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(0,230,118,0.45)" font-size="9.5" font-weight="600" letter-spacing="0.06em" font-family="var(--font-sans)">KÂR BÖLGESİ</text>`;
+        if (yTP - yP1 > 34) {
+          svg += `<text x="${axisX + 50}" y="${((yTP + yP1) / 2 + 4).toFixed(1)}" text-anchor="middle" fill="rgba(0,230,118,0.82)" font-size="11.5" font-weight="700" letter-spacing="0.06em" font-family="var(--font-sans)">KÂR BÖLGESİ</text>`;
         }
-        if (yPLast - yHardSL > 28) {
-          svg += `<text x="${axisX + 44}" y="${((yPLast + yHardSL) / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(255,82,82,0.48)" font-size="9.5" font-weight="600" letter-spacing="0.06em" font-family="var(--font-sans)">STOP BÖLGESİ</text>`;
+        if (yPLast - yHardSL > 34) {
+          svg += `<text x="${axisX + 50}" y="${((yPLast + yHardSL) / 2 + 4).toFixed(1)}" text-anchor="middle" fill="rgba(255,82,82,0.86)" font-size="11.5" font-weight="700" letter-spacing="0.06em" font-family="var(--font-sans)">STOP BÖLGESİ</text>`;
         }
 
         // Draw each level
@@ -3172,39 +3261,40 @@
           const ly = lvl.labelY;
           const ty = lvl.tickY;
           const isDashed = lvl.type === "sl";
-          const strokeDash = isDashed ? 'stroke-dasharray="4 3"' : "";
+          const strokeDash = isDashed ? 'stroke-dasharray="5 3"' : "";
           const priceStr = "$" + formatPriceRaw(lvl.price, refPrice);
-          const pillH = 30;
+          const pillH = 44;
           const pillTop = ly - pillH / 2;
 
           // Elbow connector path from exact price line to pill left edge
           const midX = lineEndX + 9;
           const connectorPath = `M ${lineEndX} ${y.toFixed(1)} L ${midX} ${y.toFixed(1)} L ${pillX - 4} ${ly.toFixed(1)} L ${pillX} ${ly.toFixed(1)}`;
+          const labelYPos = lvl.marginText ? (ly - 3) : (ly + 4.5);
 
           svg += `
             <g class="ladder-group" data-tier="${lvl.tier || ""}" data-level="${lvl.id}">
               <!-- Tick on left side of spine -->
-              <text x="${axisX - 7}" y="${(ty + 3.5).toFixed(1)}" text-anchor="end" fill="${lvl.color}" font-size="9.5" font-weight="600" font-family="var(--font-mono)" opacity="0.88">${lvl.diffText}</text>
+              <text x="${axisX - 9}" y="${(ty + 4.5).toFixed(1)}" text-anchor="end" fill="${lvl.color}" font-size="13" font-weight="700" font-family="var(--font-mono)">${lvl.diffText}</text>
 
               <!-- Exact proportional horizontal price line -->
-              <line x1="${axisX}" y1="${y.toFixed(1)}" x2="${lineEndX}" y2="${y.toFixed(1)}" stroke="${lvl.color}" stroke-width="${lvl.type === "hardsl" || lvl.type === "tp" ? "2" : "1.5"}" ${strokeDash}></line>
-              <circle cx="${axisX}" cy="${y.toFixed(1)}" r="3.2" fill="${lvl.color}"></circle>
+              <line x1="${axisX}" y1="${y.toFixed(1)}" x2="${lineEndX}" y2="${y.toFixed(1)}" stroke="${lvl.color}" stroke-width="${lvl.type === "hardsl" || lvl.type === "tp" ? "2.4" : "1.8"}" ${strokeDash}></line>
+              <circle cx="${axisX}" cy="${y.toFixed(1)}" r="4.2" fill="${lvl.color}"></circle>
 
               <!-- Connector to label card -->
-              <path d="${connectorPath}" fill="none" stroke="${lvl.color}" stroke-width="1" opacity="0.55"></path>
+              <path d="${connectorPath}" fill="none" stroke="${lvl.color}" stroke-width="1.3" opacity="0.65"></path>
 
               <!-- Label pill -->
-              <rect class="ladder-pill-bg" x="${pillX}" y="${pillTop.toFixed(1)}" width="${pillW}" height="${pillH}" rx="6" fill="${lvl.bg}" stroke="${lvl.border}" stroke-width="1"></rect>
+              <rect class="ladder-pill-bg" x="${pillX}" y="${pillTop.toFixed(1)}" width="${pillW}" height="${pillH}" rx="8" fill="${lvl.bg}" stroke="${lvl.border}" stroke-width="1.4"></rect>
 
-              <!-- Left: Label Name -->
-              <text x="${pillX + 9}" y="${(ly + 3.5).toFixed(1)}" fill="${lvl.color}" font-size="10.5" font-weight="700" font-family="var(--font-sans)">${lvl.label}</text>
-
-              <!-- Middle/Right: Margin (if entry) + Price -->
+              <!-- Left: Label Name (+ optional Margin subline) -->
+              <text x="${pillX + 12}" y="${labelYPos.toFixed(1)}" fill="${lvl.color}" font-size="12.5" font-weight="700" font-family="var(--font-sans)">${lvl.label}</text>
               ${lvl.marginText
-                ? `<text x="${pillX + pillW - 76}" y="${(ly + 3.5).toFixed(1)}" text-anchor="end" fill="#9aa3b5" font-size="10" font-weight="600" font-family="var(--font-mono)">${lvl.marginText}</text>`
+                ? `<text x="${pillX + 12}" y="${(ly + 13.5).toFixed(1)}" fill="#b0bacd" font-size="11.5" font-weight="600" font-family="var(--font-mono)">${lvl.marginText}</text>`
                 : ""
               }
-              <text x="${pillX + pillW - 9}" y="${(ly + 4).toFixed(1)}" text-anchor="end" fill="#f0f3fa" font-size="11.5" font-weight="700" font-family="var(--font-mono)">${priceStr}</text>
+
+              <!-- Right: Price -->
+              <text x="${pillX + pillW - 12}" y="${(ly + 6).toFixed(1)}" text-anchor="end" fill="#ffffff" font-size="18" font-weight="800" font-family="var(--font-mono)">${priceStr}</text>
             </g>
           `;
         }
@@ -4107,8 +4197,8 @@
         dom.tiersGrid.innerHTML = html;
         dom.simTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:24px 12px; color:var(--text-muted);">Simülasyonu görüntülemek için yukarıdaki parametre hatasını düzeltin.</td></tr>`;
         dom.ladderSvg.innerHTML = `
-          <text x="210" y="202" text-anchor="middle" fill="#687287" font-size="13" font-family="var(--font-sans)">Fiyat Merdiveni Bekleniyor</text>
-          <text x="210" y="224" text-anchor="middle" fill="#ff5252" font-size="11" font-family="var(--font-sans)">Geçerli fiyat seviyeleri giriniz</text>
+          <text x="230" y="330" text-anchor="middle" fill="#687287" font-size="16" font-weight="600" font-family="var(--font-sans)">Fiyat Merdiveni Bekleniyor</text>
+          <text x="230" y="358" text-anchor="middle" fill="#ff5252" font-size="13.5" font-family="var(--font-sans)">Geçerli fiyat seviyeleri giriniz</text>
         `;
       }
 
@@ -4283,12 +4373,12 @@
 
       /* -------------------- MODE 2 SVG PRICE LADDER (SHORT & LONG AUTO-FLIP + BREAK AXIS) -------------------- */
       function renderM2Ladder(res) {
-        const svgW = 420;
-        const svgH = 420;
-        const axisX = 58;
-        const lineEndX = 148;
-        const pillX = 166;
-        const pillW = 244;
+        const svgW = 460;
+        const svgH = 680;
+        const axisX = 72;
+        const lineEndX = 172;
+        const pillX = 190;
+        const pillW = 262;
         const refPrice = res.tiers[0].entry;
         const isShort = res.isShort;
 
@@ -4302,8 +4392,8 @@
           price: res.TP,
           type: "tp",
           color: "#00e676",
-          bg: "rgba(0, 230, 118, 0.12)",
-          border: "rgba(0, 230, 118, 0.45)",
+          bg: "rgba(0, 230, 118, 0.14)",
+          border: "rgba(0, 230, 118, 0.55)",
           subText: m2FmtUSDSigned(res.finalTier.cumNet),
           diffText: (isShort ? "-" : "+") + Math.abs(((res.TP - res.tiers[0].entry) / res.tiers[0].entry) * 100).toFixed(1) + "%"
         });
@@ -4316,9 +4406,9 @@
             label: `${t.index}. KADEME`,
             price: t.entry,
             type: "entry",
-            color: isAmber ? "#ffb74d" : "#4d82ff",
-            bg: isAmber ? "rgba(255, 183, 77, 0.12)" : "rgba(41, 98, 255, 0.14)",
-            border: isAmber ? "rgba(255, 183, 77, 0.48)" : "rgba(41, 98, 255, 0.48)",
+            color: isAmber ? "#ffb74d" : "#6ea0ff",
+            bg: isAmber ? "rgba(255, 183, 77, 0.14)" : "rgba(41, 98, 255, 0.16)",
+            border: isAmber ? "rgba(255, 183, 77, 0.58)" : "rgba(41, 98, 255, 0.58)",
             subText: `M: $${t.margin.toFixed(2)}`,
             diffText: `%${t.walletPct.toFixed(1)}`
           });
@@ -4332,8 +4422,8 @@
             price: res.finalAvg,
             type: "avg",
             color: "#38bdf8",
-            bg: "rgba(56, 189, 248, 0.11)",
-            border: "rgba(56, 189, 248, 0.48)",
+            bg: "rgba(56, 189, 248, 0.13)",
+            border: "rgba(56, 189, 248, 0.55)",
             subText: `${res.n}K Ort`,
             diffText: "ORT"
           });
@@ -4346,17 +4436,17 @@
           price: res.manualSlPrice,
           type: "sl",
           color: "#ff5252",
-          bg: "rgba(255, 82, 82, 0.15)",
-          border: "rgba(255, 82, 82, 0.58)",
+          bg: "rgba(255, 82, 82, 0.18)",
+          border: "rgba(255, 82, 82, 0.65)",
           subText: m2FmtUSDSigned(res.manualSlNet),
           diffText: (isShort ? "+" : "-") + `${Math.round(res.weeklyPct)}%`
         });
 
         // Main plot range (leaves room at top in SHORT or bottom in LONG for break-axis Cross Liq)
-        const liqBandY = isShort ? 26 : svgH - 26;
-        const breakY = isShort ? 56 : svgH - 56;
-        const plotTop = isShort ? 78 : 26;
-        const plotBottom = isShort ? svgH - 26 : svgH - 78;
+        const liqBandY = isShort ? 34 : svgH - 34;
+        const breakY = isShort ? 74 : svgH - 74;
+        const plotTop = isShort ? 106 : 36;
+        const plotBottom = isShort ? svgH - 36 : svgH - 106;
         const plotH = plotBottom - plotTop;
 
         const prices = coreLevels.map((l) => l.price);
@@ -4375,7 +4465,7 @@
 
         // Sort top-down by visual Y
         const topDown = [...coreLevels].sort((a, b) => a.y - b.y);
-        const minGap = topDown.length >= 6 ? 37 : 41;
+        const minGap = topDown.length >= 6 ? 56 : 62;
         topDown.forEach((l) => { l.labelY = l.y; });
 
         for (let iter = 0; iter < 18; iter++) {
@@ -4409,7 +4499,7 @@
           for (let i = 1; i < topDown.length; i++) {
             const prev = topDown[i - 1];
             const curr = topDown[i];
-            const overlap = (prev.tickY + 14) - curr.tickY;
+            const overlap = (prev.tickY + 20) - curr.tickY;
             if (overlap > 0) {
               prev.tickY -= overlap * 0.5;
               curr.tickY += overlap * 0.5;
@@ -4434,24 +4524,24 @@
 
         let svg = `
           <!-- Profit Zone -->
-          <rect x="${axisX}" y="${profitTop.toFixed(1)}" width="${lineEndX - axisX}" height="${profitH.toFixed(1)}" fill="rgba(0, 230, 118, 0.08)" rx="2"></rect>
+          <rect x="${axisX}" y="${profitTop.toFixed(1)}" width="${lineEndX - axisX}" height="${profitH.toFixed(1)}" fill="rgba(0, 230, 118, 0.11)" rx="3"></rect>
           <!-- Scaling Zone -->
-          <rect x="${axisX}" y="${scaleTop.toFixed(1)}" width="${lineEndX - axisX}" height="${scaleH.toFixed(1)}" fill="rgba(41, 98, 255, 0.06)" rx="2"></rect>
+          <rect x="${axisX}" y="${scaleTop.toFixed(1)}" width="${lineEndX - axisX}" height="${scaleH.toFixed(1)}" fill="rgba(41, 98, 255, 0.08)" rx="3"></rect>
           <!-- Manual SL Zone -->
-          <rect x="${axisX}" y="${riskTop.toFixed(1)}" width="${lineEndX - axisX}" height="${riskH.toFixed(1)}" fill="rgba(255, 82, 82, 0.09)" rx="2"></rect>
+          <rect x="${axisX}" y="${riskTop.toFixed(1)}" width="${lineEndX - axisX}" height="${riskH.toFixed(1)}" fill="rgba(255, 82, 82, 0.13)" rx="3"></rect>
 
           <!-- Main Spine -->
-          <line x1="${axisX}" y1="${plotTop - 10}" x2="${axisX}" y2="${plotBottom + 10}" stroke="#2a3142" stroke-width="1.5"></line>
+          <line x1="${axisX}" y1="${plotTop - 12}" x2="${axisX}" y2="${plotBottom + 12}" stroke="#313a4f" stroke-width="2"></line>
           <!-- Break-axis connector to Cross Liq -->
-          <line x1="${axisX}" y1="${liqBandY}" x2="${axisX}" y2="${breakY + (isShort ? -5 : 5)}" stroke="#e879f9" stroke-width="1.3" stroke-dasharray="3 3" opacity="0.65"></line>
-          <path d="M ${axisX - 6} ${breakY + 3} L ${axisX + 6} ${breakY - 3} M ${axisX - 6} ${breakY + 7} L ${axisX + 6} ${breakY + 1}" stroke="#687287" stroke-width="1.3" fill="none"></path>
+          <line x1="${axisX}" y1="${liqBandY}" x2="${axisX}" y2="${breakY + (isShort ? -6 : 6)}" stroke="#e879f9" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.78"></line>
+          <path d="M ${axisX - 8} ${breakY + 3} L ${axisX + 8} ${breakY - 4} M ${axisX - 8} ${breakY + 9} L ${axisX + 8} ${breakY + 2}" stroke="#7e8aa3" stroke-width="1.8" fill="none"></path>
         `;
 
-        if (profitH > 26) {
-          svg += `<text x="${axisX + 45}" y="${(profitTop + profitH / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(0,230,118,0.48)" font-size="9.5" font-weight="600" letter-spacing="0.06em" font-family="var(--font-sans)">KÂR BÖLGESİ</text>`;
+        if (profitH > 32) {
+          svg += `<text x="${axisX + 50}" y="${(profitTop + profitH / 2 + 4).toFixed(1)}" text-anchor="middle" fill="rgba(0,230,118,0.85)" font-size="11.5" font-weight="700" letter-spacing="0.06em" font-family="var(--font-sans)">KÂR BÖLGESİ</text>`;
         }
-        if (riskH > 24) {
-          svg += `<text x="${axisX + 45}" y="${(riskTop + riskH / 2 + 3).toFixed(1)}" text-anchor="middle" fill="rgba(255,82,82,0.52)" font-size="9" font-weight="600" letter-spacing="0.05em" font-family="var(--font-sans)">MANUEL SL</text>`;
+        if (riskH > 28) {
+          svg += `<text x="${axisX + 50}" y="${(riskTop + riskH / 2 + 4).toFixed(1)}" text-anchor="middle" fill="rgba(255,82,82,0.88)" font-size="11.5" font-weight="700" letter-spacing="0.06em" font-family="var(--font-sans)">MANUEL SL</text>`;
         }
 
         // Cross Liquidation Level (Pinned on break-axis extreme)
@@ -4462,17 +4552,19 @@
         const liqSubTag = res.liqNoLiq
           ? "Tam Korumalı"
           : (isShort ? `~${res.liqMultFromAvg.toFixed(1)}x yukarı` : `Aşağıda`);
-        const liqPillTop = liqBandY - 15;
+        const liqPillH = 46;
+        const liqPillTop = liqBandY - liqPillH / 2;
 
         svg += `
           <g class="ladder-group" data-m2-level="liq">
-            <text x="${axisX - 7}" y="${(liqBandY + 3.5).toFixed(1)}" text-anchor="end" fill="#e879f9" font-size="9.5" font-weight="700" font-family="var(--font-mono)">${liqMultText}</text>
-            <line x1="${axisX}" y1="${liqBandY}" x2="${lineEndX}" y2="${liqBandY}" stroke="#e879f9" stroke-width="2" stroke-dasharray="5 3"></line>
-            <circle cx="${axisX}" cy="${liqBandY}" r="3.4" fill="#e879f9"></circle>
-            <path d="M ${lineEndX} ${liqBandY} L ${pillX} ${liqBandY}" fill="none" stroke="#e879f9" stroke-width="1" opacity="0.65"></path>
-            <rect class="ladder-pill-bg" x="${pillX}" y="${liqPillTop}" width="${pillW}" height="30" rx="6" fill="rgba(232, 121, 249, 0.13)" stroke="rgba(232, 121, 249, 0.58)" stroke-width="1.1"></rect>
-            <text x="${pillX + 9}" y="${liqBandY + 3.5}" fill="#f0abfc" font-size="10" font-weight="700" font-family="var(--font-sans)">TAHMİNİ CROSS LİQ</text>
-            <text x="${pillX + pillW - 9}" y="${liqBandY + 4}" text-anchor="end" fill="#ffffff" font-size="11.5" font-weight="700" font-family="var(--font-mono)">${liqPriceLabel}</text>
+            <text x="${axisX - 9}" y="${(liqBandY + 4.5).toFixed(1)}" text-anchor="end" fill="#e879f9" font-size="13" font-weight="800" font-family="var(--font-mono)">${liqMultText}</text>
+            <line x1="${axisX}" y1="${liqBandY}" x2="${lineEndX}" y2="${liqBandY}" stroke="#e879f9" stroke-width="2.4" stroke-dasharray="6 3"></line>
+            <circle cx="${axisX}" cy="${liqBandY}" r="4.4" fill="#e879f9"></circle>
+            <path d="M ${lineEndX} ${liqBandY} L ${pillX} ${liqBandY}" fill="none" stroke="#e879f9" stroke-width="1.4" opacity="0.75"></path>
+            <rect class="ladder-pill-bg" x="${pillX}" y="${liqPillTop}" width="${pillW}" height="${liqPillH}" rx="8" fill="rgba(232, 121, 249, 0.16)" stroke="rgba(232, 121, 249, 0.68)" stroke-width="1.5"></rect>
+            <text x="${pillX + 12}" y="${(liqBandY - 3).toFixed(1)}" fill="#f0abfc" font-size="11.5" font-weight="800" font-family="var(--font-sans)">TAHMİNİ CROSS LİQ</text>
+            <text x="${pillX + 12}" y="${(liqBandY + 13.5).toFixed(1)}" fill="#d8b4fe" font-size="11" font-weight="600" font-family="var(--font-mono)">${liqSubTag}</text>
+            <text x="${pillX + pillW - 12}" y="${(liqBandY + 6).toFixed(1)}" text-anchor="end" fill="#ffffff" font-size="18" font-weight="800" font-family="var(--font-mono)">${liqPriceLabel}</text>
           </g>
         `;
 
@@ -4481,26 +4573,27 @@
           const y = lvl.y;
           const ly = lvl.labelY;
           const ty = lvl.tickY;
-          const strokeDash = lvl.type === "avg" ? 'stroke-dasharray="4 3"' : "";
+          const strokeDash = lvl.type === "avg" ? 'stroke-dasharray="5 3"' : "";
           const priceStr = "$" + m2FmtPrice(lvl.price, refPrice);
-          const pillH = 29;
+          const pillH = 44;
           const pillTop = ly - pillH / 2;
           const midX = lineEndX + 9;
           const connectorPath = `M ${lineEndX} ${y.toFixed(1)} L ${midX} ${y.toFixed(1)} L ${pillX - 4} ${ly.toFixed(1)} L ${pillX} ${ly.toFixed(1)}`;
+          const labelYPos = lvl.subText ? (ly - 3) : (ly + 4.5);
 
           svg += `
             <g class="ladder-group" data-m2-tier="${lvl.tier || ""}" data-m2-level="${lvl.id}">
-              <text x="${axisX - 7}" y="${(ty + 3.5).toFixed(1)}" text-anchor="end" fill="${lvl.color}" font-size="9.5" font-weight="600" font-family="var(--font-mono)" opacity="0.9">${lvl.diffText}</text>
-              <line x1="${axisX}" y1="${y.toFixed(1)}" x2="${lineEndX}" y2="${y.toFixed(1)}" stroke="${lvl.color}" stroke-width="${lvl.type === "tp" || lvl.type === "sl" ? "2" : "1.5"}" ${strokeDash}></line>
-              <circle cx="${axisX}" cy="${y.toFixed(1)}" r="3.1" fill="${lvl.color}"></circle>
-              <path d="${connectorPath}" fill="none" stroke="${lvl.color}" stroke-width="1" opacity="0.55"></path>
-              <rect class="ladder-pill-bg" x="${pillX}" y="${pillTop.toFixed(1)}" width="${pillW}" height="${pillH}" rx="6" fill="${lvl.bg}" stroke="${lvl.border}" stroke-width="1"></rect>
-              <text x="${pillX + 9}" y="${(ly + 3.5).toFixed(1)}" fill="${lvl.color}" font-size="10" font-weight="700" font-family="var(--font-sans)">${lvl.label}</text>
+              <text x="${axisX - 9}" y="${(ty + 4.5).toFixed(1)}" text-anchor="end" fill="${lvl.color}" font-size="13" font-weight="700" font-family="var(--font-mono)">${lvl.diffText}</text>
+              <line x1="${axisX}" y1="${y.toFixed(1)}" x2="${lineEndX}" y2="${y.toFixed(1)}" stroke="${lvl.color}" stroke-width="${lvl.type === "tp" || lvl.type === "sl" ? "2.4" : "1.8"}" ${strokeDash}></line>
+              <circle cx="${axisX}" cy="${y.toFixed(1)}" r="4.2" fill="${lvl.color}"></circle>
+              <path d="${connectorPath}" fill="none" stroke="${lvl.color}" stroke-width="1.3" opacity="0.65"></path>
+              <rect class="ladder-pill-bg" x="${pillX}" y="${pillTop.toFixed(1)}" width="${pillW}" height="${pillH}" rx="8" fill="${lvl.bg}" stroke="${lvl.border}" stroke-width="1.4"></rect>
+              <text x="${pillX + 12}" y="${labelYPos.toFixed(1)}" fill="${lvl.color}" font-size="12.5" font-weight="700" font-family="var(--font-sans)">${lvl.label}</text>
               ${lvl.subText
-                ? `<text x="${pillX + pillW - 76}" y="${(ly + 3.5).toFixed(1)}" text-anchor="end" fill="#9aa3b5" font-size="9.5" font-weight="600" font-family="var(--font-mono)">${lvl.subText}</text>`
+                ? `<text x="${pillX + 12}" y="${(ly + 13.5).toFixed(1)}" fill="#b0bacd" font-size="11.5" font-weight="600" font-family="var(--font-mono)">${lvl.subText}</text>`
                 : ""
               }
-              <text x="${pillX + pillW - 9}" y="${(ly + 4).toFixed(1)}" text-anchor="end" fill="#f0f3fa" font-size="11.5" font-weight="700" font-family="var(--font-mono)">${priceStr}</text>
+              <text x="${pillX + pillW - 12}" y="${(ly + 6).toFixed(1)}" text-anchor="end" fill="#ffffff" font-size="18" font-weight="800" font-family="var(--font-mono)">${priceStr}</text>
             </g>
           `;
         }
