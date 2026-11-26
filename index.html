@@ -1683,7 +1683,7 @@
 
     #mode2Workspace .slider-num {
       height: 33px !important;
-      width: 72px !important;
+      width: 84px !important;
       font-size: 14px !important;
     }
 
@@ -1697,33 +1697,305 @@
       padding: 9px 11px;
     }
 
-    @media (max-width: 1540px) {
+    @media (max-width: 1680px) {
       .topbar {
-        padding: 0 14px;
+        padding: 0 12px;
         gap: 10px;
       }
       .brand-title {
-        font-size: 15px;
+        font-size: 13px;
+      }
+      .brand-subtitle {
+        display: none;
       }
       .app-mode-btn {
-        font-size: 12.5px;
-        padding: 6px 10px;
+        font-size: 11px;
+        padding: 4px 7px;
+      }
+      .topbar-metrics {
+        gap: 6px;
       }
       .ticker-pill,
       .kpi-chip {
-        font-size: 12.5px;
-        padding: 5px 10px;
+        font-size: 11px;
+        padding: 4px 7px;
+      }
+      .share-card-btn {
+        font-size: 11.5px;
+        padding: 0 9px;
       }
     }
 
-    @media (max-width: 1260px) {
+    @media (max-width: 1420px) {
       .topbar {
         height: auto;
-        min-height: 58px;
-        padding: 10px 14px;
+        min-height: 54px;
+        padding: 8px 14px;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
       }
+    }
+
+    /* ==================== AUTO %8 BADGE, SHARE BUTTON & MODAL ==================== */
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .share-card-btn {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(41, 98, 255, 0.55);
+      background: linear-gradient(135deg, rgba(41, 98, 255, 0.24) 0%, rgba(0, 230, 118, 0.14) 100%);
+      color: #eef4ff;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all var(--transition);
+      box-shadow: 0 2px 10px rgba(41, 98, 255, 0.18);
+    }
+
+    .share-card-btn:hover {
+      background: linear-gradient(135deg, rgba(41, 98, 255, 0.42) 0%, rgba(0, 230, 118, 0.24) 100%);
+      border-color: #5b8cff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(41, 98, 255, 0.3);
+    }
+
+    .share-card-btn:active {
+      transform: translateY(0);
+    }
+
+    .quota-label-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .auto-quota-badge {
+      border: 1px solid var(--border-strong);
+      background: var(--bg-input);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .auto-quota-badge:hover {
+      border-color: var(--blue-border);
+      color: var(--text-primary);
+    }
+
+    .auto-quota-badge.active {
+      background: rgba(0, 230, 118, 0.14);
+      border-color: rgba(0, 230, 118, 0.5);
+      color: var(--green);
+      box-shadow: 0 0 8px rgba(0, 230, 118, 0.12);
+    }
+
+    .auto-quota-badge .aq-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .weight-chip.starred-chip {
+      border-color: rgba(41, 98, 255, 0.42);
+    }
+
+    .weight-chip.starred-chip.active {
+      background: var(--blue);
+      border-color: #5c8aff;
+      color: #ffffff;
+      box-shadow: 0 1px 6px rgba(41, 98, 255, 0.38);
+    }
+
+    /* Share Card Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 11, 0.82);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-dialog {
+      width: 100%;
+      max-width: 980px;
+      background: #10141e;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.72);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.97);
+      transition: transform 160ms ease;
+    }
+
+    .modal-backdrop.open .modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 11px 16px;
+      background: #141926;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-subtitle {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .modal-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .modal-close:hover {
+      background: var(--red-dim);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+
+    .modal-canvas-wrap {
+      padding: 16px;
+      background: #080a0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #shareCardCanvas {
+      width: 100%;
+      height: auto;
+      max-height: 68vh;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #1f2636;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+      display: block;
+    }
+
+    .modal-actions {
+      padding: 12px 16px;
+      background: #141926;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .modal-hint {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .modal-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-modal-copy {
+      height: 34px;
+      padding: 0 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 230, 118, 0.45);
+      background: rgba(0, 230, 118, 0.14);
+      color: var(--green);
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all var(--transition);
+    }
+
+    .btn-modal-copy:hover {
+      background: rgba(0, 230, 118, 0.24);
+      border-color: var(--green);
+    }
+
+    .btn-modal-download {
+      height: 34px;
+      padding: 0 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #4c7dff;
+      background: var(--blue);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all var(--transition);
+    }
+
+    .btn-modal-download:hover {
+      background: var(--blue-hover);
     }
   </style>
 </head>
@@ -1750,40 +2022,46 @@
       </div>
     </div>
 
-    <!-- Mode 1 Topbar Metrics (Unchanged IDs) -->
-    <div class="topbar-metrics" id="mode1TopbarMetrics">
-      <div class="ticker-pill">
-        <span class="ticker-symbol mono" id="headerCoin">VVVUSDT</span>
-        <span class="ticker-tag">SHORT</span>
-        <span class="ticker-tag mode-tag mono" id="headerMode">2K · 10x</span>
+    <div class="topbar-right">
+      <!-- Mode 1 Topbar Metrics (Unchanged IDs) -->
+      <div class="topbar-metrics" id="mode1TopbarMetrics">
+        <div class="ticker-pill">
+          <span class="ticker-symbol mono" id="headerCoin">VVVUSDT</span>
+          <span class="ticker-tag">SHORT</span>
+          <span class="ticker-tag mode-tag mono" id="headerMode">2K · 10x</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Maks Kayıp:</span>
+          <span class="kpi-val red mono" id="headerMaxLoss">-$40.00</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Son Kademe Hedef Net (3/4):</span>
+          <span class="kpi-val green mono" id="headerTargetProfit">+$30.00</span>
+        </div>
       </div>
-      <div class="kpi-chip">
-        <span class="kpi-label">Maks Kayıp:</span>
-        <span class="kpi-val red mono" id="headerMaxLoss">-$40.00</span>
-      </div>
-      <div class="kpi-chip">
-        <span class="kpi-label">Son Kademe Hedef Net (3/4):</span>
-        <span class="kpi-val green mono" id="headerTargetProfit">+$30.00</span>
-      </div>
-    </div>
 
-    <!-- Mode 2 Topbar Metrics -->
-    <div class="topbar-metrics m2-hidden" id="mode2TopbarMetrics">
-      <div class="ticker-pill">
-        <span class="ticker-symbol mono" id="m2HeaderCoin">VVVUSDT</span>
-        <span class="ticker-tag" id="m2HeaderDir">SHORT</span>
-        <span class="ticker-tag mode-tag mono" id="m2HeaderMode">2K · 10x Cross</span>
+      <!-- Mode 2 Topbar Metrics -->
+      <div class="topbar-metrics m2-hidden" id="mode2TopbarMetrics">
+        <div class="ticker-pill">
+          <span class="ticker-symbol mono" id="m2HeaderCoin">VVVUSDT</span>
+          <span class="ticker-tag" id="m2HeaderDir">SHORT</span>
+          <span class="ticker-tag mode-tag mono" id="m2HeaderMode">2K · 10x Cross</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Toplam Hacim:</span>
+          <span class="kpi-val mono" style="color:var(--text-primary);" id="m2HeaderNotional">$56.74 (%11.35)</span>
+          <span class="kpi-label" style="margin-left:3px;">| Marjin:</span>
+          <span class="kpi-val orange mono" id="m2HeaderMargin">$5.67</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label" id="m2HeaderTpLabel">2. Kademe TP Kârı:</span>
+          <span class="kpi-val green mono" id="m2HeaderTpProfit">+$28.99</span>
+        </div>
       </div>
-      <div class="kpi-chip">
-        <span class="kpi-label">Toplam Hacim:</span>
-        <span class="kpi-val mono" style="color:var(--text-primary);" id="m2HeaderNotional">$25.00 (%5.0)</span>
-        <span class="kpi-label" style="margin-left:3px;">| Marjin:</span>
-        <span class="kpi-val orange mono" id="m2HeaderMargin">$2.50</span>
-      </div>
-      <div class="kpi-chip">
-        <span class="kpi-label" id="m2HeaderTpLabel">2. Kademe TP Kârı:</span>
-        <span class="kpi-val green mono" id="m2HeaderTpProfit">+$13.23</span>
-      </div>
+
+      <button type="button" class="share-card-btn" id="openShareCardBtn" title="Yüksek çözünürlüklü paylaşım kartı oluştur">
+        📸 İşlem Kartı Al
+      </button>
     </div>
   </header>
 
@@ -2124,16 +2402,22 @@
         <div class="sub-section">
           <div class="slider-block">
             <div class="slider-top">
-              <label class="field-label" for="m2QuotaInput">Coin Başı Maks. Pozisyon Kotası</label>
-              <span class="mono" style="font-size:12.5px; font-weight:700; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $25.00</span>
+              <div class="quota-label-group">
+                <label class="field-label" for="m2QuotaInput">Maks. Pozisyon Kotası</label>
+                <button type="button" class="auto-quota-badge active" id="m2AutoQuotaBtn" title="Fitil stres testindeki anlık zararı kasanın tam %8'ine eşitle">
+                  <span class="aq-dot"></span>Oto %8
+                </button>
+              </div>
+              <span class="mono" style="font-size:12.5px; font-weight:700; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $56.74</span>
             </div>
             <div class="slider-controls">
-              <input type="range" id="m2QuotaRange" min="1" max="15" step="0.5" value="5.0" aria-label="Maksimum Pozisyon Kotası Slider" />
+              <input type="range" id="m2QuotaRange" min="1" max="30" step="0.5" value="11.35" aria-label="Maksimum Pozisyon Kotası Slider" />
               <div class="input-wrap">
-                <input type="number" id="m2QuotaInput" class="slider-num" min="1" max="15" step="0.5" value="5.0" />
+                <input type="number" id="m2QuotaInput" class="slider-num" min="0.1" max="100" step="any" value="11.35" />
                 <span class="input-suffix" style="right:6px;">%</span>
               </div>
             </div>
+            <div class="slider-hint" id="m2QuotaAutoHint">Oto (%8 Fitil Riski): <strong style="color:var(--green);">-$40.00</strong> hedef yüzen zarar</div>
           </div>
 
           <!-- Dynamic Weight Distribution -->
@@ -2152,12 +2436,12 @@
             <div id="m2Weight2Wrap" class="field-grid-2">
               <div class="input-wrap">
                 <span class="input-prefix" style="font-size:12px; left:8px;">K1</span>
-                <input type="number" id="m2W2_1" value="32" min="5" max="95" step="1" style="padding-left:30px; padding-right:24px; text-align:right;" />
+                <input type="number" id="m2W2_1" value="40" min="5" max="95" step="1" style="padding-left:30px; padding-right:24px; text-align:right;" />
                 <span class="input-suffix" style="right:8px;">%</span>
               </div>
               <div class="input-wrap">
                 <span class="input-prefix" style="font-size:12px; left:8px;">K2</span>
-                <input type="number" id="m2W2_2" value="68" min="5" max="95" step="1" style="padding-left:30px; padding-right:24px; text-align:right;" />
+                <input type="number" id="m2W2_2" value="60" min="5" max="95" step="1" style="padding-left:30px; padding-right:24px; text-align:right;" />
                 <span class="input-suffix" style="right:8px;">%</span>
               </div>
             </div>
@@ -2392,6 +2676,34 @@
     </section>
 
   </main>
+
+  <!-- Share Card Preview Modal -->
+  <div class="modal-backdrop" id="shareCardModal" role="dialog" aria-modal="true" aria-labelledby="shareCardModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title" id="shareCardModalTitle">
+          <span>📸 İşlem Özeti Paylaşım Kartı</span>
+          <span class="modal-subtitle" id="shareCardModalSubtitle">2x Retina · Tamamen Offline Canvas</span>
+        </div>
+        <button type="button" class="modal-close" id="closeShareCardBtn" title="Kapat (ESC)" aria-label="Pencereyi kapat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-canvas-wrap">
+        <canvas id="shareCardCanvas" width="2240" height="1360"></canvas>
+      </div>
+      <div class="modal-actions">
+        <span class="modal-hint" id="shareCardHint">Telegram, Discord veya X'te paylaşmak için doğrudan panoya kopyalayabilir veya PNG olarak indirebilirsiniz.</span>
+        <div class="modal-btn-group">
+          <button type="button" class="btn-modal-copy" id="copyShareCardBtn">📋 Panoya Kopyala</button>
+          <button type="button" class="btn-modal-download" id="downloadShareCardBtn">📥 PNG İndir</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div class="toast" id="toast" role="status" aria-live="polite">
@@ -3577,8 +3889,11 @@
       const appMode1Btn = document.getElementById("appMode1Btn");
       const appMode2Btn = document.getElementById("appMode2Btn");
 
+      let activeAppMode = 1;
+
       function switchAppMode(modeNum) {
-        const isMode2 = modeNum === 2;
+        activeAppMode = modeNum === 2 ? 2 : 1;
+        const isMode2 = activeAppMode === 2;
         mode1Workspace.classList.toggle("m2-hidden", isMode2);
         mode2Workspace.classList.toggle("m2-hidden", !isMode2);
         mode1Metrics.classList.toggle("m2-hidden", isMode2);
@@ -3596,16 +3911,18 @@
       /* -------------------- MODE 2 CONSTANTS & STATE -------------------- */
       const M2_PRESETS_KEY = "cross_5pct_presets";
       const TAKER_SIDE_FEE = 0.00055; // 0.055% per side (open + close = 0.11%)
+      const AUTO_WICK_RISK_PCT = 8.0; // Target floating loss = 8% of wallet at wick stress level
 
       const M2_DEFAULTS = {
         coin: "VVVUSDT",
         direction: "SHORT",
         tiers: 2,
         balance: 500,
+        autoQuota: true,
         quotaPct: 5.0,
         leverage: 10,
         basketCount: 10,
-        weights2: [32, 68],
+        weights2: [40, 60],
         weights3: [16.7, 33.3, 50.0],
         p1: 25.00,
         p2: 40.00,
@@ -3638,9 +3955,11 @@
         balanceInput: document.getElementById("m2BalanceInput"),
         leverageInput: document.getElementById("m2LeverageInput"),
         basketInput: document.getElementById("m2BasketInput"),
+        autoQuotaBtn: document.getElementById("m2AutoQuotaBtn"),
         quotaRange: document.getElementById("m2QuotaRange"),
         quotaInput: document.getElementById("m2QuotaInput"),
         quotaUsdHint: document.getElementById("m2QuotaUsdHint"),
+        quotaAutoHint: document.getElementById("m2QuotaAutoHint"),
 
         weightPresets: document.getElementById("m2WeightPresets"),
         weight1Wrap: document.getElementById("m2Weight1Wrap"),
@@ -4046,6 +4365,49 @@
         };
       }
 
+      /* -------------------- AUTO %8 WICK RISK QUOTA ENGINE -------------------- */
+      function computeAutoQuotaPct(cfg) {
+        const isShort = cfg.direction === "SHORT";
+        const n = cfg.tiers;
+        const wickPct = cfg.wickPct;
+        const rawEntries = [cfg.p1, cfg.p2, cfg.p3].slice(0, n);
+
+        if (!isFinite(wickPct) || wickPct <= 0 || rawEntries.some((p) => !isFinite(p) || p <= 0)) {
+          return 5.0;
+        }
+
+        let weights;
+        if (n === 1) weights = [100];
+        else if (n === 2) weights = [...cfg.weights2];
+        else weights = [...cfg.weights3];
+
+        const wSum = weights.reduce((acc, w) => acc + (isFinite(w) ? w : 0), 0);
+        if (weights.some((w) => !isFinite(w) || w <= 0) || wSum <= 0) {
+          return 5.0;
+        }
+
+        const p1 = rawEntries[0];
+        const pFitil = isShort
+          ? p1 * (1 + wickPct / 100)
+          : p1 * Math.max(0, 1 - wickPct / 100);
+
+        let carpan = 0;
+        for (let i = 0; i < n; i++) {
+          const pi = rawEntries[i];
+          const wi = weights[i] / wSum;
+          if (isShort && pi <= pFitil) {
+            carpan += wi * (pFitil / pi - 1);
+          } else if (!isShort && pi >= pFitil) {
+            carpan += wi * (1 - pFitil / pi);
+          }
+        }
+
+        if (!isFinite(carpan) || carpan <= 0) {
+          return 5.0;
+        }
+        return AUTO_WICK_RISK_PCT / carpan;
+      }
+
       /* -------------------- WEIGHT PRESETS RENDER -------------------- */
       function renderWeightControls() {
         const n = m2.tiers;
@@ -4055,19 +4417,19 @@
 
         if (n === 1) {
           dom.weightPresets.innerHTML = "";
-          dom.w1SingleWallet.textContent = `%${Number(m2.quotaPct).toFixed(1)}`;
+          dom.w1SingleWallet.textContent = `%${Number(m2.quotaPct).toFixed(2)}`;
           return;
         }
 
         if (n === 2) {
           const presets2 = [
-            { label: "20/80", w: [20, 80] },
-            { label: "32/68", w: [32, 68] },
-            { label: "40/60", w: [40, 60] }
+            { label: "⭐ 40/60", w: [40, 60], starred: true },
+            { label: "32/68", w: [32, 68], starred: false },
+            { label: "20/80", w: [20, 80], starred: false }
           ];
           dom.weightPresets.innerHTML = presets2.map((p) => {
             const active = Math.abs(m2.weights2[0] - p.w[0]) < 0.05 && Math.abs(m2.weights2[1] - p.w[1]) < 0.05;
-            return `<button type="button" class="weight-chip ${active ? "active" : ""}" data-wpreset="2:${p.w[0]},${p.w[1]}">${p.label}</button>`;
+            return `<button type="button" class="weight-chip ${p.starred ? "starred-chip" : ""} ${active ? "active" : ""}" data-wpreset="2:${p.w[0]},${p.w[1]}">${p.label}</button>`;
           }).join("");
         } else {
           const presets3 = [
@@ -4087,6 +4449,20 @@
         const coinLabel = (m2.coin || "PARITE").trim().toUpperCase() || "PARITE";
         const baseCoin = m2BaseCoin(coinLabel);
         const isShort = m2.direction === "SHORT";
+
+        // Auto %8 Wick Risk Quota recalculation when active
+        if (m2.autoQuota) {
+          const autoQ = computeAutoQuotaPct(m2);
+          m2.quotaPct = autoQ;
+          dom.quotaInput.value = autoQ.toFixed(2);
+          dom.quotaRange.value = Math.min(30, Math.max(1, autoQ));
+        }
+
+        dom.autoQuotaBtn.classList.toggle("active", m2.autoQuota);
+        const targetRiskUsd = isFinite(m2.balance) && m2.balance > 0 ? m2.balance * (AUTO_WICK_RISK_PCT / 100) : 0;
+        dom.quotaAutoHint.innerHTML = m2.autoQuota
+          ? `Oto (%8 Fitil Riski): <strong style="color:var(--green);">-${m2FmtUSD(targetRiskUsd)}</strong> hedef yüzen zarar`
+          : `Manuel kota aktif · Otomatik %8 kuralı için <strong>Oto %8</strong>'e tıklayın`;
 
         // Direction button styling
         dom.dirShortBtn.className = "segmented-btn dir-btn" + (isShort ? " active-short" : "");
@@ -4142,7 +4518,7 @@
         dom.errorBanner.classList.remove("visible");
 
         // Update top-right summary pills
-        dom.headerNotional.textContent = `${m2FmtUSD(res.totalNotional)} (%${res.Qpct.toFixed(1)})`;
+        dom.headerNotional.textContent = `${m2FmtUSD(res.totalNotional)} (%${res.Qpct.toFixed(2)})`;
         dom.headerMargin.textContent = m2FmtUSD(res.totalMargin);
         dom.headerTpLabel.textContent = `${res.n}. Kademe TP Kârı:`;
         dom.headerTpProfit.textContent = m2FmtUSDSigned(res.finalTier.cumNet);
@@ -4658,6 +5034,7 @@
           direction: m2.direction,
           tiers: m2.tiers,
           balance: m2.balance,
+          autoQuota: m2.autoQuota,
           quotaPct: m2.quotaPct,
           leverage: m2.leverage,
           basketCount: m2.basketCount,
@@ -4688,6 +5065,7 @@
           direction: p.direction === "LONG" ? "LONG" : "SHORT",
           tiers: [1, 2, 3].includes(p.tiers) ? p.tiers : 2,
           balance: Number(p.balance),
+          autoQuota: typeof p.autoQuota === "boolean" ? p.autoQuota : false,
           quotaPct: Number(p.quotaPct),
           leverage: Number(p.leverage),
           basketCount: Number(p.basketCount) || 10,
@@ -4732,7 +5110,7 @@
                 <span class="preset-coin">${m2Escape(p.coin)}</span>
                 <span class="preset-badge" style="color:${dirColor}; background:rgba(255,255,255,0.05);">${p.direction === "LONG" ? "L" : "S"}</span>
                 <span class="preset-badge">${p.tiers}K</span>
-                <span class="preset-meta">$${Number(p.balance).toFixed(0)} · %${Number(p.quotaPct).toFixed(1)}</span>
+                <span class="preset-meta">$${Number(p.balance).toFixed(0)} · ${p.autoQuota ? "Oto %8" : "%" + Number(p.quotaPct).toFixed(1)}</span>
               </div>
               <button type="button" class="preset-del" data-m2-del="${m2Escape(p.key)}" title="Kurguyu sil">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -4757,8 +5135,8 @@
         dom.balanceInput.value = m2.balance;
         dom.leverageInput.value = m2.leverage;
         dom.basketInput.value = m2.basketCount;
-        dom.quotaRange.value = m2.quotaPct;
-        dom.quotaInput.value = Number(m2.quotaPct).toFixed(1);
+        dom.quotaRange.value = Math.min(30, Math.max(1, m2.quotaPct));
+        dom.quotaInput.value = Number(m2.quotaPct).toFixed(2);
         dom.w2_1.value = m2.weights2[0];
         dom.w2_2.value = m2.weights2[1];
         dom.w3_1.value = m2.weights3[0];
@@ -4817,16 +5195,30 @@
         dom.leverageInput.addEventListener("input", () => { m2.leverage = numVal(dom.leverageInput); renderMode2(); });
         dom.basketInput.addEventListener("input", () => { m2.basketCount = numVal(dom.basketInput); renderMode2(); });
 
-        // Quota slider <-> input
+        // Auto %8 toggle badge
+        dom.autoQuotaBtn.addEventListener("click", () => {
+          m2.autoQuota = !m2.autoQuota;
+          if (!m2.autoQuota && isFinite(m2.quotaPct)) {
+            m2.quotaPct = Number(m2.quotaPct.toFixed(2));
+          }
+          renderMode2();
+          m2ShowToast(m2.autoQuota
+            ? 'Otomatik kota aktif: <span class="toast-val">%8 Fitil Riski</span>'
+            : "Manuel kota moduna geçildi");
+        });
+
+        // Quota slider <-> input (manual drag/input exits Auto %8 mode)
         dom.quotaRange.addEventListener("input", () => {
+          m2.autoQuota = false;
           m2.quotaPct = parseFloat(dom.quotaRange.value);
-          dom.quotaInput.value = m2.quotaPct.toFixed(1);
+          dom.quotaInput.value = m2.quotaPct.toFixed(2);
           renderMode2();
         });
         dom.quotaInput.addEventListener("input", () => {
+          m2.autoQuota = false;
           const v = numVal(dom.quotaInput);
           m2.quotaPct = v;
-          if (isFinite(v)) dom.quotaRange.value = Math.min(15, Math.max(1, v));
+          if (isFinite(v)) dom.quotaRange.value = Math.min(30, Math.max(1, v));
           renderMode2();
         });
 
@@ -4973,6 +5365,893 @@
           if (val !== null) m2Copy(val, btn);
         });
       }
+
+      /* ==================== SHARE CARD GENERATOR (2x RETINA HTML5 CANVAS) ==================== */
+      const shareDom = {
+        openBtn: document.getElementById("openShareCardBtn"),
+        modal: document.getElementById("shareCardModal"),
+        closeBtn: document.getElementById("closeShareCardBtn"),
+        canvas: document.getElementById("shareCardCanvas"),
+        subtitle: document.getElementById("shareCardModalSubtitle"),
+        copyBtn: document.getElementById("copyShareCardBtn"),
+        downloadBtn: document.getElementById("downloadShareCardBtn")
+      };
+
+      let lastCardFilename = "VVVUSDT_SHORT.png";
+
+      function readMode1Snapshot() {
+        const coin = (document.getElementById("coinInput").value || "PARITE").trim().toUpperCase() || "PARITE";
+        const baseCoin = m2BaseCoin(coin);
+        const mode = document.getElementById("mode3Btn").classList.contains("active") ? 3 : 2;
+        const W = parseFloat(document.getElementById("maxLossInput").value);
+        const L = parseFloat(document.getElementById("leverageInput").value);
+        const P1 = parseFloat(document.getElementById("p1Input").value);
+        const P2 = parseFloat(document.getElementById("p2Input").value);
+        const P3 = parseFloat(document.getElementById("p3Input").value);
+        const TP = parseFloat(document.getElementById("tpInput").value);
+        const b = parseFloat(document.getElementById("midSlInput").value) / 100;
+        const s = parseFloat(document.getElementById("hardSlInput").value) / 100;
+        const feeOn = document.getElementById("feeToggle").checked;
+        const feeRate = feeOn ? 0.0011 : 0;
+
+        if (!isFinite(W) || W <= 0 || !isFinite(L) || L <= 0 || !isFinite(P1) || !isFinite(P2) || !isFinite(TP)) {
+          return { error: "Geçersiz Mod 1 parametreleri." };
+        }
+        if (TP >= P1 || P1 >= P2 || (mode === 3 && (!isFinite(P3) || P2 >= P3))) {
+          return { error: "Fiyat sıralaması geçersiz." };
+        }
+
+        if (mode === 2) {
+          const SL1 = P2 * (1 - b);
+          const SL2 = P2 * (1 + s);
+          if (SL1 <= P1) return { error: "SL1 geçersiz." };
+          const rTP1 = L * (P1 - TP) / P1 - L * feeRate;
+          const rSL1 = L * (SL1 - P1) / P1 + L * feeRate;
+          const rTP2 = L * (P2 - TP) / P2 - L * feeRate;
+          const rSL2 = L * (SL2 - P2) / P2 + L * feeRate;
+          const alpha2 = rTP2 / rSL2;
+          if (rTP1 <= 0 || rTP2 <= 0 || alpha2 <= 0.75) return { error: "3/4 hedefi sağlanamıyor." };
+          const D1 = W * (alpha2 - 0.75) / (1 + alpha2);
+          const D2 = W - D1;
+          const M1 = D1 / rSL1;
+          const M2 = D2 / rSL2;
+          return {
+            kind: 1,
+            coin,
+            baseCoin,
+            direction: "SHORT",
+            isShort: true,
+            mode,
+            W,
+            L,
+            TP,
+            feeOn,
+            totalMargin: M1 + M2,
+            s1Net: M1 * rTP1,
+            s1RR: (M1 * rTP1) / D1,
+            finalNet: M2 * rTP2 - D1,
+            hardSL: SL2,
+            tiers: [
+              { index: 1, entry: P1, sl: SL1, margin: M1, notional: M1 * L, qty: (M1 * L) / P1, risk: D1, isFinal: false },
+              { index: 2, entry: P2, sl: SL2, margin: M2, notional: M2 * L, qty: (M2 * L) / P2, risk: D2, isFinal: true }
+            ]
+          };
+        } else {
+          const SL1 = P2 * (1 - b);
+          const SL2 = P3 * (1 - b);
+          const SL3 = P3 * (1 + s);
+          if (SL1 <= P1 || SL2 <= P2) return { error: "Ara SL geçersiz." };
+          const rTP1 = L * (P1 - TP) / P1 - L * feeRate;
+          const rSL1 = L * (SL1 - P1) / P1 + L * feeRate;
+          const rTP2 = L * (P2 - TP) / P2 - L * feeRate;
+          const rSL2 = L * (SL2 - P2) / P2 + L * feeRate;
+          const rTP3 = L * (P3 - TP) / P3 - L * feeRate;
+          const rSL3 = L * (SL3 - P3) / P3 + L * feeRate;
+          const alpha3 = rTP3 / rSL3;
+          const alpha2 = rTP2 / rSL2;
+          if (rTP1 <= 0 || rTP2 <= 0 || rTP3 <= 0 || alpha3 <= 0.75) return { error: "3/4 hedefi sağlanamıyor." };
+          const D12 = W * (alpha3 - 0.75) / (1 + alpha3);
+          const D3 = W - D12;
+          const D1Raw = (D12 * alpha2 - 0.375 * W) / (1 + alpha2);
+          const D1 = Math.max(D12 * 0.25, Math.min(D12 * 0.65, D1Raw));
+          const D2 = D12 - D1;
+          const M1 = D1 / rSL1;
+          const M2 = D2 / rSL2;
+          const M3 = D3 / rSL3;
+          return {
+            kind: 1,
+            coin,
+            baseCoin,
+            direction: "SHORT",
+            isShort: true,
+            mode,
+            W,
+            L,
+            TP,
+            feeOn,
+            totalMargin: M1 + M2 + M3,
+            s1Net: M1 * rTP1,
+            s1RR: (M1 * rTP1) / D1,
+            finalNet: M3 * rTP3 - (D1 + D2),
+            hardSL: SL3,
+            tiers: [
+              { index: 1, entry: P1, sl: SL1, margin: M1, notional: M1 * L, qty: (M1 * L) / P1, risk: D1, isFinal: false },
+              { index: 2, entry: P2, sl: SL2, margin: M2, notional: M2 * L, qty: (M2 * L) / P2, risk: D2, isFinal: false },
+              { index: 3, entry: P3, sl: SL3, margin: M3, notional: M3 * L, qty: (M3 * L) / P3, risk: D3, isFinal: true }
+            ]
+          };
+        }
+      }
+
+      function rrect(ctx, x, y, w, h, r) {
+        const rad = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + rad, y);
+        ctx.arcTo(x + w, y, x + w, y + h, rad);
+        ctx.arcTo(x + w, y + h, x, y + h, rad);
+        ctx.arcTo(x, y + h, x, y, rad);
+        ctx.arcTo(x, y, x + w, y, rad);
+        ctx.closePath();
+      }
+
+      function drawPill(ctx, x, y, text, textColor, bgColor, borderColor, fontSpec, padX) {
+        ctx.font = fontSpec;
+        const tw = ctx.measureText(text).width;
+        const h = 26;
+        const w = tw + padX * 2;
+        rrect(ctx, x, y, w, h, 6);
+        ctx.fillStyle = bgColor;
+        ctx.fill();
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = textColor;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, x + padX, y + h / 2 + 0.5);
+        return w;
+      }
+
+      function formatNowTR() {
+        const d = new Date();
+        const pad = (v) => String(v).padStart(2, "0");
+        const display = `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} · ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        const fileStamp = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`;
+        return { display, fileStamp };
+      }
+
+      function renderShareCardCanvas(snap) {
+        const canvas = shareDom.canvas;
+        const W = 1120;
+        const H = 680;
+        const DPR = 2;
+        canvas.width = W * DPR;
+        canvas.height = H * DPR;
+
+        const ctx = canvas.getContext("2d");
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+        const SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+        const MONO = '"JetBrains Mono", "Fira Code", Consolas, monospace';
+        const now = formatNowTR();
+
+        // 1. Pitch-black OLED background gradient
+        const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, "#080b10");
+        bgGrad.addColorStop(0.55, "#0d121c");
+        bgGrad.addColorStop(1, "#090d15");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+
+        // Subtle top glow accent matching direction
+        const accentRgb = snap.isShort ? "255, 82, 82" : "0, 230, 118";
+        const topGlow = ctx.createRadialGradient(180, 40, 10, 180, 40, 380);
+        topGlow.addColorStop(0, `rgba(${accentRgb}, 0.12)`);
+        topGlow.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = topGlow;
+        ctx.fillRect(0, 0, W, 240);
+
+        // Outer frame border
+        rrect(ctx, 14, 14, W - 28, H - 28, 14);
+        ctx.strokeStyle = "#1e2536";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // 2. HEADER BAR
+        const padX = 36;
+        const headerY = 34;
+
+        // Coin title
+        ctx.font = `800 30px ${MONO}`;
+        ctx.fillStyle = "#f4f7fc";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText(snap.coin, padX, headerY + 18);
+        const coinW = ctx.measureText(snap.coin).width;
+
+        // Direction badge
+        const dirText = snap.isShort ? "SHORT ↓" : "LONG ↑";
+        const dirColor = snap.isShort ? "#ff5252" : "#00e676";
+        const dirBg = snap.isShort ? "rgba(255, 82, 82, 0.16)" : "rgba(0, 230, 118, 0.16)";
+        const dirBorder = snap.isShort ? "rgba(255, 82, 82, 0.48)" : "rgba(0, 230, 118, 0.48)";
+        let cursorX = padX + coinW + 14;
+        cursorX += drawPill(ctx, cursorX, headerY + 5, dirText, dirColor, dirBg, dirBorder, `700 13px ${SANS}`, 11) + 8;
+
+        // Mode tag pill
+        let modeBadgeText;
+        if (snap.kind === 2) {
+          const quotaTag = m2.autoQuota ? "%8 Fitil Korumalı" : `Manuel %${snap.Qpct.toFixed(1)} Kota`;
+          modeBadgeText = `${snap.n}K · ${snap.L}x Cross · ${quotaTag}`;
+        } else {
+          modeBadgeText = `Mod 1 · ${snap.mode}K · ${snap.L}x · Split-Stop (Sabit Risk)`;
+        }
+        drawPill(ctx, cursorX, headerY + 5, modeBadgeText, "#8db4ff", "rgba(41, 98, 255, 0.15)", "rgba(41, 98, 255, 0.44)", `600 12px ${MONO}`, 11);
+
+        // Date/time top-right
+        ctx.font = `600 12.5px ${MONO}`;
+        ctx.fillStyle = "#7b8599";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        ctx.fillText(now.display, W - padX, headerY + 13);
+
+        ctx.font = `600 10.5px ${SANS}`;
+        ctx.fillStyle = "#4d5669";
+        ctx.fillText("SPLIT-STOP & CROSS TERMINAL", W - padX, headerY + 30);
+
+        // Header divider
+        ctx.beginPath();
+        ctx.moveTo(padX, 86);
+        ctx.lineTo(W - padX, 86);
+        ctx.strokeStyle = "#1c2231";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Layout Geometry: Left Main Area (x: 36..752) | Right Mini Price Ladder (x: 770..1084)
+        const leftX = padX;
+        const leftW = 716;
+        const rightX = 770;
+        const rightW = W - padX - rightX; // 314px
+
+        // 3. MIDDLE SECTION: TIER TABLE CARD
+        const tableY = 104;
+        const tableH = 248;
+        rrect(ctx, leftX, tableY, leftW, tableH, 10);
+        ctx.fillStyle = "#111622";
+        ctx.fill();
+        ctx.strokeStyle = "#1e2536";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Card title row
+        ctx.font = `700 11.5px ${SANS}`;
+        ctx.fillStyle = "#8a94a8";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText("KADEME EMİR PLANI", leftX + 16, tableY + 22);
+
+        ctx.font = `600 11px ${MONO}`;
+        ctx.fillStyle = "#697387";
+        ctx.textAlign = "right";
+        const tableSub = snap.kind === 2
+          ? `Toplam Hacim: ${m2FmtUSD(snap.totalNotional)} (%${snap.Qpct.toFixed(2)}) · Toplam Marjin: ${m2FmtUSD(snap.totalMargin)}`
+          : `Maks. Kayıp: -${m2FmtUSD(snap.W)} · Toplam Marjin: ${m2FmtUSD(snap.totalMargin)}`;
+        ctx.fillText(tableSub, leftX + leftW - 16, tableY + 22);
+
+        // Table Header Row
+        const thY = tableY + 52;
+        ctx.fillStyle = "#0c1019";
+        ctx.fillRect(leftX + 1, tableY + 38, leftW - 2, 28);
+
+        const cols = snap.kind === 2
+          ? [
+              { label: "KADEME", x: leftX + 16, align: "left" },
+              { label: "GİRİŞ FİYATI", x: leftX + 195, align: "right" },
+              { label: "POZİSYON ($)", x: leftX + 330, align: "right" },
+              { label: `ADET (${snap.baseCoin})`, x: leftX + 458, align: "right" },
+              { label: "MARJİN ($)", x: leftX + 572, align: "right" },
+              { label: "BİRLEŞİK ORT.", x: leftX + leftW - 16, align: "right" }
+            ]
+          : [
+              { label: "KADEME", x: leftX + 16, align: "left" },
+              { label: "GİRİŞ FİYATI", x: leftX + 195, align: "right" },
+              { label: "POZİSYON ($)", x: leftX + 330, align: "right" },
+              { label: `ADET (${snap.baseCoin})`, x: leftX + 458, align: "right" },
+              { label: "MARJİN ($)", x: leftX + 572, align: "right" },
+              { label: "STOP-LOSS", x: leftX + leftW - 16, align: "right" }
+            ];
+
+        ctx.font = `700 10px ${SANS}`;
+        ctx.fillStyle = "#6c768b";
+        for (const c of cols) {
+          ctx.textAlign = c.align;
+          ctx.fillText(c.label, c.x, thY);
+        }
+
+        // Table Rows
+        const refPrice = snap.tiers[0].entry;
+        const rowH = 54;
+        snap.tiers.forEach((t, idx) => {
+          const ry = tableY + 68 + idx * rowH;
+          if (idx > 0) {
+            ctx.beginPath();
+            ctx.moveTo(leftX + 14, ry);
+            ctx.lineTo(leftX + leftW - 14, ry);
+            ctx.strokeStyle = "#1b2130";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+
+          const midY = ry + rowH / 2;
+          const badgeCol = t.isFinal && snap.tiers.length > 1 ? "#ffb74d" : "#4d82ff";
+          const badgeBg = t.isFinal && snap.tiers.length > 1 ? "rgba(255,183,77,0.14)" : "rgba(41,98,255,0.15)";
+
+          // Tier pill
+          rrect(ctx, leftX + 16, midY - 11, 24, 22, 5);
+          ctx.fillStyle = badgeBg;
+          ctx.fill();
+          ctx.font = `700 11.5px ${MONO}`;
+          ctx.fillStyle = badgeCol;
+          ctx.textAlign = "center";
+          ctx.fillText(`K${t.index}`, leftX + 28, midY + 0.5);
+
+          ctx.font = `600 12px ${SANS}`;
+          ctx.fillStyle = "#d9e0ee";
+          ctx.textAlign = "left";
+          const tierSub = snap.kind === 2
+            ? `%${t.weightPct.toFixed(snap.n === 3 ? 1 : 0)}`
+            : `-${m2FmtUSD(t.risk)}`;
+          ctx.fillText(`${t.index}. Kademe`, leftX + 47, midY - 6);
+          ctx.font = `600 10px ${MONO}`;
+          ctx.fillStyle = snap.kind === 2 ? "#7d889e" : "#ff6b6b";
+          ctx.fillText(tierSub, leftX + 47, midY + 9);
+
+          // Entry Price
+          ctx.font = `700 13.5px ${MONO}`;
+          ctx.fillStyle = "#f0f4fc";
+          ctx.textAlign = "right";
+          ctx.fillText("$" + m2FmtPrice(t.entry, refPrice), cols[1].x, midY);
+
+          // Position Size
+          ctx.font = `700 13px ${MONO}`;
+          ctx.fillStyle = "#d1d8e6";
+          ctx.fillText(m2FmtUSD(t.notional), cols[2].x, snap.kind === 2 ? midY - 6 : midY);
+          if (snap.kind === 2) {
+            ctx.font = `600 10px ${MONO}`;
+            ctx.fillStyle = "#7ea7ff";
+            ctx.fillText(`Kasa %${t.walletPct.toFixed(2)}`, cols[2].x, midY + 9);
+          }
+
+          // Coin Qty
+          ctx.font = `600 12.5px ${MONO}`;
+          ctx.fillStyle = "#b8c2d6";
+          ctx.fillText(m2FmtQty(t.qty), cols[3].x, midY);
+
+          // Margin (Highlighted)
+          ctx.font = `800 14px ${MONO}`;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillText(m2FmtUSD(t.margin), cols[4].x, midY);
+
+          // Last Col: Avg Cost (Mod 2) or Stop-Loss (Mod 1)
+          if (snap.kind === 2) {
+            ctx.font = `700 13px ${MONO}`;
+            ctx.fillStyle = t.index >= 2 ? "#38bdf8" : "#6c768b";
+            ctx.fillText("$" + m2FmtPrice(t.avgCost, refPrice), cols[5].x, midY);
+          } else {
+            ctx.font = `700 13px ${MONO}`;
+            ctx.fillStyle = "#ff5252";
+            ctx.fillText("$" + m2FmtPrice(t.sl, refPrice), cols[5].x, midY);
+          }
+        });
+
+        // 4. BOTTOM SECTION: 4 METRIC BOXES (2x2 GRID)
+        const gridY = 368;
+        const boxGap = 12;
+        const boxW = (leftW - boxGap) / 2;
+        const boxH = 114;
+
+        let metricBoxes;
+        if (snap.kind === 2) {
+          const signTxt = snap.isShort ? "+" : "-";
+          const liqMain = snap.liqNoLiq ? "LİQ YOK ($0)" : "$" + m2FmtPrice(snap.liqPrice, refPrice);
+          const liqSub = snap.liqNoLiq
+            ? "Kasa %100 teminat korumalı"
+            : (snap.isShort
+              ? `Ortalamadan ~${snap.liqMultFromAvg.toFixed(1)}x yukarı`
+              : `Ortalamadan -%${(((snap.finalAvg - snap.liqPrice) / snap.finalAvg) * 100).toFixed(1)} aşağı`);
+
+          metricBoxes = [
+            {
+              title: "TP HEDEFİ & BEKLENEN NET KÂR",
+              accent: "#00e676",
+              border: "rgba(0, 230, 118, 0.36)",
+              bg: "rgba(0, 230, 118, 0.06)",
+              main: m2FmtUSDSigned(snap.finalTier.cumNet),
+              rightTag: `TP $${m2FmtPrice(snap.TP, refPrice)}`,
+              sub1: `Marjin ROI: +${snap.finalTier.cumRoiPct.toFixed(1)}% · Kasa +%${snap.finalTier.cumWalletPct.toFixed(2)}`,
+              sub2: `1. Kademe Direkt TP: ${m2FmtUSDSigned(snap.tiers[0].cumNet)}`
+            },
+            {
+              title: `HAFTALIK KAPANIŞ SL (${signTxt}%${Math.round(snap.weeklyPct)})`,
+              accent: "#ff5252",
+              border: "rgba(255, 82, 82, 0.36)",
+              bg: "rgba(255, 82, 82, 0.06)",
+              main: m2FmtUSDSigned(snap.manualSlNet),
+              rightTag: `SL $${m2FmtPrice(snap.manualSlPrice, refPrice)}`,
+              sub1: `Ana Kasaya Etki: %${snap.manualSlWalletPct.toFixed(2)}`,
+              sub2: `Birleşik Ort: $${m2FmtPrice(snap.finalAvg, refPrice)} üzerinden manuel çıkış`
+            },
+            {
+              title: `FİTİL STRES TESTİ (${signTxt}%${Math.round(snap.wickPct)} İĞNE)`,
+              accent: "#ffb74d",
+              border: "rgba(255, 183, 77, 0.38)",
+              bg: "rgba(255, 183, 77, 0.06)",
+              main: m2FmtUSDSigned(snap.wickFloatingPnL),
+              rightTag: `İğne $${m2FmtPrice(snap.wickPrice, refPrice)}`,
+              sub1: `Kasa Etkisi: %${snap.wickWalletImpactPct.toFixed(2)} (${snap.wickFilledCount}/${snap.n} kademe dolu)`,
+              sub2: `Kalan Serbest Teminat: ${m2FmtUSD(snap.wickFreeCollateral)}`
+            },
+            {
+              title: "TAHMİNİ CROSS LİKİDASYON",
+              accent: "#e879f9",
+              border: "rgba(232, 121, 249, 0.42)",
+              bg: "rgba(232, 121, 249, 0.06)",
+              main: liqMain,
+              rightTag: `${snap.L}x CROSS`,
+              sub1: liqSub,
+              sub2: `Ana Cüzdan: ${m2FmtUSD(snap.B)} · Sepet (${snap.basket}): ${m2FmtUSD(snap.basketNotional)}`
+            }
+          ];
+        } else {
+          metricBoxes = [
+            {
+              title: "TP HEDEFİ & SON KADEME NET (3/4)",
+              accent: "#00e676",
+              border: "rgba(0, 230, 118, 0.36)",
+              bg: "rgba(0, 230, 118, 0.06)",
+              main: m2FmtUSDSigned(snap.finalNet),
+              rightTag: `TP $${m2FmtPrice(snap.TP, refPrice)}`,
+              sub1: `Önceki stop zararları düşülmüş net kâr`,
+              sub2: `Hedef: Maks. Kayıp × 3/4 (${m2FmtUSD(snap.W * 0.75)})`
+            },
+            {
+              title: "1. KADEMEDEN DİREKT TP",
+              accent: "#4d82ff",
+              border: "rgba(41, 98, 255, 0.38)",
+              bg: "rgba(41, 98, 255, 0.06)",
+              main: m2FmtUSDSigned(snap.s1Net),
+              rightTag: `${snap.s1RR.toFixed(2)}R`,
+              sub1: `1. kademe stop olmadan doğrudan hedefe ulaşırsa`,
+              sub2: `1. Kademe Riski: -${m2FmtUSD(snap.tiers[0].risk)}`
+            },
+            {
+              title: "EN KÖTÜ SENARYO (TÜMÜ STOP)",
+              accent: "#ff5252",
+              border: "rgba(255, 82, 82, 0.36)",
+              bg: "rgba(255, 82, 82, 0.06)",
+              main: `-${m2FmtUSD(snap.W)}`,
+              rightTag: `Hard SL $${m2FmtPrice(snap.hardSL, refPrice)}`,
+              sub1: `Sabit Maksimum Kayıp Limiti korunur`,
+              sub2: `Önerilen Min. Cüzdan (+%5): ${m2FmtUSD(snap.W * 1.05)}`
+            },
+            {
+              title: "MARJİN & MOD ÖZETİ",
+              accent: "#ffb74d",
+              border: "rgba(255, 183, 77, 0.38)",
+              bg: "rgba(255, 183, 77, 0.06)",
+              main: m2FmtUSD(snap.totalMargin),
+              rightTag: `${snap.L}x CROSS`,
+              sub1: `Toplam kademe marjin ihtiyacı (${snap.mode} Kademe)`,
+              sub2: `Komisyon Koruması: ${snap.feeOn ? "Açık (%0.11)" : "Kapalı"}`
+            }
+          ];
+        }
+
+        metricBoxes.forEach((box, i) => {
+          const col = i % 2;
+          const row = Math.floor(i / 2);
+          const bx = leftX + col * (boxW + boxGap);
+          const by = gridY + row * (boxH + boxGap);
+
+          rrect(ctx, bx, by, boxW, boxH, 10);
+          ctx.fillStyle = "#111622";
+          ctx.fill();
+          ctx.fillStyle = box.bg;
+          ctx.fill();
+          ctx.strokeStyle = box.border;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          // Left accent bar
+          rrect(ctx, bx + 1, by + 12, 3, boxH - 24, 2);
+          ctx.fillStyle = box.accent;
+          ctx.fill();
+
+          // Title
+          ctx.font = `700 10px ${SANS}`;
+          ctx.fillStyle = "#8d98ad";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText(box.title, bx + 14, by + 20);
+
+          // Right tag
+          ctx.font = `700 10.5px ${MONO}`;
+          ctx.fillStyle = box.accent;
+          ctx.textAlign = "right";
+          ctx.fillText(box.rightTag, bx + boxW - 13, by + 20);
+
+          // Main big figure
+          ctx.font = `800 24px ${MONO}`;
+          ctx.fillStyle = box.accent;
+          ctx.textAlign = "left";
+          ctx.fillText(box.main, bx + 14, by + 54);
+
+          // Sublines
+          ctx.font = `500 11px ${MONO}`;
+          ctx.fillStyle = "#cbd3e3";
+          ctx.fillText(box.sub1, bx + 14, by + 82);
+
+          ctx.font = `500 10.5px ${SANS}`;
+          ctx.fillStyle = "#7a8499";
+          ctx.fillText(box.sub2, bx + 14, by + 99);
+        });
+
+        // 5. RIGHT COLUMN: MINI PRICE LADDER CHART
+        const ladY = 104;
+        const ladH = 504;
+        rrect(ctx, rightX, ladY, rightW, ladH, 10);
+        ctx.fillStyle = "#111622";
+        ctx.fill();
+        ctx.strokeStyle = "#1e2536";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.font = `700 11.5px ${SANS}`;
+        ctx.fillStyle = "#8a94a8";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText("FİYAT MERDİVENİ", rightX + 16, ladY + 22);
+
+        ctx.font = `600 10px ${MONO}`;
+        ctx.fillStyle = snap.isShort ? "#ff5252" : "#00e676";
+        ctx.textAlign = "right";
+        ctx.fillText(snap.isShort ? "SHORT ↓" : "LONG ↑", rightX + rightW - 16, ladY + 22);
+
+        drawCanvasPriceLadder(ctx, snap, rightX + 14, ladY + 42, rightW - 28, ladH - 56, SANS, MONO);
+
+        // 6. FOOTER STRIP
+        const footY = H - 36;
+        ctx.beginPath();
+        ctx.moveTo(padX, footY - 18);
+        ctx.lineTo(W - padX, footY - 18);
+        ctx.strokeStyle = "#1c2231";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.font = `600 11px ${MONO}`;
+        ctx.fillStyle = "#6d778c";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        const footLeft = snap.kind === 2
+          ? `Cüzdan: ${m2FmtUSD(snap.B)} · Sepet (${snap.basket}): ${m2FmtUSD(snap.basketNotional)} (%${snap.basketNotionalPct.toFixed(0)}) · Serbest: ${m2FmtUSD(snap.basketFreeCollateral)}`
+          : `Çapraz (Cross) Marjin · Önerilen Min. Bakiye: ${m2FmtUSD(snap.W * 1.05)} · 100% Offline Hesaplayıcı`;
+        ctx.fillText(footLeft, padX, footY);
+
+        ctx.font = `600 11px ${SANS}`;
+        ctx.fillStyle = "#4d5669";
+        ctx.textAlign = "right";
+        ctx.fillText("Pozisyon & Risk Hesaplayıcı", W - padX, footY);
+
+        lastCardFilename = `${snap.coin}_${snap.direction}_${now.fileStamp}.png`;
+      }
+
+      function drawCanvasPriceLadder(ctx, snap, x, y, w, h, SANS, MONO) {
+        const refPrice = snap.tiers[0].entry;
+        const isShort = snap.isShort;
+        const spineX = x + 22;
+        const lineEndX = x + 68;
+        const pillX = x + 80;
+        const pillW = w - 82;
+
+        const core = [];
+        core.push({
+          label: "TP HEDEF",
+          price: snap.TP,
+          color: "#00e676",
+          bg: "rgba(0, 230, 118, 0.12)",
+          border: "rgba(0, 230, 118, 0.48)",
+          dashed: false
+        });
+
+        for (const t of snap.tiers) {
+          const isAmber = t.isFinal && snap.tiers.length > 1;
+          core.push({
+            label: `${t.index}. KADEME`,
+            price: t.entry,
+            color: isAmber ? "#ffb74d" : "#4d82ff",
+            bg: isAmber ? "rgba(255, 183, 77, 0.13)" : "rgba(41, 98, 255, 0.14)",
+            border: isAmber ? "rgba(255, 183, 77, 0.5)" : "rgba(41, 98, 255, 0.5)",
+            dashed: false
+          });
+          if (snap.kind === 1) {
+            core.push({
+              label: t.isFinal ? "ANA HARD SL" : `SL ${t.index}`,
+              price: t.sl,
+              color: "#ff5252",
+              bg: t.isFinal ? "rgba(255, 82, 82, 0.18)" : "rgba(255, 82, 82, 0.10)",
+              border: t.isFinal ? "rgba(255, 82, 82, 0.65)" : "rgba(255, 82, 82, 0.38)",
+              dashed: !t.isFinal
+            });
+          }
+        }
+
+        if (snap.kind === 2) {
+          if (snap.n >= 2) {
+            core.push({
+              label: "BİRLEŞİK ORT.",
+              price: snap.finalAvg,
+              color: "#38bdf8",
+              bg: "rgba(56, 189, 248, 0.12)",
+              border: "rgba(56, 189, 248, 0.48)",
+              dashed: true
+            });
+          }
+          core.push({
+            label: "HAFTALIK SL",
+            price: snap.manualSlPrice,
+            color: "#ff5252",
+            bg: "rgba(255, 82, 82, 0.16)",
+            border: "rgba(255, 82, 82, 0.58)",
+            dashed: false
+          });
+        }
+
+        const hasLiqBand = snap.kind === 2;
+        const liqBandY = isShort ? (y + 22) : (y + h - 22);
+        const breakY = isShort ? (y + 52) : (y + h - 52);
+        const plotTop = hasLiqBand ? (isShort ? y + 74 : y + 20) : (y + 20);
+        const plotBottom = hasLiqBand ? (isShort ? y + h - 20 : y + h - 74) : (y + h - 20);
+        const plotH = plotBottom - plotTop;
+
+        const prices = core.map((c) => c.price);
+        const minP = Math.min(...prices);
+        const maxP = Math.max(...prices);
+        const rangeP = Math.max(maxP - minP, 1e-9);
+        const p2y = (p) => plotTop + ((maxP - p) / rangeP) * plotH;
+
+        core.forEach((c) => { c.py = p2y(c.price); });
+        core.sort((a, b) => a.py - b.py);
+
+        // Label collision avoidance
+        const minGap = core.length >= 7 ? 38 : 44;
+        core.forEach((c) => { c.ly = c.py; });
+        for (let iter = 0; iter < 18; iter++) {
+          for (let i = 1; i < core.length; i++) {
+            const ov = (core[i - 1].ly + minGap) - core[i].ly;
+            if (ov > 0) {
+              core[i - 1].ly -= ov * 0.5;
+              core[i].ly += ov * 0.5;
+            }
+          }
+          if (core[0].ly < plotTop) core[0].ly = plotTop;
+          const last = core.length - 1;
+          if (core[last].ly > plotBottom) core[last].ly = plotBottom;
+          for (let i = 1; i < core.length; i++) {
+            if (core[i].ly < core[i - 1].ly + minGap) core[i].ly = core[i - 1].ly + minGap;
+          }
+          for (let i = last - 1; i >= 0; i--) {
+            if (core[i].ly > core[i + 1].ly - minGap) core[i].ly = core[i + 1].ly - minGap;
+          }
+        }
+
+        // Subtle zone fills
+        const yTP = p2y(snap.TP);
+        const yP1 = p2y(snap.tiers[0].entry);
+        const yLast = p2y(snap.tiers[snap.tiers.length - 1].entry);
+        const ySL = p2y(snap.kind === 2 ? snap.manualSlPrice : snap.hardSL);
+
+        ctx.fillStyle = "rgba(0, 230, 118, 0.08)";
+        ctx.fillRect(spineX, Math.min(yTP, yP1), lineEndX - spineX, Math.abs(yTP - yP1));
+        ctx.fillStyle = "rgba(41, 98, 255, 0.06)";
+        ctx.fillRect(spineX, Math.min(yP1, yLast), lineEndX - spineX, Math.abs(yP1 - yLast));
+        ctx.fillStyle = "rgba(255, 82, 82, 0.09)";
+        ctx.fillRect(spineX, Math.min(yLast, ySL), lineEndX - spineX, Math.abs(yLast - ySL));
+
+        // Vertical spine
+        ctx.beginPath();
+        ctx.moveTo(spineX, plotTop - 8);
+        ctx.lineTo(spineX, plotBottom + 8);
+        ctx.strokeStyle = "#2a3347";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Cross Liq Break-axis band (Mode 2)
+        if (hasLiqBand) {
+          ctx.save();
+          ctx.setLineDash([4, 3]);
+          ctx.beginPath();
+          ctx.moveTo(spineX, liqBandY);
+          ctx.lineTo(spineX, breakY + (isShort ? -5 : 5));
+          ctx.strokeStyle = "rgba(232, 121, 249, 0.65)";
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+          ctx.restore();
+
+          // Axis break slashes //
+          ctx.beginPath();
+          ctx.moveTo(spineX - 5, breakY + 3);
+          ctx.lineTo(spineX + 5, breakY - 3);
+          ctx.moveTo(spineX - 5, breakY + 7);
+          ctx.lineTo(spineX + 5, breakY + 1);
+          ctx.strokeStyle = "#6c768b";
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+
+          // Liq horizontal line & pill
+          ctx.save();
+          ctx.setLineDash([5, 3]);
+          ctx.beginPath();
+          ctx.moveTo(spineX, liqBandY);
+          ctx.lineTo(lineEndX, liqBandY);
+          ctx.strokeStyle = "#e879f9";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.restore();
+
+          ctx.beginPath();
+          ctx.arc(spineX, liqBandY, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = "#e879f9";
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(lineEndX, liqBandY);
+          ctx.lineTo(pillX, liqBandY);
+          ctx.strokeStyle = "rgba(232, 121, 249, 0.6)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          rrect(ctx, pillX, liqBandY - 15, pillW, 30, 6);
+          ctx.fillStyle = "rgba(232, 121, 249, 0.14)";
+          ctx.fill();
+          ctx.strokeStyle = "rgba(232, 121, 249, 0.58)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.font = `700 9.5px ${SANS}`;
+          ctx.fillStyle = "#f0abfc";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText("CROSS LİQ", pillX + 8, liqBandY + 0.5);
+
+          ctx.font = `700 11.5px ${MONO}`;
+          ctx.fillStyle = "#ffffff";
+          ctx.textAlign = "right";
+          ctx.fillText(snap.liqNoLiq ? "LİQ YOK" : "$" + m2FmtPrice(snap.liqPrice, refPrice), pillX + pillW - 8, liqBandY + 0.5);
+        }
+
+        // Core proportional levels
+        for (const lvl of core) {
+          ctx.save();
+          if (lvl.dashed) ctx.setLineDash([4, 3]);
+          ctx.beginPath();
+          ctx.moveTo(spineX, lvl.py);
+          ctx.lineTo(lineEndX, lvl.py);
+          ctx.strokeStyle = lvl.color;
+          ctx.lineWidth = 1.8;
+          ctx.stroke();
+          ctx.restore();
+
+          ctx.beginPath();
+          ctx.arc(spineX, lvl.py, 3.2, 0, Math.PI * 2);
+          ctx.fillStyle = lvl.color;
+          ctx.fill();
+
+          // Connector elbow
+          ctx.beginPath();
+          ctx.moveTo(lineEndX, lvl.py);
+          ctx.lineTo(lineEndX + 5, lvl.py);
+          ctx.lineTo(pillX - 4, lvl.ly);
+          ctx.lineTo(pillX, lvl.ly);
+          ctx.strokeStyle = lvl.color;
+          ctx.globalAlpha = 0.55;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+
+          // Pill box
+          rrect(ctx, pillX, lvl.ly - 15, pillW, 30, 6);
+          ctx.fillStyle = lvl.bg;
+          ctx.fill();
+          ctx.strokeStyle = lvl.border;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.font = `700 9.5px ${SANS}`;
+          ctx.fillStyle = lvl.color;
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText(lvl.label, pillX + 8, lvl.ly + 0.5);
+
+          ctx.font = `700 11.5px ${MONO}`;
+          ctx.fillStyle = "#f0f4fc";
+          ctx.textAlign = "right";
+          ctx.fillText("$" + m2FmtPrice(lvl.price, refPrice), pillX + pillW - 8, lvl.ly + 0.5);
+        }
+      }
+
+      function openShareCardModal() {
+        let snap;
+        if (activeAppMode === 2) {
+          const res = calculateMode2(m2);
+          if (res.error) {
+            m2ShowToast("Kart oluşturmak için önce parametre hatasını düzeltin.");
+            return;
+          }
+          snap = {
+            ...res,
+            kind: 2,
+            coin: (m2.coin || "PARITE").trim().toUpperCase() || "PARITE",
+            baseCoin: m2BaseCoin(m2.coin)
+          };
+          shareDom.subtitle.textContent = `Mod 2 · ${snap.coin} ${snap.direction} · 2x Retina (2240×1360)`;
+        } else {
+          snap = readMode1Snapshot();
+          if (snap.error) {
+            m2ShowToast("Kart oluşturmak için önce parametre hatasını düzeltin.");
+            return;
+          }
+          shareDom.subtitle.textContent = `Mod 1 · ${snap.coin} SHORT · 2x Retina (2240×1360)`;
+        }
+
+        renderShareCardCanvas(snap);
+        shareDom.modal.classList.add("open");
+      }
+
+      function closeShareCardModal() {
+        shareDom.modal.classList.remove("open");
+      }
+
+      shareDom.openBtn.addEventListener("click", openShareCardModal);
+      shareDom.closeBtn.addEventListener("click", closeShareCardModal);
+      shareDom.modal.addEventListener("click", (e) => {
+        if (e.target === shareDom.modal) closeShareCardModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && shareDom.modal.classList.contains("open")) {
+          closeShareCardModal();
+        }
+      });
+
+      // Copy PNG Blob to Clipboard
+      shareDom.copyBtn.addEventListener("click", () => {
+        if (!navigator.clipboard || typeof ClipboardItem === "undefined") {
+          m2ShowToast("Tarayıcı görsel panosunu desteklemiyor; PNG İndir butonunu kullanabilirsiniz.");
+          return;
+        }
+        shareDom.canvas.toBlob((blob) => {
+          if (!blob) {
+            m2ShowToast("Görsel oluşturulamadı.");
+            return;
+          }
+          navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
+            .then(() => {
+              m2ShowToast("Panoya kopyalandı! Telegram'a <span class=\"toast-val\">Ctrl+V</span> ile yapıştırabilirsin");
+            })
+            .catch(() => {
+              m2ShowToast("Tarayıcı izni engelledi (file:// kısıtı olabilir); PNG İndir kullanın.");
+            });
+        }, "image/png");
+      });
+
+      // Download PNG
+      shareDom.downloadBtn.addEventListener("click", () => {
+        const a = document.createElement("a");
+        a.href = shareDom.canvas.toDataURL("image/png");
+        a.download = lastCardFilename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        m2ShowToast(`İndirildi: <span class="toast-val">${m2Escape(lastCardFilename)}</span>`);
+      });
 
       /* -------------------- INIT MODE 2 -------------------- */
       syncM2Inputs();
