@@ -2402,22 +2402,16 @@
         <div class="sub-section">
           <div class="slider-block">
             <div class="slider-top">
-              <div class="quota-label-group">
-                <label class="field-label" for="m2QuotaInput">Maks. Pozisyon Kotası</label>
-                <button type="button" class="auto-quota-badge" id="m2AutoQuotaBtn" title="Fitil stres testindeki anlık zararı kasanın tam %8'ine eşitle">
-                  <span class="aq-dot"></span>Oto %8
-                </button>
-              </div>
+              <label class="field-label" for="m2QuotaInput">Coin Başı Maks. Pozisyon Kotası</label>
               <span class="mono" style="font-size:12.5px; font-weight:700; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $25.00</span>
             </div>
             <div class="slider-controls">
-              <input type="range" id="m2QuotaRange" min="1" max="30" step="0.5" value="5.0" aria-label="Maksimum Pozisyon Kotası Slider" />
+              <input type="range" id="m2QuotaRange" min="1" max="15" step="0.5" value="5.0" aria-label="Maksimum Pozisyon Kotası Slider" />
               <div class="input-wrap">
-                <input type="number" id="m2QuotaInput" class="slider-num" min="0.1" max="100" step="any" value="5.00" />
+                <input type="number" id="m2QuotaInput" class="slider-num" min="0.1" max="100" step="0.5" value="5.0" />
                 <span class="input-suffix" style="right:6px;">%</span>
               </div>
             </div>
-            <div class="slider-hint" id="m2QuotaAutoHint">Manuel kota aktif · Otomatik %8 kuralı için <strong>Oto %8</strong>'e tıklayın</div>
           </div>
 
           <!-- Dynamic Weight Distribution -->
@@ -4450,19 +4444,23 @@
         const baseCoin = m2BaseCoin(coinLabel);
         const isShort = m2.direction === "SHORT";
 
-        // Auto %8 Wick Risk Quota recalculation when active
-        if (m2.autoQuota) {
+        // Archived: Auto %8 Wick Risk Quota UI is disabled (computeAutoQuotaPct kept archived above)
+        if (m2.autoQuota && dom.autoQuotaBtn) {
           const autoQ = computeAutoQuotaPct(m2);
           m2.quotaPct = autoQ;
           dom.quotaInput.value = autoQ.toFixed(2);
-          dom.quotaRange.value = Math.min(30, Math.max(1, autoQ));
+          dom.quotaRange.value = Math.min(15, Math.max(1, autoQ));
         }
 
-        dom.autoQuotaBtn.classList.toggle("active", m2.autoQuota);
-        const targetRiskUsd = isFinite(m2.balance) && m2.balance > 0 ? m2.balance * (AUTO_WICK_RISK_PCT / 100) : 0;
-        dom.quotaAutoHint.innerHTML = m2.autoQuota
-          ? `Oto (%8 Fitil Riski): <strong style="color:var(--green);">-${m2FmtUSD(targetRiskUsd)}</strong> hedef yüzen zarar`
-          : `Manuel kota aktif · Otomatik %8 kuralı için <strong>Oto %8</strong>'e tıklayın`;
+        if (dom.autoQuotaBtn) {
+          dom.autoQuotaBtn.classList.toggle("active", m2.autoQuota);
+        }
+        if (dom.quotaAutoHint) {
+          const targetRiskUsd = isFinite(m2.balance) && m2.balance > 0 ? m2.balance * (AUTO_WICK_RISK_PCT / 100) : 0;
+          dom.quotaAutoHint.innerHTML = m2.autoQuota
+            ? `Oto (%8 Fitil Riski): <strong style="color:var(--green);">-${m2FmtUSD(targetRiskUsd)}</strong> hedef yüzen zarar`
+            : "";
+        }
 
         // Direction button styling
         dom.dirShortBtn.className = "segmented-btn dir-btn" + (isShort ? " active-short" : "");
@@ -4518,7 +4516,7 @@
         dom.errorBanner.classList.remove("visible");
 
         // Update top-right summary pills
-        dom.headerNotional.textContent = `${m2FmtUSD(res.totalNotional)} (%${res.Qpct.toFixed(2)})`;
+        dom.headerNotional.textContent = `${m2FmtUSD(res.totalNotional)} (%${res.Qpct.toFixed(1)})`;
         dom.headerMargin.textContent = m2FmtUSD(res.totalMargin);
         dom.headerTpLabel.textContent = `${res.n}. Kademe TP Kârı:`;
         dom.headerTpProfit.textContent = m2FmtUSDSigned(res.finalTier.cumNet);
@@ -5065,7 +5063,7 @@
           direction: p.direction === "LONG" ? "LONG" : "SHORT",
           tiers: [1, 2, 3].includes(p.tiers) ? p.tiers : 2,
           balance: Number(p.balance),
-          autoQuota: typeof p.autoQuota === "boolean" ? p.autoQuota : false,
+          autoQuota: false,
           quotaPct: Number(p.quotaPct),
           leverage: Number(p.leverage),
           basketCount: Number(p.basketCount) || 10,
@@ -5110,7 +5108,7 @@
                 <span class="preset-coin">${m2Escape(p.coin)}</span>
                 <span class="preset-badge" style="color:${dirColor}; background:rgba(255,255,255,0.05);">${p.direction === "LONG" ? "L" : "S"}</span>
                 <span class="preset-badge">${p.tiers}K</span>
-                <span class="preset-meta">$${Number(p.balance).toFixed(0)} · ${p.autoQuota ? "Oto %8" : "%" + Number(p.quotaPct).toFixed(1)}</span>
+                <span class="preset-meta">$${Number(p.balance).toFixed(0)} · %${Number(p.quotaPct).toFixed(1)}</span>
               </div>
               <button type="button" class="preset-del" data-m2-del="${m2Escape(p.key)}" title="Kurguyu sil">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -5135,8 +5133,8 @@
         dom.balanceInput.value = m2.balance;
         dom.leverageInput.value = m2.leverage;
         dom.basketInput.value = m2.basketCount;
-        dom.quotaRange.value = Math.min(30, Math.max(1, m2.quotaPct));
-        dom.quotaInput.value = Number(m2.quotaPct).toFixed(2);
+        dom.quotaRange.value = Math.min(15, Math.max(1, m2.quotaPct));
+        dom.quotaInput.value = Number(m2.quotaPct).toFixed(1);
         dom.w2_1.value = m2.weights2[0];
         dom.w2_2.value = m2.weights2[1];
         dom.w3_1.value = m2.weights3[0];
@@ -5195,30 +5193,29 @@
         dom.leverageInput.addEventListener("input", () => { m2.leverage = numVal(dom.leverageInput); renderMode2(); });
         dom.basketInput.addEventListener("input", () => { m2.basketCount = numVal(dom.basketInput); renderMode2(); });
 
-        // Auto %8 toggle badge
-        dom.autoQuotaBtn.addEventListener("click", () => {
-          m2.autoQuota = !m2.autoQuota;
-          if (!m2.autoQuota && isFinite(m2.quotaPct)) {
-            m2.quotaPct = Number(m2.quotaPct.toFixed(2));
-          }
-          renderMode2();
-          m2ShowToast(m2.autoQuota
-            ? 'Otomatik kota aktif: <span class="toast-val">%8 Fitil Riski</span>'
-            : "Manuel kota moduna geçildi");
-        });
+        // Archived: Auto %8 toggle badge listener (only attaches if UI button is restored)
+        if (dom.autoQuotaBtn) {
+          dom.autoQuotaBtn.addEventListener("click", () => {
+            m2.autoQuota = !m2.autoQuota;
+            if (!m2.autoQuota && isFinite(m2.quotaPct)) {
+              m2.quotaPct = Number(m2.quotaPct.toFixed(2));
+            }
+            renderMode2();
+          });
+        }
 
-        // Quota slider <-> input (manual drag/input exits Auto %8 mode)
+        // Quota slider <-> input
         dom.quotaRange.addEventListener("input", () => {
           m2.autoQuota = false;
           m2.quotaPct = parseFloat(dom.quotaRange.value);
-          dom.quotaInput.value = m2.quotaPct.toFixed(2);
+          dom.quotaInput.value = m2.quotaPct.toFixed(1);
           renderMode2();
         });
         dom.quotaInput.addEventListener("input", () => {
           m2.autoQuota = false;
           const v = numVal(dom.quotaInput);
           m2.quotaPct = v;
-          if (isFinite(v)) dom.quotaRange.value = Math.min(30, Math.max(1, v));
+          if (isFinite(v)) dom.quotaRange.value = Math.min(15, Math.max(1, v));
           renderMode2();
         });
 
@@ -5580,8 +5577,7 @@
         // Mode tag pill
         let modeBadgeText;
         if (snap.kind === 2) {
-          const quotaTag = m2.autoQuota ? "%8 Fitil Korumalı" : `Manuel %${snap.Qpct.toFixed(1)} Kota`;
-          modeBadgeText = `${snap.n}K · ${snap.L}x Cross · ${quotaTag}`;
+          modeBadgeText = `${snap.n}K · ${snap.L}x Cross · %${snap.Qpct.toFixed(1)} Kasa`;
         } else {
           modeBadgeText = `Mod 1 · ${snap.mode}K · ${snap.L}x · Split-Stop (Sabit Risk)`;
         }
