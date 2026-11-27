@@ -2404,20 +2404,20 @@
             <div class="slider-top">
               <div class="quota-label-group">
                 <label class="field-label" for="m2QuotaInput">Maks. Pozisyon Kotası</label>
-                <button type="button" class="auto-quota-badge active" id="m2AutoQuotaBtn" title="Fitil stres testindeki anlık zararı kasanın tam %8'ine eşitle">
+                <button type="button" class="auto-quota-badge" id="m2AutoQuotaBtn" title="Fitil stres testindeki anlık zararı kasanın tam %8'ine eşitle">
                   <span class="aq-dot"></span>Oto %8
                 </button>
               </div>
-              <span class="mono" style="font-size:12.5px; font-weight:700; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $56.74</span>
+              <span class="mono" style="font-size:12.5px; font-weight:700; color:#7ea7ff;" id="m2QuotaUsdHint">Hacim: $25.00</span>
             </div>
             <div class="slider-controls">
-              <input type="range" id="m2QuotaRange" min="1" max="30" step="0.5" value="11.35" aria-label="Maksimum Pozisyon Kotası Slider" />
+              <input type="range" id="m2QuotaRange" min="1" max="30" step="0.5" value="5.0" aria-label="Maksimum Pozisyon Kotası Slider" />
               <div class="input-wrap">
-                <input type="number" id="m2QuotaInput" class="slider-num" min="0.1" max="100" step="any" value="11.35" />
+                <input type="number" id="m2QuotaInput" class="slider-num" min="0.1" max="100" step="any" value="5.00" />
                 <span class="input-suffix" style="right:6px;">%</span>
               </div>
             </div>
-            <div class="slider-hint" id="m2QuotaAutoHint">Oto (%8 Fitil Riski): <strong style="color:var(--green);">-$40.00</strong> hedef yüzen zarar</div>
+            <div class="slider-hint" id="m2QuotaAutoHint">Manuel kota aktif · Otomatik %8 kuralı için <strong>Oto %8</strong>'e tıklayın</div>
           </div>
 
           <!-- Dynamic Weight Distribution -->
@@ -3918,7 +3918,7 @@
         direction: "SHORT",
         tiers: 2,
         balance: 500,
-        autoQuota: true,
+        autoQuota: false,
         quotaPct: 5.0,
         leverage: 10,
         basketCount: 10,
